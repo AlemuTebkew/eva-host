@@ -1,22 +1,22 @@
-import {  Factory, Globe, Hammer, Leaf, Package, Pickaxe, ShieldCheck, Star, Truck } from "lucide-react";
+import { Building, Ruler, Hammer, Leaf, Truck, Wrench, HardHat, Layers, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "East Gafat Engineering Group | Global Trading & Sustainable Solutions",
-  description: "East Gafat Engineering Group is a trusted global trading company delivering high-quality products and sustainable solutions across industries like mining, construction, agriculture, and healthcare. We ensure reliability, innovation, and excellence in everything we do.",
-  keywords: "global trading company, high-quality products, sustainable solutions, mining, construction, agriculture, healthcare, trusted supplier, innovation, excellence",
+  title: "Eva Engineering | Innovative Construction & Engineering Solutions",
+  description: "Eva Engineering provides expert construction and engineering solutions, including design, planning, structural engineering, and sustainable building practices.",
+  keywords: "construction engineering, structural engineering, sustainable construction, project management, commercial building, residential construction, infrastructure, civil engineering",
   // Open Graph Meta Tags for Social Media Sharing
   openGraph: {
-    title: "East Gafat Engineering Group | Global Trading & Sustainable Solutions",
-    description: "Delivering high-quality products and sustainable solutions across industries. Partner with us for innovative, reliable, and ethical services.",
+    title: "Eva Engineering | Innovative Construction & Engineering Solutions",
+    description: "Delivering innovative and sustainable engineering solutions across industries. Partner with us for expert services in construction, design, and project management.",
     images: ["/images/logo/logo.png"],  // Update with the path to a suitable image
-    url: "https://eastgafat.com",
+    url: "https://evaengineering.com",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "East Gafat Engineering Group | Global Trading & Sustainable Solutions",
-    description: "Trusted global trading company delivering high-quality products and sustainable solutions.",
+    title: "Eva Engineering | Innovative Construction & Engineering Solutions",
+    description: "Expert construction and engineering solutions tailored to your project needs.",
     images: ["/images/logo/logo.png"],  // Update with the path to a suitable image
   },
 };
@@ -24,34 +24,44 @@ export const metadata: Metadata = {
 const Services = () => {
   const services = [
     {
-      icon: <Pickaxe className="w-10 h-10 text-primary" />,
-      title: "Mining",
-      description: "Responsible extraction and supply of essential minerals and resources.",
+      icon: <Ruler className="w-10 h-10 text-primary" />,
+      title: "Design & Planning",
+      description: "Custom building design and project planning services tailored to your unique needs.",
     },
     {
-      icon: <Leaf className="w-10 h-10 text-primary" />, 
-      title: "Agriculture",
-      description: "Sustainable sourcing and distribution of agricultural products to global markets.",
+      icon: <Hammer className="w-10 h-10 text-primary" />, 
+      title: "Construction Management",
+      description: "On-site project management, quality control, and ensuring project timelines are met.",
     },
     {
-      icon: <Globe className="w-10 h-10 text-primary" />,
-      title: "Export",
-      description: "Global export of high-quality products across various industries.",
+      icon: <Building className="w-10 h-10 text-primary" />,
+      title: "Structural Engineering",
+      description: "Advanced structural analysis, design, and reinforcement for long-lasting infrastructure.",
     },
     {
-      icon: <Package className="w-10 h-10 text-primary" />,
-      title: "Medical Supply",
-      description: "We provide high-quality medical products and equipment from trusted global suppliers.",
+      icon: <Truck className="w-10 h-10 text-primary" />,
+      title: "Infrastructure Development",
+      description: "Development of roads, bridges, tunnels, and large-scale infrastructure projects.",
     },
     {
-      icon: <Factory className="w-10 h-10 text-primary" />,
-      title: "Manufacturing & Textile",
-      description: "Innovative manufacturing solutions, including textile production for various industries.",
+      icon: <Leaf className="w-10 h-10 text-primary" />,
+      title: "Sustainable Construction",
+      description: "Incorporating green building practices and energy-efficient solutions in every project.",
     },
     {
-      icon: <Hammer className="w-10 h-10 text-primary" />,
-      title: "Construction Materials",
-      description: "Supplying high-quality marble, granite, paint, and other construction essentials.",
+      icon: <Layers className="w-10 h-10 text-primary" />,
+      title: "Retrofitting & Renovation",
+      description: "Upgrading and renovating existing buildings with modern, sustainable methods.",
+    },
+    {
+      icon: <HardHat className="w-10 h-10 text-primary" />,
+      title: "Safety & Compliance",
+      description: "Ensuring that all projects meet safety standards and regulations.",
+    },
+    {
+      icon: <ShieldCheck className="w-10 h-10 text-primary" />,
+      title: "Quality Assurance",
+      description: "Strict quality control measures to ensure excellence in workmanship and materials.",
     },
   ];
 
@@ -59,7 +69,7 @@ const Services = () => {
     <section className="bg-white pt-[120px] md:pt-[130px] lg:pt-[130px] pb-4 lg:pb-8">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-3xl font-bold text-gray-900">Our Services</h2>
-        <p className="text-lg text-gray-600 mt-2">We deliver quality and excellence in pharmaceutical imports and distribution.</p>
+        <p className="text-lg text-gray-600 mt-2">At Eva Engineering, we deliver expert construction and engineering services, from design to project completion.</p>
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {services.map((service, index) => (

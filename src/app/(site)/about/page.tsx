@@ -4,21 +4,21 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "East Gafat Engineering Group | Global Trading & Sustainable Solutions",
-  description: "East Gafat Engineering Group is a trusted global trading company delivering high-quality products and sustainable solutions across industries like mining, construction, agriculture, and healthcare. We ensure reliability, innovation, and excellence in everything we do.",
-  keywords: "global trading company, high-quality products, sustainable solutions, mining, construction, agriculture, healthcare, trusted supplier, innovation, excellence",
+  title: "Eva Engineering | Expert Construction & Engineering Solutions",
+  description: "Eva Engineering is a trusted construction and engineering company offering high-quality solutions across infrastructure, civil engineering, and sustainable building projects. We ensure reliability, innovation, and excellence in everything we do.",
+  keywords: "construction engineering, high-quality solutions, infrastructure, civil engineering, sustainable building, project management, trusted company, innovation, excellence",
   // Open Graph Meta Tags for Social Media Sharing
   openGraph: {
-    title: "East Gafat Engineering Group | Global Trading & Sustainable Solutions",
-    description: "Delivering high-quality products and sustainable solutions across industries. Partner with us for innovative, reliable, and ethical services.",
+    title: "Eva Engineering | Expert Construction & Engineering Solutions",
+    description: "Delivering high-quality, sustainable construction and engineering solutions across industries. Partner with us for innovative, reliable, and ethical services.",
     images: ["/images/logo/logo.png"],  // Update with the path to a suitable image
-    url: "https://eastgafat.com",
+    url: "https://evaengineering.com",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "East Gafat Engineering Group | Global Trading & Sustainable Solutions",
-    description: "Trusted global trading company delivering high-quality products and sustainable solutions.",
+    title: "Eva Engineering | Expert Construction & Engineering Solutions",
+    description: "Trusted construction and engineering company delivering high-quality, sustainable solutions.",
     images: ["/images/logo/logo.png"],  // Update with the path to a suitable image
   },
 };
@@ -27,7 +27,7 @@ const AboutPage = () => {
   return (
     <main>
       <About />
-      <Clients/>
+      <Clients />
     </main>
   );
 };

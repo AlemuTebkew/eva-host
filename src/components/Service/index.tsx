@@ -1,48 +1,51 @@
-'use client'
+'use client';
 import { motion } from "framer-motion";
-import { useGetServicesQuery } from "@/store/app-api";
-import { Building, Factory, Globe, Hammer, Leaf, Package, Pickaxe, ShieldCheck, Star, Truck } from "lucide-react";
+import { Building, Hammer, Leaf, Truck, Wrench, HardHat, Layers, ShieldCheck, Ruler } from "lucide-react";
+
 const services = [
   {
-    icon: <Pickaxe className="w-10 h-10 text-primary" />,
-    title: "Mining",
-    description: "Responsible extraction and supply of essential minerals and resources.",
+    icon: <Ruler className="w-10 h-10 text-primary" />,
+    title: "Design & Planning",
+    description: "Custom building design and project planning services tailored to your unique needs.",
   },
   {
-    icon: <Leaf className="w-10 h-10 text-primary" />, 
-    title: "Agriculture",
-    description: "Sustainable sourcing and distribution of agricultural products to global markets.",
+    icon: <Hammer className="w-10 h-10 text-primary" />, 
+    title: "Construction Management",
+    description: "On-site project management, quality control, and ensuring project timelines are met.",
   },
   {
-    icon: <Globe className="w-10 h-10 text-primary" />,
-    title: "Export",
-    description: "Global export of high-quality products across various industries.",
+    icon: <Building className="w-10 h-10 text-primary" />,
+    title: "Structural Engineering",
+    description: "Advanced structural analysis, design, and reinforcement for long-lasting infrastructure.",
   },
   {
-    icon: <Package className="w-10 h-10 text-primary" />,
-    title: "Medical Supply",
-    description: "We provide high-quality medical products and equipment from trusted global suppliers.",
+    icon: <Truck className="w-10 h-10 text-primary" />,
+    title: "Infrastructure Development",
+    description: "Development of roads, bridges, tunnels, and large-scale infrastructure projects.",
   },
-  
-
   {
-    icon: <Factory className="w-10 h-10 text-primary" />,
-    title: "Manufacturing & Textile",
-    description: "Innovative manufacturing solutions, including textile production for various industries.",
+    icon: <Leaf className="w-10 h-10 text-primary" />,
+    title: "Sustainable Construction",
+    description: "Incorporating green building practices and energy-efficient solutions in every project.",
   },
- 
   {
-    icon: <Hammer className="w-10 h-10 text-primary" />,
-    title: "Construction Materials",
-    description: "Supplying high-quality marble, granite, paint, and other construction essentials.",
+    icon: <Layers className="w-10 h-10 text-primary" />,
+    title: "Retrofitting & Renovation",
+    description: "Upgrading and renovating existing buildings with modern, sustainable methods.",
   },
- 
+  {
+    icon: <HardHat className="w-10 h-10 text-primary" />,
+    title: "Safety & Compliance",
+    description: "Ensuring that all projects meet safety standards and regulations.",
+  },
+  {
+    icon: <ShieldCheck className="w-10 h-10 text-primary" />,
+    title: "Quality Assurance",
+    description: "Strict quality control measures to ensure excellence in workmanship and materials.",
+  },
 ];
 
-
-
 const Service = () => {
-  // const { data: services = []} = useGetServicesQuery();
   return (
     <section className="py-16 bg-black text-white">
       <div className="max-w-6xl mx-auto px-4 text-center">
@@ -56,7 +59,7 @@ const Service = () => {
             Our Services
           </h2>
           <p className="text-base text-gray-400 max-w-lg mx-auto mt-3">
-          Premium solutions across pharmaceuticals, healthcare, manufacturing, agriculture, and more, ensuring excellence in distribution, sustainability, and industry compliance.
+            At Eva Engineering, we offer comprehensive construction and engineering services tailored to your project needs.
           </p>
         </motion.div>
 

@@ -7,33 +7,33 @@ export default function Head() {
 
       {/* Title Tag - SEO Optimized */}
       <title>
-        Reliable Pharmaceutical Import & Supply | High-Quality Medicines & Healthcare Solutions
+        Eva Engineering | Expert Construction & Engineering Solutions for Your Projects
       </title>
 
       {/* Meta Description - Optimized for Clarity and Keywords */}
       <meta
         name="description"
-        content="Partner with a trusted pharmaceutical import company offering high-quality, certified medicines and healthcare products. We supply to pharmacies, hospitals, and healthcare providers with reliable, on-time delivery."
+        content="Eva Engineering provides high-quality construction, design, and project management solutions. From structural engineering to sustainable construction, we deliver excellence in every project."
       />
 
       {/* Meta Keywords */}
       <meta
         name="keywords"
-        content="pharmaceutical imports, high-quality medicines, healthcare products, certified pharmaceuticals, reliable supply, medicines for pharmacies, hospital healthcare supplies"
+        content="construction engineering, project management, structural engineering, sustainable building, civil engineering, infrastructure, quality assurance, design and planning"
       />
 
       {/* Open Graph Meta Tags (for social media sharing) */}
       <meta property="og:type" content="website" />
-      <meta property="og:title" content="Reliable Pharmaceutical Import & Supply | High-Quality Medicines & Healthcare Solutions" />
+      <meta property="og:title" content="Eva Engineering | Expert Construction & Engineering Solutions" />
       <meta
         property="og:description"
-        content="Partner with a trusted pharmaceutical import company offering high-quality medicines and healthcare products to pharmacies, hospitals, and healthcare providers."
+        content="Eva Engineering offers expert construction, design, and project management services for commercial, residential, and infrastructure projects."
       />
       <meta property="og:image" content="/images/logo/logo.png" />
-      <meta property="og:url" content="https://eastgafat.com" />
+      <meta property="og:url" content="https://evaengineering.com" />
 
       {/* Canonical Link */}
-      <link rel="canonical" href="https://eastgafat.com" />
+      <link rel="canonical" href="https://evaengineering.com" />
 
       {/* Favicon */}
       <link rel="icon" href="/images/logo/logo.png" />

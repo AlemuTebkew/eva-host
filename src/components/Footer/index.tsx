@@ -11,10 +11,10 @@ const Footer = () => {
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-4/12 xl:w-3/12">
             <div className="mb-10">
               <Link href="/" className="mb-6 inline-block">
-                <p className="text-2xl font-semibold text-white">East Gafat Engineering Group</p>
+                <p className="text-2xl font-semibold text-white">EVA Engineering </p>
               </Link>
               <p className="mb-8 max-w-[270px] text-base text-white">
-                We are a trusted global trading company committed to delivering high-quality products and sustainable solutions across industries, ensuring reliability, innovation, and excellence.
+              We specialize in providing innovative construction solutions and high-quality engineering services, committed to sustainability, safety, and excellence.
               </p>
               <div className="flex items-center gap-4">
                 <a aria-label="Facebook" href="#" className="text-white hover:text-white text-xl">
