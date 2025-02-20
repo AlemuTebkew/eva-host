@@ -28,7 +28,7 @@ interface Product {
 }
 
 const Products = () => {
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<String | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<Subcategory | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -38,16 +38,10 @@ const Products = () => {
   const { data: products = [], isLoading, isError } = useGetProductsQuery();
 
   // Add "All" option to the categories
-  const allCategories = [{ id: 0, name: "All", description: "All", subcategory: [] }, ...categories];
+  // const ["ongoing","completed","uppcomming"] = [{ id: 0, name: "All", description: "All", subcategory: [] }, ...categories];
 
   // Filter products based on the selected category and subcategory
-  const filteredProducts = selectedCategory
-    ? selectedSubcategory
-      ? products.filter((product) => product.subcategory.id === selectedSubcategory.id)
-      : products.filter((product) =>
-          selectedCategory.subcategory.some((sub) => sub.id === product.subcategory.id)
-        )
-    : products;
+  const filteredProducts =  products;
 
   // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
@@ -75,65 +69,34 @@ const Products = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching products</div>;
+  if (isError) return <div>Error fetching projects</div>;
 
   return (
     <section className="bg-white py-14">
       <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-gray-900">Our Products</h2>
-        <p className="text-lg text-gray-600 mt-2">Explore our diverse range of products.</p>
+        <h2 className="text-3xl font-bold text-gray-900">Our Projects</h2>
+        <p className="text-lg text-gray-600 mt-2">Explore our diverse range of projects.</p>
 
         {/* Category Selection */}
         <div className="mt-6 flex justify-center space-x-4">
-          {allCategories.map((category) => (
+          {["ongoing","completed","upcoming"].map((category) => (
             <button
-              key={category.id}
+              key={category}
               className={`px-4 py-2 rounded-lg transition duration-300 ${
-                selectedCategory?.id === category.id ? "bg-primary text-white" : "bg-gray-200 text-gray-800"
+                selectedCategory === category ? "bg-primary text-white" : "bg-gray-200 text-gray-800"
               }`}
               onClick={() => {
-                setSelectedCategory(category.id === 0 ? null : category);
+                setSelectedCategory(category);
                 setSelectedSubcategory(null);
                 setCurrentPage(1);
               }}
             >
-              {category.name}
+              {category}
             </button>
           ))}
         </div>
 
-        {/* Subcategory Selection */}
-        {selectedCategory && selectedCategory.subcategory.length > 0 && (
-          <div className="mt-4 flex justify-center space-x-4">
-            <button
-              className={`px-4 py-2 rounded-lg transition duration-300 ${
-                !selectedSubcategory ? "bg-primary text-white" : "bg-gray-200 text-gray-800"
-              }`}
-              onClick={() => {
-                setSelectedSubcategory(null);
-                setCurrentPage(1);
-              }}
-            >
-              All
-            </button>
-            {selectedCategory.subcategory.map((subcategory) => (
-              <button
-                key={subcategory.id}
-                className={`px-4 py-2 rounded-lg transition duration-300 ${
-                  selectedSubcategory?.id === subcategory.id
-                    ? "bg-yellow-500 text-white"
-                    : "bg-yellow-100 text-gray-800"
-                }`}
-                onClick={() => {
-                  setSelectedSubcategory(subcategory);
-                  setCurrentPage(1);
-                }}
-              >
-                {subcategory.name}
-              </button>
-            ))}
-          </div>
-        )}
+     
 
         {/* Product Grid */}
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
