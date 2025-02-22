@@ -9,7 +9,7 @@ export default function SocialButtons() {
   const [isHoveredWhatsApp, setIsHoveredWhatsApp] = useState(false);
 
   const openTelegram = () => {
-    window.open("https://t.me/eastgafat_group", "_blank");
+    window.open("https://t.me/evaengineering", "_blank");
   };
 
   const openWhatsApp = () => {

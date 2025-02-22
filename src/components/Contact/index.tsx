@@ -22,8 +22,8 @@ const Contact = () => {
           <FaMobileAlt className="text-primary mx-auto mb-3" size={40} />
           <h3 className="text-xl font-semibold text-gray-900">Call Us</h3>
           <p className="text-gray-600 mt-2">
-            <a href="tel:+251911576379" className="text-primary font-medium hover:underline">
-            +251 911 576 379
+            <a href="tel:+251900123456" className="text-primary font-medium hover:underline">
+            +251 900 123 456
             </a>
            
           </p>
@@ -34,8 +34,8 @@ const Contact = () => {
           <Phone className="text-primary mx-auto mb-3" size={40} />
           <h3 className="text-xl font-semibold text-gray-900">Call Us</h3>
           <p className="text-gray-600 mt-2">
-            <a href="tel:+251911576379" className="text-primary font-medium hover:underline">
-            +251 116 672 700
+            <a href="tel:+251118765432" className="text-primary font-medium hover:underline">
+            +251 118 765 432
             </a>
           </p>
         </div>
