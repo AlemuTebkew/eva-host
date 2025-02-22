@@ -16,7 +16,7 @@ const About = () => {
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div>
             <Image
-              src="/images/hero/who.jpg"
+              src="/images/hero/2.jpg"
               alt="About Us"
               width={600}
               height={400}

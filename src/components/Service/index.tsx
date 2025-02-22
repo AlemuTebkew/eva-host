@@ -1,8 +1,8 @@
 'use client';
 import { motion } from "framer-motion";
 import { Building, Hammer, Leaf, Truck, Wrench, HardHat, Layers, ShieldCheck, Ruler, Construction, ConstructionIcon, Building2Icon } from "lucide-react";
-import { AiOutlineAntDesign } from "react-icons/ai";
-import { FaBuilding, FaSketch } from "react-icons/fa";
+import { AiFillBulb, AiOutlineAntDesign } from "react-icons/ai";
+import { FaBuilding, FaIdeal, FaRoad, FaSketch } from "react-icons/fa";
 
 const services = [
   {
@@ -21,7 +21,7 @@ const services = [
     description: "Advanced structural analysis, design, and reinforcement for long-lasting infrastructure.",
   },
   {
-    icon: <Truck className="w-10 h-10 text-white" />,
+    icon: <FaRoad className="w-10 h-10 text-white" />,
     title: "Infrastructure Development",
     description: "Development of roads, bridges, tunnels, and large-scale infrastructure projects.",
   },
@@ -31,7 +31,7 @@ const services = [
     description: "Incorporating green building practices and energy-efficient solutions in every project.",
   },
   {
-    icon: <Layers className="w-10 h-10 text-white" />,
+    icon: <AiFillBulb className="w-10 h-10 text-white" />,
     title: "Retrofitting & Renovation",
     description: "Upgrading and renovating existing buildings with modern, sustainable methods.",
   },

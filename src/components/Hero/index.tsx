@@ -31,7 +31,7 @@ const items = [
   { 
     image: "/images/hero/2.jpg", 
     title: "Export Trade", 
-    subtitle: "Our mission is to develop innovative, value, and trusted design solutions to support our Clients in making sound business decisions." 
+    subtitle: "Eva Engineering delivers world-class construction, engineering, and infrastructure solutions with a commitment to quality and sustainability." 
   }
 ];
 

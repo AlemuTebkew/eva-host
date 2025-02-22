@@ -10,13 +10,14 @@ const Footer = () => {
           {/* Logo and About Section */}
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-4/12 xl:w-3/12">
             <Link href="/">
-              <Image
+              <h1 className="text-2xl font-bold mb-4">Eva Engineering</h1>
+              {/* <Image
                 src="/images/logo/eva-logo-white.png"
                 alt="Eva Engineering Logo"
                 width={200}
                 height={40}
                 className="mb-4"
-              />
+              /> */}
             </Link>
             <p className="mb-6 max-w-[270px] text-base">
               Eva Engineering is a leading provider of construction, media, and event management services, delivering excellence across multiple industries.

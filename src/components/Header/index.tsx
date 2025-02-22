@@ -39,11 +39,11 @@ const Header = () => {
                 className={`navbar-logo block w-full`}
               >
                 <Image
-                  src={`/images/logo/logo.png`}
+                  src={`/images/logo/logo.jpg`}
                   alt="logo"
                   width={80}
                   height={20}
-                  className="header-logo dark:hidden"
+                  className="header-logo"
                 />
                 
               </Link>

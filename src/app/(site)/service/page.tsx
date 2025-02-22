@@ -1,5 +1,7 @@
 import { Building, Ruler, Hammer, Leaf, Truck, Wrench, HardHat, Layers, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
+import { AiFillBulb, AiOutlineAntDesign } from "react-icons/ai";
+import { FaBuilding, FaRoad, FaSketch } from "react-icons/fa";
 
 export const metadata: Metadata = {
   title: "Eva Engineering | Innovative Construction & Engineering Solutions",
@@ -24,35 +26,35 @@ export const metadata: Metadata = {
 const Services = () => {
   const services = [
     {
-      icon: <Ruler className="w-10 h-10 text-primary" />,
-      title: "Design & Planning",
-      description: "Custom building design and project planning services tailored to your unique needs.",
-    },
-    {
-      icon: <Hammer className="w-10 h-10 text-primary" />, 
-      title: "Construction Management",
-      description: "On-site project management, quality control, and ensuring project timelines are met.",
-    },
-    {
-      icon: <Building className="w-10 h-10 text-primary" />,
-      title: "Structural Engineering",
-      description: "Advanced structural analysis, design, and reinforcement for long-lasting infrastructure.",
-    },
-    {
-      icon: <Truck className="w-10 h-10 text-primary" />,
-      title: "Infrastructure Development",
-      description: "Development of roads, bridges, tunnels, and large-scale infrastructure projects.",
-    },
-    {
-      icon: <Leaf className="w-10 h-10 text-primary" />,
-      title: "Sustainable Construction",
-      description: "Incorporating green building practices and energy-efficient solutions in every project.",
-    },
-    {
-      icon: <Layers className="w-10 h-10 text-primary" />,
-      title: "Retrofitting & Renovation",
-      description: "Upgrading and renovating existing buildings with modern, sustainable methods.",
-    },
+        icon: <AiOutlineAntDesign className="w-10 h-10 text-primary" />,
+        title: "Design & Planning",
+        description: "Custom building design and project planning services tailored to your unique needs.",
+      },
+      {
+        icon: <FaBuilding className="w-10 h-10 text-primary" />, 
+        title: "Construction Management",
+        description: "On-site project management, quality control, and ensuring project timelines are met.",
+      },
+      {
+        icon: <FaSketch className="w-10 h-10 text-primary" />,
+        title: "Structural Engineering",
+        description: "Advanced structural analysis, design, and reinforcement for long-lasting infrastructure.",
+      },
+      {
+        icon: <FaRoad className="w-10 h-10 text-primary" />,
+        title: "Infrastructure Development",
+        description: "Development of roads, bridges, tunnels, and large-scale infrastructure projects.",
+      },
+      {
+        icon: <Leaf className="w-10 h-10 text-primary" />,
+        title: "Sustainable Construction",
+        description: "Incorporating green building practices and energy-efficient solutions in every project.",
+      },
+      {
+        icon: <AiFillBulb className="w-10 h-10 text-primary" />,
+        title: "Retrofitting & Renovation",
+        description: "Upgrading and renovating existing buildings with modern, sustainable methods.",
+      },
     {
       icon: <HardHat className="w-10 h-10 text-primary" />,
       title: "Safety & Compliance",

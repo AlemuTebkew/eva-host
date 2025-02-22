@@ -3,7 +3,7 @@ import { useGetCategoryQuery, useGetProductsQuery } from "@/store/app-api";
 import { useState } from "react";
 
 const PRODUCTS_PER_PAGE = 8;
-const BASE_URL = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "https://api.alenafrica.org";
+const BASE_URL = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "http://ec2-16-171-239-43.eu-north-1.compute.amazonaws.com:5006";
 
 interface Subcategory {
   id: number;
@@ -72,7 +72,7 @@ const Products = () => {
   if (isError) return <div>Error fetching projects</div>;
 
   return (
-    <section className="bg-white py-14">
+    <section className="bg-white py-28">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-3xl font-bold text-gray-900">Our Projects</h2>
         <p className="text-lg text-gray-600 mt-2">Explore our diverse range of projects.</p>
