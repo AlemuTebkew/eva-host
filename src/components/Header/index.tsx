@@ -29,10 +29,10 @@ const Header = () => {
   return (
     <>
       <header
-        className={`ud-header left-0 top-0 lg:top-4 z-40 flex w-full items-center shadow-nav fixed z-[999]`}
+        className={`ud-header left-0 top-0 lg:top-0 z-40 flex w-full items-center shadow-nav fixed z-[999]`}
       >
-        <div className="w-full lg:container bg-white lg:rounded-lg border shadow">
-          <div className="relative -mx-4 flex items-center justify-between lg:px-8">
+        <div className="w-full bg-white border shadow">
+          <div className="relative flex items-center justify-between lg:px-8">
             <div className="w-60 max-w-full px-4">
               <Link
                 href="/"

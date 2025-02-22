@@ -8,30 +8,30 @@ import Image from "next/image";
 import Link from "next/link";
 
 const items = [
-  { 
-    image: "/images/hero/5.jpg", 
-    title: "Mining", 
-    subtitle: "Providing high-quality raw materials and minerals to global markets while ensuring responsible resource management." 
-  },
-  { 
-    image: "/images/hero/1.jpg", 
-    title: "Medical Supply", 
-    subtitle: "Delivering advanced medical technology and essential supplies to enhance healthcare services and improve patient care." 
-  },
-  { 
-    image: "/images/hero/4.jpg", 
-    title: "Farming", 
-    subtitle: "Bringing premium farm produce to the world, supporting sustainable farming practices, and strengthening food systems." 
-  },
-  { 
-    image: "/images/hero/3.jpg", 
-    title: "Manufacturing", 
-    subtitle: "Sourcing essential materials and distributing high-quality products to ensure a seamless and efficient trade network." 
-  },
+  // { 
+  //   image: "/images/hero/5.jpg", 
+  //   title: "Mining", 
+  //   subtitle: "Providing high-quality raw materials and minerals to global markets while ensuring responsible resource management." 
+  // },
+  // { 
+  //   image: "/images/hero/2.jpg", 
+  //   title: "Medical Supply", 
+  //   subtitle: "Delivering advanced medical technology and essential supplies to enhance healthcare services and improve patient care." 
+  // },
+  // { 
+  //   image: "/images/hero/4.jpg", 
+  //   title: "Farming", 
+  //   subtitle: "Bringing premium farm produce to the world, supporting sustainable farming practices, and strengthening food systems." 
+  // },
+  // { 
+  //   image: "/images/hero/3.jpg", 
+  //   title: "Manufacturing", 
+  //   subtitle: "Sourcing essential materials and distributing high-quality products to ensure a seamless and efficient trade network." 
+  // },
   { 
     image: "/images/hero/2.jpg", 
     title: "Export Trade", 
-    subtitle: "Connecting quality products with international demand, optimizing logistics, and fostering strong economic partnerships." 
+    subtitle: "Our mission is to develop innovative, value, and trusted design solutions to support our Clients in making sound business decisions." 
   }
 ];
 
@@ -61,29 +61,23 @@ const Hero = () => {
                 priority
               />
               <div className="absolute inset-0 bg-black opacity-60"></div>
-              <div className="container relative z-10 flex h-full items-center justify-center text-center">
+              <div className="container relative z-10 flex h-full items-center justify-center">
                 <div className="max-w-[900px]">
-                  <h1 className="mb-4 text-3xl font-bold leading-snug text-white sm:text-4xl lg:text-5xl">
-                    {item.title}
+                  <h1 className="mb-4 text-3xl font-semibold leading-relaxed text-white sm:text-4xl lg:text-4xl">
+                    {item.subtitle}
                   </h1>
                   {/* <h2 className="mb-6 text-xl font-medium text-gray-300 sm:text-xl">
                     {item.subtitle}
                   </h2> */}
                   
-                  {/* <div className="flex justify-center gap-5">
+                  <div className="flex justify-left gap-5">
                     <Link
                       href="/contact"
-                      className="flex items-center gap-4 rounded-md bg-primary px-7 py-[14px] text-base font-medium text-white shadow-xl transition hover:bg-white hover:text-dark"
+                      className="flex items-center gap-4 rounded-md bg-[#FF781E] px-7 py-[14px] text-base font-medium text-white shadow-xl transition hover:bg-white hover:text-dark"
                     >
                       Contact Us
                     </Link>
-                    <Link
-                      href="/about"
-                      className="flex items-center gap-4 rounded-md bg-white/[0.12] px-6 py-[14px] text-base font-medium text-white transition hover:bg-white hover:text-dark"
-                    >
-                      Learn More
-                    </Link>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,95 +1,97 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaFacebook, FaInstagram, FaTelegramPlane, FaTiktok, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTelegramPlane, FaTiktok, FaTwitter, FaWhatsapp, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="wow fadeInUp relative z-10 bg-primary pt-10" data-wow-delay=".15s">
-      <div className="container mx-auto px-4">
+    <footer className="bg-[#FF781E] text-white pt-10">
+      <div className="container mx-auto px-6 lg:px-12">
         <div className="flex flex-wrap justify-between gap-8">
-          {/* Logo and Social Section */}
+          {/* Logo and About Section */}
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-4/12 xl:w-3/12">
-            <div className="mb-10">
-              <Link href="/" className="mb-6 inline-block">
-                <p className="text-2xl font-semibold text-white">EVA Engineering </p>
-              </Link>
-              <p className="mb-8 max-w-[270px] text-base text-white">
-              We specialize in providing innovative construction solutions and high-quality engineering services, committed to sustainability, safety, and excellence.
-              </p>
-              <div className="flex items-center gap-4">
-                <a aria-label="Facebook" href="#" className="text-white hover:text-white text-xl">
-                  <FaFacebook />
-                </a>
-               
-                <a aria-label="Telegram" href="#" className="text-white hover:text-white text-xl">
-                  <FaTelegramPlane />
-                </a>
-                <a aria-label="WhatsApp" href="https://wa.me/+251911576379" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white text-xl">
-                  <FaWhatsapp />
-                </a>
-              </div>
+            <Link href="/">
+              <Image
+                src="/images/logo/eva-logo-white.png"
+                alt="Eva Engineering Logo"
+                width={200}
+                height={40}
+                className="mb-4"
+              />
+            </Link>
+            <p className="mb-6 max-w-[270px] text-base">
+              Eva Engineering is a leading provider of construction, media, and event management services, delivering excellence across multiple industries.
+            </p>
+            <div className="flex items-center gap-4 text-xl">
+              <a aria-label="Facebook" target="_blank" href="https://www.facebook.com/evaengineering" className="hover:text-gray-200">
+                <FaFacebook />
+              </a>
+              <a
+                aria-label="Telegram"
+                href="https://t.me/evaengineering"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-200"
+              >
+                <FaTelegramPlane />
+              </a>
+              <a aria-label="LinkedIn" target="_blank" href="https://www.linkedin.com/company/evaengineering" className="hover:text-gray-200">
+                <FaLinkedin />
+              </a>
             </div>
           </div>
 
           {/* Quick Links Section */}
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-2/12">
-            <h4 className="mb-4 text-lg font-medium text-white">Quick Links</h4>
+            <h4 className="mb-4 text-lg font-medium">Quick Links</h4>
             <ul className="flex flex-col gap-4">
               <li>
-                <Link href="/">
-                  <h4 className="text-lg font-medium text-white hover:text-white cursor-pointer">Home</h4>
-                </Link>
+                <Link href="/" className="hover:underline">Home</Link>
               </li>
               <li>
-                <Link href="/about">
-                  <h4 className="text-lg font-medium text-white hover:text-white cursor-pointer">About Us</h4>
-                </Link>
+                <Link href="#about" className="hover:underline">About Us</Link>
               </li>
               <li>
-                <Link href="/service">
-                  <h4 className="text-lg font-medium text-white hover:text-white cursor-pointer">Service</h4>
-                </Link>
+                <Link href="#services" className="hover:underline">Services</Link>
               </li>
               <li>
-                <Link href="/contact">
-                  <h4 className="text-lg font-medium text-white hover:text-white cursor-pointer">Contact</h4>
-                </Link>
+                <Link href="#projects" className="hover:underline">Projects</Link>
+              </li>
+              <li>
+                <Link href="#contact" className="hover:underline">Contact</Link>
               </li>
             </ul>
           </div>
 
-          {/* Community Section */}
-          
+          {/* Join Our Community Section */}
+          <div className="w-full sm:w-1/2 md:w-1/3 lg:w-3/12">
+            <h4 className="mb-4 text-lg font-medium">Join Our Community</h4>
+            <p className="mb-4">Stay connected and updated with our latest projects and innovations.</p>
+            <a
+              href="https://t.me/evaengineering"
+              target="_blank"
+              className="flex items-center gap-2 bg-white text-primary px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+            >
+              <FaTelegramPlane className="text-xl" /> Join Our Telegram
+            </a>
+          </div>
         </div>
       </div>
 
       {/* Footer Bottom Section */}
-      <div className="border-t border-white border-opacity-40 py-8 mt-6 lg:mt-0">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-between text-center md:flex-nowrap md:text-left">
-            {/* Policies */}
-            <div className="w-full mb-4 md:mb-0">
-              <div className="flex justify-center md:justify-start gap-4">
-                <Link href="/terms" className="text-base text-white hover:underline">
-                  Privacy policy
-                </Link>
-              </div>
-            </div>
-            {/* Attribution */}
-            <div className="w-full md:text-right">
-              <p className="text-base text-white">
-                Designed and Developed by{" "}
-                <a
-                  href="https://www.pixeladdis.com/"
-                  rel="nofollow noopener noreferrer"
-                  target="_blank"
-                  className="text-white hover:underline"
-                >
-                  Pixel Addis Solutions
-                </a>
-              </p>
-            </div>
-          </div>
+      <div className="border-t border-white border-opacity-40 py-6 mt-6">
+        <div className="container mx-auto px-6 lg:px-12 text-center md:flex md:justify-between">
+          <p className="mb-4 md:mb-0">&copy; {new Date().getFullYear()} Eva Engineering. All Rights Reserved.</p>
+          <p>
+            Designed and Developed by {" "}
+            <a
+              href="https://www.pixeladdis.com/"
+              rel="nofollow noopener noreferrer"
+              target="_blank"
+              className="hover:underline"
+            >
+              Pixel Addis Solutions
+            </a>
+          </p>
         </div>
       </div>
     </footer>

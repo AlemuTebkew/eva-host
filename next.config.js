@@ -7,11 +7,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.alenafrica.org',
+        hostname: 'api.eva.org',
         port: '9000',
         pathname: '/**',
       },
     ],
   },
 };
+
 module.exports = nextConfig;
