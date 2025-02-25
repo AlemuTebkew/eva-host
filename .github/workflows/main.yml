@@ -15,12 +15,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t drjseifu/gafat_website .
       - name: Publish Docker image
-        run: docker push drjseifu/gafat_website:latest
+        run: docker push drjseifu/eva_website:latest
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: SSH into Hulu AWS Server
+      - name: SSH into Pixel AWS Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.PIXEL_ADDIS_AWS_HOST }}
@@ -28,5 +28,5 @@ jobs:
           key: ${{ secrets.PIXEL_ADDIS_SSH_PRIVATE_KEY }}
           script: |
             sudo docker-compose down --remove-orphans
-            sudo docker rmi -f drjseifu/gafat_website:latest
+            sudo docker rmi -f drjseifu/eva_website:latest
             sudo docker-compose up -d
