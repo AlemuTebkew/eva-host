@@ -1,10 +1,11 @@
 import { Partner } from "@/types/partner";
+import { Product, ProductQueryRequest, ProductResponse } from "@/types/product";
 import { Service } from "@/types/service";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const appApi = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://ec2-16-171-239-43.eu-north-1.compute.amazonaws.com:5006" }), // Change this to your API
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5006" }), // Change this to your API
   endpoints: (builder) => ({
     getServices: builder.query<Service[], void>({
       query: () => ({
@@ -24,12 +25,18 @@ export const appApi = createApi({
         method: "GET",
       })
     }),
-    getProducts: builder.query<any[], void>({
+    getProducts: builder.query<Product[], void>({
       query: () => ({
         url: "/api/products",
         method: "GET",
       })
-    })
+    }),
+    getProductsWithPrice: builder.query<ProductResponse, ProductQueryRequest>({
+      query: ({ search, limit, page }) => ({
+        url: "/api/product_price",
+        params: { search, limit, page },
+      }),
+    }),
   }),
 });
 
@@ -37,5 +44,6 @@ export const {
   useGetServicesQuery,
   useGetPartnersQuery ,
   useGetCategoryQuery,
-  useGetProductsQuery
+  useGetProductsQuery,
+  useGetProductsWithPriceQuery
 } = appApi;
