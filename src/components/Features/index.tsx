@@ -1,28 +1,34 @@
-'use client'
+import { Shirt, ShoppingBag, Store, Tag, Gem, Handshake } from "lucide-react";
 
-import SingleFeature from "./SingleFeature";
-import featuresData from "./featuresData";
-import { } from "framer-motion";
-const Features = () => {
+export default function FeaturedSuppliers() {
+  const suppliers = [
+    { name: "ZARA", Icon: Shirt },
+    { name: "D&G", Icon: ShoppingBag },
+    { name: "H&M", Icon: Store },
+    { name: "CHANEL", Icon: Tag },
+    { name: "PRADA", Icon: Gem },
+    { name: "BIBA", Icon: Handshake },
+  ];
+
   return (
-    <section className="pb-8 pt-8 lg:pb-10 lg:pt-8">
-      <div className="container">
-        <div className="mx-auto">
-          <p className="text-3xl font-semibold text-primary text-center">Our Key Industries</p>
-          <p className="text-center text-gray-600 mt-2 lg:w-2/3 mx-auto">
-          Delivering excellence across multiple industries through innovation, expertise, and a commitment to quality.
-          </p>
-        </div>
-        <div
-          className="mx-auto mt-12 flex flex-wrap lg:mt-10"
-        >
-          {featuresData.map((feature, i) => (
-            <SingleFeature key={i} feature={feature} />
-          ))}
-        </div>
+    <div className="bg-white py-6">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">FEATURED SUPPLIERS</h2>
+        <a href="#" className="text-primary font-semibold">
+          VIEW SUPPLIER LIST
+        </a>
       </div>
-    </section>
+      <div className="flex flex-wrap justify-between">
+        {suppliers.map((supplier, index) => (
+          <div
+            key={index}
+            className="w-28 h-28 flex flex-col items-center justify-center bg-gray-100 rounded-xl shadow-md"
+          >
+            <supplier.Icon className="h-10 w-10 text-gray-700" />
+            <span className="mt-2 text-sm font-semibold">{supplier.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
-};
-
-export default Features;
+}

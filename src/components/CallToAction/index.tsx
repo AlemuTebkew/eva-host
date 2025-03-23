@@ -1,94 +1,48 @@
-"use client";
+import { TrendingUp, Tags, BarChart, FileDown } from "lucide-react";
+import { Button } from "../ui/button";
 
-import { useState } from "react";
-import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
-import { motion } from "framer-motion";
-
-export default function SocialMediaButtons() {
-  const [isHoveredTelegram, setIsHoveredTelegram] = useState(false);
-  const [isHoveredWhatsApp, setIsHoveredWhatsApp] = useState(false);
-
-  const openTelegram = () => {
-    window.open("https://t.me/eastgafat_group", "_blank");
-  };
-
-  const openWhatsApp = () => {
-    window.open("https://wa.me/+251911576379", "_blank");
-  };
+export default function CallToAction() {
+  const features = [
+    {
+      icon: TrendingUp,
+      title: "Live Market Data",
+      description: "Stay Updated With Accurate, Real-Time Prices.",
+    },
+    {
+      icon: Tags,
+      title: "Compare Suppliers",
+      description: "Find The Best Offers From Multiple Vendors.",
+    },
+    {
+      icon: BarChart,
+      title: "Track Price Trends",
+      description: "Analyze Past Data To Predict Future Pricing.",
+    },
+    {
+      icon: FileDown,
+      title: "Download Reports",
+      description: "Get Detailed Insights For Better Business Decisions.",
+    },
+  ];
 
   return (
-    <div className="fixed bottom-8 right-8 z-[999] flex items-center justify-end space-x-4">
-      {/* Telegram Button */}
-      <motion.div
-        onClick={openTelegram}
-        onMouseEnter={() => setIsHoveredTelegram(true)}
-        onMouseLeave={() => setIsHoveredTelegram(false)}
-        whileTap={{ scale: 0.95 }}
-        className="flex items-center rounded-full bg-blue-500 text-white shadow-lg transition-all duration-300 hover:bg-blue-600"
-        style={{
-          width: isHoveredTelegram ? "190px" : "40px",
-          height: "40px",
-          padding: isHoveredTelegram ? "0 16px" : "0 12px",
-          justifyContent: isHoveredTelegram ? "space-between" : "center",
-        }}
-      >
-        <motion.div
-          className="flex items-center justify-center w-10 h-10"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <FaTelegramPlane size={22} />
-        </motion.div>
+    <div className="bg-blue-600 text-white p-10 rounded-2xl text-center">
+      <h2 className="text-2xl font-bold">COMPARE PRICES, MAKE SMARTER DECISIONS</h2>
+      <p className="mt-2 text-lg">
+        Discover How Suppliers And Buyers Are Leveraging Our Data And Platform To Make
+        Smarter Business Decisions.
+      </p>
 
-        {isHoveredTelegram && (
-          <motion.span
-            className="whitespace-nowrap text-sm font-medium ml-3"
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: "auto" }}
-            exit={{ opacity: 0, width: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            Join Our Telegram
-          </motion.span>
-        )}
-      </motion.div>
-
-      {/* WhatsApp Button */}
-      <motion.div
-        onClick={openWhatsApp}
-        onMouseEnter={() => setIsHoveredWhatsApp(true)}
-        onMouseLeave={() => setIsHoveredWhatsApp(false)}
-        whileTap={{ scale: 0.95 }}
-        className="flex items-center rounded-full bg-green-500 text-white shadow-lg transition-all duration-300 hover:bg-green-600"
-        style={{
-          width: isHoveredWhatsApp ? "180px" : "40px",
-          height: "40px",
-          padding: isHoveredWhatsApp ? "0 16px" : "0 12px",
-          justifyContent: isHoveredWhatsApp ? "space-between" : "center",
-        }}
-      >
-        <motion.div
-          className="flex items-center justify-center w-10 h-10"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <FaWhatsapp size={22} />
-        </motion.div>
-
-        {isHoveredWhatsApp && (
-          <motion.span
-            className="whitespace-nowrap text-sm font-medium ml-3"
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: "auto" }}
-            exit={{ opacity: 0, width: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            Chat on WhatsApp
-          </motion.span>
-        )}
-      </motion.div>
+      <div className="flex flex-wrap justify-center gap-8 mt-6">
+        {features.map((feature, index) => (
+          <div key={index} className="w-48 flex flex-col items-center">
+            <feature.icon className="h-12 w-12 text-white mb-3" />
+            <h3 className="text-lg font-semibold">{feature.title}</h3>
+            <p className="text-sm">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+      <Button variant="default" className="mt-10 px-6 py-3 text-lg font-semibold rounded-lg">Start Comparing</Button>
     </div>
   );
 }

@@ -1,107 +1,100 @@
-"use client";
+'use client'
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import Image from "next/image";
-import Link from "next/link";
+import { ChevronLeft, ChevronRight, LineChart, Tag, ShieldCheck, Headphones } from "lucide-react";
+import { useState } from "react";
 
-const items = [
-  // { 
-  //   image: "/images/hero/5.jpg", 
-  //   title: "Mining", 
-  //   subtitle: "Providing high-quality raw materials and minerals to global markets while ensuring responsible resource management." 
-  // },
-  // { 
-  //   image: "/images/hero/2.jpg", 
-  //   title: "Medical Supply", 
-  //   subtitle: "Delivering advanced medical technology and essential supplies to enhance healthcare services and improve patient care." 
-  // },
-  // { 
-  //   image: "/images/hero/4.jpg", 
-  //   title: "Farming", 
-  //   subtitle: "Bringing premium farm produce to the world, supporting sustainable farming practices, and strengthening food systems." 
-  // },
-  // { 
-  //   image: "/images/hero/3.jpg", 
-  //   title: "Manufacturing", 
-  //   subtitle: "Sourcing essential materials and distributing high-quality products to ensure a seamless and efficient trade network." 
-  // },
-  { 
-    image: "/images/hero/2.jpg", 
-    title: "Export Trade", 
-    subtitle: "Eva Engineering delivers world-class construction, engineering, and infrastructure solutions with a commitment to quality and sustainability." 
-  }
+const slides = [
+  {
+    title: "Real-Time Construction Material Prices",
+    description: "Compare prices and access verified product details for smarter decisions.",
+  },
+  {
+    title: "Get the Best Deals on Materials",
+    description: "Easily compare vendor prices and find the best offers in the market.",
+  },
+  {
+    title: "Verified Suppliers at Your Fingertips",
+    description: "Buy from trusted and quality-assured suppliers with confidence.",
+  },
+  {
+    title: "Streamline Your Procurement Process",
+    description: "Save time by sourcing materials efficiently with our user-friendly platform.",
+  },
+  {
+    title: "Stay Updated with Market Trends",
+    description: "Get insights on price fluctuations and industry trends to make informed purchases.",
+  },
 ];
 
+const features = [
+  {
+    icon: <LineChart size={32} />,
+    title: "REAL-TIME PRICES",
+    description: "Get the latest material prices updated daily.",
+  },
+  {
+    icon: <Tag size={32} />,
+    title: "PRICE COMPARISON",
+    description: "Compare prices from multiple vendors instantly.",
+  },
+  {
+    icon: <ShieldCheck size={32} />,
+    title: "TRUSTED SUPPLIERS",
+    description: "Find verified suppliers with quality materials.",
+  },
+  {
+    icon: <Headphones size={32} />,
+    title: "SEAMLESS EXPERIENCE",
+    description: "Get accurate data for better decisions.",
+  },
+];
 
-const Hero = () => {
+export default function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+  };
+
   return (
-    <section id="home" className="h-screen relative overflow-hidden">
-      <Swiper
-        modules={[Pagination, Autoplay]}
-        pagination={{
-          clickable: true,
-          renderBullet: (index, className) =>
-            `<span class="${className} custom-dot"></span>`,
-        }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
-        loop={true}
-        className="h-full"
-      >
-        {items.map((item, index) => (
-          <SwiperSlide key={index}>
-            <div className="relative h-full w-full">
-              <Image
-                src={item.image}
-                alt={`Slide ${index + 1} - ${item.title}`}
-                fill
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-black opacity-60"></div>
-              <div className="container relative z-10 flex h-full items-center justify-center">
-                <div className="max-w-[900px]">
-                  <h1 className="mb-4 text-3xl font-semibold leading-relaxed text-white sm:text-4xl lg:text-4xl">
-                    {item.subtitle}
-                  </h1>
-                  {/* <h2 className="mb-6 text-xl font-medium text-gray-300 sm:text-xl">
-                    {item.subtitle}
-                  </h2> */}
-                  
-                  <div className="flex justify-left gap-5">
-                    <Link
-                      href="/contact"
-                      className="flex items-center gap-4 rounded-md bg-[#FF781E] px-7 py-[14px] text-base font-medium text-white shadow-xl transition hover:bg-white hover:text-dark"
-                    >
-                      Contact Us
-                    </Link>
-                  </div>
-                </div>
+    <div className="contianer">
+      {/* Hero Slider */}
+      <div className="relative w-full bg-hero bg-cover bg-center text-white py-16 px-8 flex flex-col items-center justify-center text-center rounded-lg">
+        <button className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={prevSlide}>
+          <ChevronLeft className="text-blue-700" />
+        </button>
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold">{slides[currentIndex].title}</h1>
+          <p className="mt-4 text-lg">{slides[currentIndex].description}</p>
+        </div>
+        <div className="absolute bottom-8 left-4 flex gap-2 items-center">
+          {
+            slides.map((_, index) => (
+              <div className={`rounded-full h-2 ${index=== currentIndex ? 'w-6 bg-white' : 'w-2 border-white border'}`}>
               </div>
-            </div>
-          </SwiperSlide>
+            ))
+          }
+        </div>
+        <button className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={nextSlide}>
+          <ChevronRight className="text-blue-700" />
+        </button>
+      </div>
+      {/* Features Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-2 bg-white">
+        {features.map((feature, index) => (
+          <div className="flex items-center text-center shadow rounded-lg px-4 py-2 gap-2">
+              <div className="text-blue-700">{feature.icon}</div>
+              <div key={index} className="text-sm flex flex-col gap-1 items-start justify-center">
+                <h3 className="text-left font-semibold">{feature.title}</h3>
+                <p className="text-left">{feature.description}</p>
+              </div>
+          </div>
         ))}
-      </Swiper>
-
-      {/* Custom Styles for Pagination */}
-      <style jsx global>{`
-        .swiper-pagination-bullet {
-          width: 10px;
-          height: 10px;
-          border: 2px solid #CB8E3C;
-          background: transparent;
-          opacity: 1;
-          transition: all 0.3s;
-        }
-        .swiper-pagination-bullet-active {
-          background: #CB8E3C;
-          border: none;
-        }
-      `}</style>
-    </section>
+      </div>
+    </div>
   );
-};
-
-export default Hero;
+}
