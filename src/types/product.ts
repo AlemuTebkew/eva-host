@@ -4,11 +4,14 @@ export interface Price {
 }
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
-  description: string;
+  price: number;
   image: string;
-  prices: Price[];
+  category: string;
+  material: string;
+  rating: number;
+  available: boolean;
 }
 
 export interface ProductResponse {

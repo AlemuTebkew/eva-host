@@ -34,7 +34,6 @@ export default function Home() {
       <CallToAction/>
       <Testimonials/>
       <SupplierCallToAction/>
-      <Footer/>
     </main>
   );
 }

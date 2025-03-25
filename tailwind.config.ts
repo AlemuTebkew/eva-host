@@ -65,4 +65,5 @@ const config: Config = {
   },
   plugins: [require("tailgrids/plugin"), require("tailwindcss-animate")],
 };
+
 export default config;
