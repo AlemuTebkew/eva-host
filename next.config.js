@@ -17,6 +17,21 @@ const nextConfig = {
         port: '5006',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'tse2.mm.bing.net',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'photomarketingwizard.com',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'peekage.com',
+        pathname: '/**'
+      }
     ],
   },
 };

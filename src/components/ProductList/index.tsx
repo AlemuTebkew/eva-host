@@ -54,7 +54,17 @@ const ProductList: React.FC<ProductListProps> = ({ products, filters }) => {
     <div className="product-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
       {filteredProducts.length > 0 ? (
         filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+          key={product.id}
+          images={[
+            'https://tse2.mm.bing.net/th?id=OIP.a-YDWw7IcFGxYeuz_1wUrgHaHa&pid=Api',
+            'https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg',
+            'https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg'
+          ]}
+          productName='Premium-Grade Portland Cement'
+          supplier='Nexus Industrial Supplies'
+          priceRange='500 - 1000'
+           />
         ))
       ) : (
         <p className="col-span-full text-center text-lg text-gray-500">

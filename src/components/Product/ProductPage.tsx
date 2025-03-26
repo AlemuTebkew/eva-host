@@ -79,7 +79,7 @@ export default function ProductPage() {
     : productList;
 
   return (
-    <main className="container">
+    <main className="container pb-8">
       <div className="flex gap-1 justify-start items-center mb-8">
         <h1>Home Page</h1>
         <ChevronRight className="w-4 h-4" />
