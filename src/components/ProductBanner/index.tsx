@@ -2,6 +2,7 @@
 
 import { ChevronLeft, ChevronRight, LineChart, Tag, ShieldCheck, Headphones } from "lucide-react";
 import { useState } from "react";
+import ImageSlider from "../ImageSlider/ImageSlider";
 
 const slides = [
   {
@@ -62,7 +63,18 @@ export default function ProductBanner() {
 
   return (
     <div className="contianer">
+      <div className="w-full">
+      <ImageSlider
+      images={[
+        'https://tse2.mm.bing.net/th?id=OIP.a-YDWw7IcFGxYeuz_1wUrgHaHa&pid=Api',
+        'https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg',
+        'https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg'
+      ]}
+      />
+        
+      </div>
       {/* Hero Slider */}
+{/* 
       <div className="relative w-full bg-hero bg-cover bg-center text-white py-16 px-8 flex flex-col items-center justify-center text-center rounded-lg">
         <button className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={prevSlide}>
           <ChevronLeft className="text-blue-700" />
@@ -82,7 +94,7 @@ export default function ProductBanner() {
         <button className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={nextSlide}>
           <ChevronRight className="text-blue-700" />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
