@@ -30,7 +30,7 @@ const Filter = ({
   };
 
   return (
-    <div className="filter-section p-4 border rounded-lg">
+    <div className="filter-section p-4 border rounded-lg ">
       <h3 className="text-xl font-semibold mb-4">Filter By</h3>
 
       {/* Category Filter */}
