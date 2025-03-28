@@ -2,7 +2,7 @@
 
 import Footer from "@/components/Footer";
 import ProductBanner from "@/components/ProductBanner";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, FilterIcon } from "lucide-react";
 import { Metadata } from "next";
 import ProductList from "@/components/ProductList";
 import { useState } from "react";
@@ -90,10 +90,14 @@ export default function ProductPage() {
       </div>
       <ProductBanner />
 
+      <div className="my-4 flex justify-between w-full border-b py-2">
+        <h1>All Product</h1>
+        <FilterIcon/> 
+      </div>
       {/* Product List Section */}
-      <div className="grid grid-cols-4 gap-8 mt-8">
+      <div className="grid grid-cols-4 gap-8">
         {/* Filter Section */}
-        <div className="col-span-1">
+        <div className="col-span-1 hidden lg:block">
           <Filter
             categories={categories}
             brands={[]}
@@ -106,7 +110,7 @@ export default function ProductPage() {
         </div>
 
         {/* Product Cards Section */}
-        <div className="col-span-3">
+        <div className="col-span-4 lg:col-span-3">
           <ProductList products={productList}
           filters={filteredProducts}
            />

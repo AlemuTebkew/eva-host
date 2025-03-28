@@ -11,57 +11,31 @@ export default function Navbar() {
   const languages = ["ENG", "AM"];
 
   return (
-    <nav className="container mx-auto px-4 py-3">
-      {/* Top Section: Logo, Menu Button, and Account */}
-      <div className="flex items-center justify-between">
-        {/* Left: Logo & Menu */}
-        <div className="flex items-center space-x-4">
-          <div className="text-xl font-bold">EVA</div>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden text-gray-800 focus:outline-none"
-          >
-            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+    <nav className="container mx-auto py-4 flex flex-col items-center">
+      {/* Navbar Top Section */}
+      <div className="w-full flex items-center justify-between gap-4">
+        {/* Logo */}
+        <div className="text-2xl font-bold">EVA</div>
+
+        {/* Desktop Navbar */}
+        <div className="hidden lg:flex flex-1 justify-center">
+          <div className="flex flex-1 items-center border rounded overflow-hidden w-2/3">
+            <input
+              type="text"
+              placeholder="Search for products..."
+              className="px-4 py-2 w-full focus:outline-none"
+            />
+            <button className="bg-blue-700 px-4 py-2 text-white flex items-center">
+              <Search className="w-4 h-4 mr-2" /> Search
+            </button>
+          </div>
         </div>
 
-        {/* Right: Account/Login */}
-        <Button variant="default" size="sm">
-          <User className="w-4 h-4 mr-1" /> Account
-        </Button>
-      </div>
-
-      {/* Full-Width Search Bar on Mobile */}
-      <div className="mt-3 lg:hidden flex items-center border rounded-md overflow-hidden w-full">
-        <input
-          type="text"
-          placeholder="What are you looking for?"
-          className="px-4 py-2 w-full focus:outline-none"
-        />
-        <button className="bg-blue-700 px-4 py-2 text-white flex items-center">
-          <Search className="w-4 h-4 mr-2" /> Search
-        </button>
-      </div>
-
-      {/* Desktop Navbar */}
-      <div className="hidden lg:flex items-center justify-between mt-3">
-        {/* Search Bar */}
-        <div className="flex items-center border rounded-md overflow-hidden w-1/2">
-          <input
-            type="text"
-            placeholder="What are you looking for?"
-            className="px-4 py-2 w-full focus:outline-none"
-          />
-          <button className="bg-blue-700 px-4 py-2 text-white flex items-center">
-            <Search className="w-4 h-4 mr-2" /> Search
-          </button>
-        </div>
-
-        {/* Language Selector & Buttons */}
-        <div className="flex items-center space-x-4">
+        {/* Right Section (Account & Buttons) */}
+        <div className="hidden lg:flex items-center space-x-2">
           {/* Language Selector */}
           <Popover>
-            <PopoverTrigger className="flex items-center cursor-pointer px-3 py-2 border rounded-md">
+            <PopoverTrigger className="flex items-center cursor-pointer px-3 py-2 border rounded">
               {language} <ChevronDown className="w-4 h-4 ml-1" />
             </PopoverTrigger>
             <PopoverContent className="bg-white p-2 rounded-md shadow-md w-32">
@@ -69,7 +43,7 @@ export default function Navbar() {
                 <div
                   key={lang}
                   onClick={() => setLanguage(lang)}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-center"
                 >
                   {lang}
                 </div>
@@ -77,21 +51,42 @@ export default function Navbar() {
             </PopoverContent>
           </Popover>
 
-          {/* Buttons */}
-          <Button variant="default" className="px-4 py-2">Login</Button>
-          <Button variant="secondary" className="px-4 py-2 border border-black">Become Supplier</Button>
+          {/* Account & Supplier Buttons */}
+          <Button variant="default" className="px-5 py-2 rounded">
+            <User className="w-4 h-4 mr-2" /> Account
+          </Button>
+          <Button variant="secondary" className="px-5 py-2 border border-black rounded">
+            Become Supplier
+          </Button>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden text-gray-800 focus:outline-none">
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Mobile Search Bar */}
+      <div className="mt-4 lg:hidden flex items-center border rounded overflow-hidden w-full">
+        <input
+          type="text"
+          placeholder="Search for products..."
+          className="px-4 py-2 w-full focus:outline-none"
+        />
+        <button className="bg-blue-700 px-4 py-2 text-white flex">
+          <Search className="w-6 h-6" />
+        </button>
       </div>
 
       {/* Mobile Dropdown Menu */}
       {menuOpen && (
-        <div className="lg:hidden mt-3 bg-white shadow-md rounded-md p-4 flex flex-col space-y-3">
+        <div className="lg:hidden mt-4 bg-white shadow-md rounded-md p-4 flex flex-col items-center space-y-3 w-full">
           {/* Language Selector */}
           <Popover>
-            <PopoverTrigger className="flex items-center cursor-pointer px-3 py-2 border rounded-md w-full justify-between">
-              {language} <ChevronDown className="w-4 h-4" />
+            <PopoverTrigger className="flex items-center cursor-pointer px-4 py-2 border rounded-full w-full justify-center">
+              {language} <ChevronDown className="w-4 h-4 ml-2" />
             </PopoverTrigger>
-            <PopoverContent className="bg-white p-2 rounded-md shadow-md w-32">
+            <PopoverContent className="bg-white p-2 rounded-md shadow-md w-32 text-center">
               {languages.map((lang) => (
                 <div
                   key={lang}
@@ -105,8 +100,8 @@ export default function Navbar() {
           </Popover>
 
           {/* Buttons */}
-          <Button variant="default" className="px-4 py-2 w-full">Login</Button>
-          <Button variant="secondary" className="px-4 py-2 border border-black w-full">Become Supplier</Button>
+          <Button variant="default" className="px-5 py-2 w-full rounded-full">Login</Button>
+          <Button variant="secondary" className="px-5 py-2 border border-black w-full rounded-full">Become Supplier</Button>
         </div>
       )}
     </nav>

@@ -6,43 +6,53 @@ export default function CallToAction() {
     {
       icon: TrendingUp,
       title: "Live Market Data",
-      description: "Stay Updated With Accurate, Real-Time Prices.",
+      description: "Stay updated with accurate, real-time prices.",
     },
     {
       icon: Tags,
       title: "Compare Suppliers",
-      description: "Find The Best Offers From Multiple Vendors.",
+      description: "Find the best offers from multiple vendors.",
     },
     {
       icon: BarChart,
       title: "Track Price Trends",
-      description: "Analyze Past Data To Predict Future Pricing.",
+      description: "Analyze past data to predict future pricing.",
     },
     {
       icon: FileDown,
       title: "Download Reports",
-      description: "Get Detailed Insights For Better Business Decisions.",
+      description: "Get detailed insights for better business decisions.",
     },
   ];
 
   return (
     <div className="bg-blue-600 text-white p-10 rounded-2xl text-center">
-      <h2 className="text-2xl font-bold">COMPARE PRICES, MAKE SMARTER DECISIONS</h2>
-      <p className="mt-2 text-lg">
-        Discover How Suppliers And Buyers Are Leveraging Our Data And Platform To Make
-        Smarter Business Decisions.
+      {/* Title */}
+      <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
+        COMPARE PRICES, MAKE SMARTER DECISIONS
+      </h2>
+      <p className="mt-2 text-base sm:text-lg max-w-2xl mx-auto">
+        Discover how suppliers and buyers are leveraging our platform to make
+        smarter business decisions.
       </p>
 
-      <div className="flex flex-wrap justify-center gap-8 mt-6">
+      {/* Features Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-6">
         {features.map((feature, index) => (
-          <div key={index} className="w-48 flex flex-col items-center">
+          <div key={index} className="flex flex-col items-center">
             <feature.icon className="h-12 w-12 text-white mb-3" />
-            <h3 className="text-lg font-semibold">{feature.title}</h3>
-            <p className="text-sm">{feature.description}</p>
+            <h3 className="text-lg font-semibold text-center">{feature.title}</h3>
+            <p className="text-sm text-gray-200 text-center line-clamp-2">
+              {feature.description}
+            </p>
           </div>
         ))}
       </div>
-      <Button variant="default" className="mt-10 px-6 py-3 text-lg font-semibold rounded-lg">Start Comparing</Button>
+
+      {/* Call to Action Button */}
+      <Button className="mt-8 px-6 py-3 text-lg font-semibold rounded-lg">
+        Start Comparing
+      </Button>
     </div>
   );
 }
