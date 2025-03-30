@@ -64,6 +64,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, filters }) => {
           productName='Premium-Grade Portland Cement'
           supplier='Nexus Industrial Supplies'
           priceRange='500 - 1000'
+          otherSuppliersCount={4}
            />
         ))
       ) : (

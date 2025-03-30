@@ -1,100 +1,112 @@
-'use client'
+"use client";
 
-import { ChevronLeft, ChevronRight, LineChart, Tag, ShieldCheck, Headphones } from "lucide-react";
-import { useState } from "react";
-import ImageSlider from "../ImageSlider/ImageSlider";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-const slides = [
-  {
-    title: "Real-Time Construction Material Prices",
-    description: "Compare prices and access verified product details for smarter decisions.",
-  },
-  {
-    title: "Get the Best Deals on Materials",
-    description: "Easily compare vendor prices and find the best offers in the market.",
-  },
-  {
-    title: "Verified Suppliers at Your Fingertips",
-    description: "Buy from trusted and quality-assured suppliers with confidence.",
-  },
-  {
-    title: "Streamline Your Procurement Process",
-    description: "Save time by sourcing materials efficiently with our user-friendly platform.",
-  },
-  {
-    title: "Stay Updated with Market Trends",
-    description: "Get insights on price fluctuations and industry trends to make informed purchases.",
-  },
-];
+interface ProductBannerProps {
+  items: { image: string; link: string }[];
+  autoSlide?: boolean;
+  slideInterval?: number;
+}
 
-const features = [
-  {
-    icon: <LineChart size={32} />,
-    title: "REAL-TIME PRICES",
-    description: "Get the latest material prices updated daily.",
-  },
-  {
-    icon: <Tag size={32} />,
-    title: "PRICE COMPARISON",
-    description: "Compare prices from multiple vendors instantly.",
-  },
-  {
-    icon: <ShieldCheck size={32} />,
-    title: "TRUSTED SUPPLIERS",
-    description: "Find verified suppliers with quality materials.",
-  },
-  {
-    icon: <Headphones size={32} />,
-    title: "SEAMLESS EXPERIENCE",
-    description: "Get accurate data for better decisions.",
-  },
-];
-
-export default function ProductBanner() {
+export default function ProductBanner({
+  items,
+  autoSlide = false,
+  slideInterval = 3000,
+}: ProductBannerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const totalSlides = items.length;
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-  };
+  const goToSlide = useCallback((index: number) => {
+    setCurrentIndex(index);
+  }, []);
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
-  };
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  }, [totalSlides]);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
+  }, [totalSlides]);
+
+  const startAutoSlide = useCallback(() => {
+    if (!autoSlide) return;
+    stopAutoSlide();
+    intervalRef.current = setInterval(() => {
+      nextSlide();
+    }, slideInterval);
+  }, [autoSlide, nextSlide, slideInterval]);
+
+  const stopAutoSlide = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  }, []);
+
+  useEffect(() => {
+    return () => stopAutoSlide(); // Cleanup on unmount
+  }, [stopAutoSlide]);
 
   return (
-    <div className="contianer">
-      <div className="w-full">
-      <ImageSlider
-      images={[
-        'https://tse2.mm.bing.net/th?id=OIP.a-YDWw7IcFGxYeuz_1wUrgHaHa&pid=Api',
-        'https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg',
-        'https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg'
-      ]}
-      />
-        
+    <div className="relative w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      {/* Image Container with Link */}
+      <div
+        onMouseEnter={startAutoSlide}
+        onMouseLeave={stopAutoSlide}
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {items.map((item, index) => (
+          <Link key={index} href={item.link} className="relative flex-shrink-0 w-full h-48 block">
+            <Image
+              src={item.image}
+              alt={`Slide ${index + 1}`}
+              layout="fill"
+              objectFit="cover"
+              loading="lazy"
+              className="rounded-lg"
+            />
+          </Link>
+        ))}
       </div>
-      {/* Hero Slider */}
-{/* 
-      <div className="relative w-full bg-hero bg-cover bg-center text-white py-16 px-8 flex flex-col items-center justify-center text-center rounded-lg">
-        <button className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={prevSlide}>
-          <ChevronLeft className="text-blue-700" />
-        </button>
-        <div>
-          <h1 className="text-3xl md:text-4xl font-bold">{slides[currentIndex].title}</h1>
-          <p className="mt-4 text-lg">{slides[currentIndex].description}</p>
-        </div>
-        <div className="absolute bottom-8 left-4 flex gap-2 items-center">
-          {
-            slides.map((_, index) => (
-              <div className={`rounded-full h-2 ${index=== currentIndex ? 'w-6 bg-white' : 'w-2 border-white border'}`}>
-              </div>
-            ))
-          }
-        </div>
-        <button className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={nextSlide}>
-          <ChevronRight className="text-blue-700" />
-        </button>
-      </div> */}
+
+      {/* Navigation Arrows */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={prevSlide}
+        aria-label="Previous Slide"
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-100 text-gray-800 hover:bg-gray-300 rounded-full"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={nextSlide}
+        aria-label="Next Slide"
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-100 text-gray-800 hover:bg-gray-300 rounded-full"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </Button>
+
+      {/* Pagination */}
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {items.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
+            className={cn(
+              "w-3 h-3 rounded-full transition-all",
+              index === currentIndex ? "bg-white scale-110" : "bg-gray-400"
+            )}
+          />
+        ))}
+      </div>
     </div>
   );
 }

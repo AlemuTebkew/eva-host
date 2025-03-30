@@ -8,6 +8,7 @@ interface FilterProps {
   materials: string[];
   sizes: string[];
   ratings: number[];
+  locations: string[]; // New field for locations
   handleFilterChange: (filters: any) => void;
 }
 
@@ -18,6 +19,7 @@ const Filter = ({
   materials,
   sizes,
   ratings,
+  locations,
   handleFilterChange,
 }: FilterProps) => {
   const [selectedFilters, setSelectedFilters] = useState<any>({});
@@ -30,14 +32,14 @@ const Filter = ({
   };
 
   return (
-    <div className="filter-section p-4 border rounded-lg ">
-      <h3 className="text-xl font-semibold mb-4">Filter By</h3>
+    <div className="filter-section p-6 bg-white rounded-lg shadow-lg max-w-xs w-full">
+      <h3 className="text-2xl font-semibold mb-6 text-gray-800">Filter By</h3>
 
       {/* Category Filter */}
-      <div className="filter-category mt-4">
-        <label className="block text-sm font-medium">Category</label>
+      <div className="filter-category mb-6">
+        <label className="block text-sm font-medium text-gray-700">Category</label>
         <select
-          className="w-full p-2 mt-2 border rounded"
+          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
           onChange={(e) => handleInputChange('category', e.target.value)}
         >
           <option value="">All Categories</option>
@@ -50,10 +52,10 @@ const Filter = ({
       </div>
 
       {/* Brand Filter */}
-      <div className="filter-brand mt-4">
-        <label className="block text-sm font-medium">Brand</label>
+      <div className="filter-brand mb-6">
+        <label className="block text-sm font-medium text-gray-700">Brand</label>
         <select
-          className="w-full p-2 mt-2 border rounded"
+          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
           onChange={(e) => handleInputChange('brand', e.target.value)}
         >
           <option value="">All Brands</option>
@@ -66,8 +68,8 @@ const Filter = ({
       </div>
 
       {/* Price Range Filter */}
-      <div className="filter-price mt-4">
-        <label className="block text-sm font-medium">Price Range (₣)</label>
+      <div className="filter-price mb-6">
+        <label className="block text-sm font-medium text-gray-700">Price Range (₣)</label>
         <input
           type="range"
           min={priceRange[0]}
@@ -77,17 +79,17 @@ const Filter = ({
           }
           className="w-full mt-2"
         />
-        <div className="flex justify-between text-sm">
+        <div className="flex justify-between text-sm text-gray-600">
           <span>{priceRange[0]}</span>
           <span>{priceRange[1]}</span>
         </div>
       </div>
 
       {/* Material Type Filter */}
-      <div className="filter-material mt-4">
-        <label className="block text-sm font-medium">Material</label>
+      <div className="filter-material mb-6">
+        <label className="block text-sm font-medium text-gray-700">Material</label>
         <select
-          className="w-full p-2 mt-2 border rounded"
+          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
           onChange={(e) => handleInputChange('material', e.target.value)}
         >
           <option value="">All Materials</option>
@@ -100,10 +102,10 @@ const Filter = ({
       </div>
 
       {/* Size Filter */}
-      <div className="filter-size mt-4">
-        <label className="block text-sm font-medium">Size</label>
+      <div className="filter-size mb-6">
+        <label className="block text-sm font-medium text-gray-700">Size</label>
         <select
-          className="w-full p-2 mt-2 border rounded"
+          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
           onChange={(e) => handleInputChange('size', e.target.value)}
         >
           <option value="">All Sizes</option>
@@ -116,8 +118,8 @@ const Filter = ({
       </div>
 
       {/* Rating Filter */}
-      <div className="filter-rating mt-4">
-        <label className="block text-sm font-medium">Rating</label>
+      <div className="filter-rating mb-6">
+        <label className="block text-sm font-medium text-gray-700">Rating</label>
         <div className="flex gap-2 mt-2">
           {ratings.map((rating) => (
             <div key={rating} className="flex items-center">
@@ -127,8 +129,9 @@ const Filter = ({
                 name="rating"
                 value={rating}
                 onChange={() => handleInputChange('rating', rating)}
+                className="w-4 h-4 text-pink-500"
               />
-              <label htmlFor={`rating-${rating}`} className="ml-2 text-sm">
+              <label htmlFor={`rating-${rating}`} className="ml-2 text-sm text-gray-700">
                 {rating}★
               </label>
             </div>
@@ -136,78 +139,20 @@ const Filter = ({
         </div>
       </div>
 
-      {/* Checkbox Filters (for multiple selections, e.g., availability or eco-friendly) */}
-      <div className="filter-checkbox mt-4">
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            id="eco-friendly"
-            onChange={(e) => handleInputChange('ecoFriendly', e.target.checked)}
-          />
-          <label htmlFor="eco-friendly" className="ml-2 text-sm">
-            Eco-friendly Materials
-          </label>
-        </div>
-        <div className="flex items-center mt-2">
-          <input
-            type="checkbox"
-            id="in-stock"
-            onChange={(e) => handleInputChange('inStock', e.target.checked)}
-          />
-          <label htmlFor="in-stock" className="ml-2 text-sm">
-            In Stock Only
-          </label>
-        </div>
-      </div>
-
-      {/* Availability Filter (for checkbox with multiple options) */}
-      <div className="filter-availability mt-4">
-        <label className="block text-sm font-medium">Availability</label>
-        <div className="flex items-center gap-2 mt-2">
-          <input
-            type="checkbox"
-            id="available-now"
-            onChange={(e) => handleInputChange('availableNow', e.target.checked)}
-          />
-          <label htmlFor="available-now" className="text-sm">
-            Available Now
-          </label>
-        </div>
-        <div className="flex items-center gap-2 mt-2">
-          <input
-            type="checkbox"
-            id="preorder"
-            onChange={(e) => handleInputChange('preorder', e.target.checked)}
-          />
-          <label htmlFor="preorder" className="text-sm">
-            Pre-order Available
-          </label>
-        </div>
-      </div>
-
-      {/* Color Filter */}
-      <div className="filter-color mt-4">
-        <label className="block text-sm font-medium">Color</label>
-        <div className="flex gap-2 mt-2">
-          <input
-            type="checkbox"
-            id="color-red"
-            onChange={(e) => handleInputChange('color', e.target.checked)}
-          />
-          <label htmlFor="color-red" className="ml-2 text-sm">
-            Red
-          </label>
-        </div>
-        <div className="flex gap-2 mt-2">
-          <input
-            type="checkbox"
-            id="color-blue"
-            onChange={(e) => handleInputChange('color', e.target.checked)}
-          />
-          <label htmlFor="color-blue" className="ml-2 text-sm">
-            Blue
-          </label>
-        </div>
+      {/* Location Filter (Proximity) */}
+      <div className="filter-location mb-6">
+        <label className="block text-sm font-medium text-gray-700">Location</label>
+        <select
+          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
+          onChange={(e) => handleInputChange('location', e.target.value)}
+        >
+          <option value="">All Locations</option>
+          {locations.map((location) => (
+            <option key={location} value={location}>
+              {location}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );

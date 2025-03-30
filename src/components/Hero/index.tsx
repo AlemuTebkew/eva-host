@@ -61,7 +61,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="contianer">
+    <div className="contianer mt-4">
       {/* Hero Slider */}
       <div className="relative w-full bg-hero bg-cover bg-center text-white py-16 px-8 flex flex-col items-center justify-center text-center rounded-lg">
         <button className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={prevSlide}>
@@ -69,7 +69,7 @@ export default function Hero() {
         </button>
         <div>
           <h1 className="text-3xl md:text-4xl font-bold">{slides[currentIndex].title}</h1>
-          <p className="mt-4 text-lg">{slides[currentIndex].description}</p>
+          <p className="mt-2 text-lg">{slides[currentIndex].description}</p>
         </div>
         <div className="absolute bottom-8 left-4 flex gap-2 items-center">
           {

@@ -8,6 +8,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
+import Select from "react-select";
 import { useRouter } from "next/navigation";
 import SearchBar from "../SearchBar";
 import Sidebar from "../Sidebar";
@@ -29,8 +30,10 @@ const Nav: React.FC<NavProps> = ({ categories }) => {
   const [token, setToken] = useState<string | null>(null);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const navigationMenuRef = useRef<HTMLDivElement>(null);
-  const [language, setLanguage] = useState("ENG");
-  const languages = ["ENG", "AM"];
+
+  const languages = ["Eng", "Amh"];
+  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const options = languages.map((lang) => ({ value: lang, label: lang }));
 
   const toggleNavDrawer = () => {
     setMobileNavbarOpen(!mobileNavBarOpen);
@@ -67,7 +70,7 @@ const Nav: React.FC<NavProps> = ({ categories }) => {
   }, [navigationMenuRef]);
 
   return (
-    <div className={`bg-white sticky top-0 z-40 w-full py-2`}>
+    <div className={`bg-white sticky top-0 z-40 w-full py-2 shadow`}>
       <div className='w-full hidden lg:block'>
         <div className='mx-auto container flex py-0 w-full items-center relative 2xl:px-0 gap-8'>
           <Link className='z-50' href={"/"}>
@@ -78,33 +81,37 @@ const Nav: React.FC<NavProps> = ({ categories }) => {
           <div className='flex gap-4 items-center flex-1'>
             <SearchBar/>
             <div className="hidden lg:flex items-center space-x-2">
-          {/* Language Selector */}
-          <Popover>
-            <PopoverTrigger className="flex items-center cursor-pointer px-3 py-2 border rounded">
-              {language} <ChevronDown className="w-4 h-4 ml-1" />
-            </PopoverTrigger>
-            <PopoverContent className="bg-white p-2 rounded-md shadow-md w-32">
-              {languages.map((lang) => (
-                <div
-                  key={lang}
-                  onClick={() => setLanguage(lang)}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-center"
-                >
-                  {lang}
-                </div>
-              ))}
-            </PopoverContent>
-          </Popover>
-
-          {/* Account & Supplier Buttons */}
-          <Button variant="default" className="px-5 py-2 rounded">
-            Signin
-          </Button>
-          <Button variant="secondary" className="px-5 py-2 border border-black rounded">
-            Become Supplier
-          </Button>
-        </div>
-        </div>
+              {/* Language Selector */}
+              <div className="w-32 z-999">
+                <Select
+                  options={options}
+                  value={{ value: selectedLanguage, label: selectedLanguage }}
+                  onChange={(selectedOption) => setSelectedLanguage(selectedOption?.value || "")}
+                  components={{
+                    DropdownIndicator: () => <ChevronDown className="w-4 h-4 text-gray-500" />,
+                    IndicatorSeparator: () => null,
+                  }}
+                  className="text-sm"
+                  classNames={{
+                    control: () => "border px-3 py-2 rounded-md shadow-sm cursor-pointer",
+                    // menu: () => "bg-white shadow-md rounded-md",
+                    // option: () => "px-4 py-2 hover:bg-gray-100 cursor-pointer text-center",
+                  }}
+                  styles={{
+                    menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures it stays on top
+                    menu: (base) => ({ ...base, zIndex: 9999 }),
+                  }}
+                />
+              </div>
+              {/* Account & Supplier Buttons */}
+              <Button variant="default" className="px-5 py-2 rounded">
+                Signin
+              </Button>
+              <Button variant="secondary" className="px-5 py-2 border border-black rounded">
+                Become Supplier
+              </Button>
+            </div>
+          </div>
         </div>
         <Separator className="mt-2" />
         <div className="mx-auto container relative mt-2 flex" ref={navigationMenuRef}>

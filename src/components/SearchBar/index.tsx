@@ -44,7 +44,6 @@ export default function SearchBar(): JSX.Element {
               }}
             />
           </Card>
-
           {isFocused && (
             <div className="absolute w-full mt-2 bg-white rounded-md shadow-lg border border-input z-50">
               {searchQuery.length > 0 && (

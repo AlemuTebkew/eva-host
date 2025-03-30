@@ -8,6 +8,7 @@ import ProductList from '@/components/ProductList';
 import Filter from '@/components/Filters';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Product } from '@/types/product';
+import Breadcrumb from '../Breadcrumb';
 
 export default function ProductPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -33,25 +34,53 @@ export default function ProductPage() {
     : productList;
 
   return (
-    <main className="container pb-8">
+    <main className="container pb-8 mt-4">
       {/* Breadcrumbs */}
-      <div className="flex gap-2 items-center mb-6 text-gray-700 text-sm">
-        <h1 className="font-medium">Home</h1>
-        <ChevronRight className="w-4 h-4" />
-        <h1 className="font-medium">All Products</h1>
-      </div>
-
+      <Breadcrumb
+        items={[
+          {
+            label: 'Home',
+            href: '/'
+          },
+          {
+            label: 'Building Materials',
+            href: '/products'
+          },
+          {
+            label: 'Cement & Concrete',
+            href: '/products/cement-concrete'
+          }
+        ]}
+      />
       {/* Banner */}
-      <ProductBanner />
-
+      <ProductBanner
+      items={[
+        {
+          image: 'https://tse2.mm.bing.net/th?id=OIP.a-YDWw7IcFGxYeuz_1wUrgHaHa&pid=Api',
+          link: '/products/1'
+        },
+        {
+          image: 'https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg',
+          link: '/products/2'
+        },
+        {
+          image: 'https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg',
+          link: '/products/3'
+        }
+      ]} 
+      />
       {/* Mobile Filter Button */}
-      <div className="my-4 flex justify-between items-center w-full border-b py-2 lg:hidden">
+      <div className="mb-4 flex justify-between items-center w-full border-b py-2 lg:hidden">
         <h1 className="text-lg font-semibold">All Products</h1>
         <button onClick={() => setIsFilterOpen(true)}>
           <FilterIcon className="w-6 h-6 text-gray-700" />
         </button>
       </div>
-
+      <div className="text-center my-8">
+        <p>
+          <span className="font-semibold text-lg">(103)</span> products found
+        </p>
+      </div>
       {/* Product List Section */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:mt-8">
         {/* Sidebar Filter for Desktop */}
@@ -62,7 +91,8 @@ export default function ProductPage() {
             priceRange={[10, 1000]}
             materials={[]}
             sizes={[]}
-            ratings={[]}
+            ratings={[1,2,3]}
+            locations={[]}
             handleFilterChange={handleCategoryChange}
           />
         </div>
@@ -72,7 +102,6 @@ export default function ProductPage() {
           <ProductList products={filteredProducts} filters={filteredProducts}/>
         </div>
       </div>
-
       {/* Mobile Filter Dialog */}
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
         <DialogContent className="fixed bottom-0 w-screen h-screen py-6 bg-white overflow-y-auto">
@@ -86,6 +115,7 @@ export default function ProductPage() {
             materials={[]}
             sizes={[]}
             ratings={[]}
+            locations={[]}
             handleFilterChange={handleCategoryChange}
           />
         </DialogContent>
