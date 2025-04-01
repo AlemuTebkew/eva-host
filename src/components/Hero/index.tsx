@@ -74,7 +74,7 @@ export default function Hero() {
         <div className="absolute bottom-8 left-4 flex gap-2 items-center">
           {
             slides.map((_, index) => (
-              <div className={`rounded-full h-2 ${index=== currentIndex ? 'w-6 bg-white' : 'w-2 border-white border'}`}>
+              <div key={index} className={`rounded-full h-2 ${index=== currentIndex ? 'w-6 bg-white' : 'w-2 border-white border'}`}>
               </div>
             ))
           }
@@ -86,7 +86,7 @@ export default function Hero() {
       {/* Features Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-2 bg-white">
         {features.map((feature, index) => (
-          <div className="flex items-center text-center shadow rounded-lg px-4 py-2 gap-2">
+          <div key={index} className="flex items-center text-center shadow rounded-lg px-4 py-2 gap-2">
               <div className="text-blue-700">{feature.icon}</div>
               <div key={index} className="text-sm flex flex-col gap-1 items-start justify-center">
                 <h3 className="text-left font-semibold">{feature.title}</h3>
