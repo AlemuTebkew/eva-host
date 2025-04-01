@@ -46,7 +46,7 @@ COPY --from=development /app/public ./public
 RUN mkdir -p ./uploads
 
 # Expose port 3000 for the Next.js application
-EXPOSE 3000
+EXPOSE 4444
 
 # Default command to run when the container starts in production mode
 CMD ["npm", "start"]
