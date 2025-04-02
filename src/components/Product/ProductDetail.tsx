@@ -122,7 +122,7 @@ const ProductDetail = () => {
           </div>
           </div>
           <ProductDescription
-            productName="High-Performance Portland Cement (Grade 53)"
+            productName='HP Intel Core i7 11th Gen 14" FHD Laptop'
             suppliers={[
               { name: "Nexus Industrial Supplies", price: 1900, minOrder: 50, discount: { minQuantity: 100, percent: 10 } },
               { name: "Supplier B", price: 2200, minOrder: 20 },
@@ -132,7 +132,6 @@ const ProductDetail = () => {
             ]}
           />
         </div>
-        
     </div>
   );
 };

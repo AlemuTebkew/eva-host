@@ -16,8 +16,6 @@ import { Category } from "@/types/category";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { ChevronDown, User } from "lucide-react";
-import { PopoverTrigger } from "@radix-ui/react-popover";
-import { Popover, PopoverContent } from "../ui/popover";
 
 interface NavProps {
   categories: Category[];
@@ -25,9 +23,7 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ categories }) => {
   const router = useRouter();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [mobileNavBarOpen, setMobileNavbarOpen] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const navigationMenuRef = useRef<HTMLDivElement>(null);
 
@@ -104,9 +100,6 @@ const Nav: React.FC<NavProps> = ({ categories }) => {
                 />
               </div>
               {/* Account & Supplier Buttons */}
-              <Button variant="default" className="px-5 py-2 rounded">
-                Signin
-              </Button>
               <Button variant="secondary" className="px-5 py-2 border border-black rounded">
                 Become Supplier
               </Button>
@@ -287,19 +280,6 @@ const Nav: React.FC<NavProps> = ({ categories }) => {
               </g>
             </svg>
           </button>
-           {/* Show placeholders or no content initially */}
-              {(
-                (token === null || token === undefined) ? (
-                  <Button
-                    onClick={() => router.push("/login")}
-                    className="w-32 py-[10px] px-4 bg-primary text-background rounded-md font-semibold hover:bg-secondary"
-                  >
-                    Sign in
-                  </Button>
-                ) : (
-                <></>
-                )
-                ) }
         </div>
       </div>
 

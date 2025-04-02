@@ -37,7 +37,7 @@ export default function ProductCard({ images, productName, supplier, priceRange,
         {/* Buttons */}
         <div className="mt-4 space-y-2">
           <Button className="w-full text-black bg-[#F1F2F4] border border-[#E9EAEC]">
-            Compare Price
+            View Suppliers
           </Button>
         </div>
       </div>

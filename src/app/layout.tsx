@@ -8,6 +8,7 @@ import "../styles/prism-vsc-dark-plus.css";
 import { Provider } from "react-redux";
 import { store } from "@/store/app-store";
 import Nav from "@/components/Nav/Nav";
+import Navbar from "@/components/Navigation";
 
 export default function RootLayout({
   children,
@@ -27,7 +28,7 @@ export default function RootLayout({
             >
               <Provider store={store}>
                 {/* <Header /> */}
-                <Nav
+                {/* <Nav
                 categories={[
                   {
                     id: "1",
@@ -180,7 +181,8 @@ export default function RootLayout({
                     ],
                   }
                 ]}
-                />
+                /> */}
+                <Navbar/>
                 {children}
                 <Footer />
               </Provider>

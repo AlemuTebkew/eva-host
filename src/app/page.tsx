@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="container">
+    <main className="max-w-c-1235 mx-auto">
       <Hero />
       <FeaturedSuppliers/>
       <CallToAction/>

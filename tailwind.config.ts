@@ -82,7 +82,15 @@ const config: Config = {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+			maxWidth: {
+        "c-1390": "86.875rem",
+        "c-1315": "82.188rem",
+        "c-1280": "80rem",
+        "c-1235": "77.188rem",
+        "c-1154": "72.125rem",
+        "c-1016": "63.5rem",
+      },
   	}
   },
   plugins: [require("tailgrids/plugin"), require("tailwindcss-animate")],

@@ -61,9 +61,9 @@ const ProductList: React.FC<ProductListProps> = ({ products, filters }) => {
             'https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg',
             'https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg'
           ]}
-          productName='Premium-Grade Portland Cement'
+          productName='HP Intel Core i7 11th Gen 14" FHD Laptop'
           supplier='Nexus Industrial Supplies'
-          priceRange='1900 - 3600'
+          priceRange='ETB 1900'
           otherSuppliersCount={4}
            />
         ))

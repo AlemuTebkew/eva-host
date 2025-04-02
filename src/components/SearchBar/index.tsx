@@ -33,7 +33,7 @@ export default function SearchBar(): JSX.Element {
               <Search className="h-5 w-5" />
             </Button>
             <Input
-              className="w-full ml-2 border-none"
+              className="w-full border-none"
               placeholder="What are you looking for?"
               onFocus={() => setIsFocused(true)}
               onBlur={handleBlur}
