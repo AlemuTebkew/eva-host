@@ -55,7 +55,7 @@ export default function ImageSlider({
 
 
   return (
-    <div className="relative w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+    <div className="z-0 relative w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
       {/* Image Container */}
       <div
         ref={sliderRef}

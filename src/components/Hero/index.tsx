@@ -61,9 +61,9 @@ export default function Hero() {
   };
 
   return (
-    <div className="max-w-c-1254 mt-4 mx-auto">
+    <div className="z-0 max-w-c-1254 mt-4 mx-auto">
       {/* Hero Slider */}
-      <div className="relative w-full bg-hero bg-cover bg-center text-white py-16 px-8 flex flex-col items-center justify-center text-center rounded-lg">
+      <div className="z-0 relative w-full bg-hero bg-cover bg-center text-white py-16 px-8 flex flex-col items-center justify-center text-center rounded-lg">
         <button className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow" onClick={prevSlide}>
           <ChevronLeft className="text-blue-700" />
         </button>

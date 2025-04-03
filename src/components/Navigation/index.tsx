@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Search, ShoppingCart, User, Globe, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@radix-ui/react-separator";
-import NavbarCategories from "./NavbarCategories";
 import SearchBar from "../SearchBar/SearchBarComponent";
 import MobileTabs from "../MobileTab";
+import MegaMenu from "./Navigation";
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="w-full">
+    <div className="w-full shadow-md">
       <nav className="w-full mx-auto flex items-center px-4 py-3 bg-white justify-between gap-4 lg:px-6 lg:gap-12 lg:max-w-c-1235">
         {/* Left Side */}
         <div className="flex items-center gap-4">
@@ -37,13 +37,13 @@ export default function Navbar() {
           </Button>
         </div>
         
-        <button className="text-gray-700 hover:text-orange-500 hover:border-orange-500 border rounded-full p-2 lg:block">
+        <button className="text-gray-700 hover:text-orange-500 hover:border-orange-500 border rounded-full p-2 lg:hidden">
           <User size={24} />
         </button>
       </nav>
       {/* <Separator className="border"/> */}
-      <div className="hidden lg:block">
-        <NavbarCategories/>
+      <div className="hidden lg:block max-w-c-1235 mx-auto px-6">
+        <MegaMenu/>
       </div>
       <div className="lg:hidden">
         <MobileTabs/>
