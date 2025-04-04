@@ -34,7 +34,7 @@ export default function ProductPage() {
     : productList;
 
   return (
-    <main className="container pb-8 mt-4">
+    <main className="max-w-c-1235 mx-auto pb-8 mt-4 px-6">
       {/* Breadcrumbs */}
       <Breadcrumb
         items={[

@@ -5,9 +5,11 @@ import { Separator } from "@radix-ui/react-separator";
 import SearchBar from "../SearchBar/SearchBarComponent";
 import MobileTabs from "../MobileTab";
 import MegaMenu from "./Navigation";
+import CategoryNavigation from "./MobileCategoryNavigation";
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
 
   return (
     <div className="w-full shadow-md">
@@ -41,13 +43,34 @@ export default function Navbar() {
           <User size={24} />
         </button>
       </nav>
-      {/* <Separator className="border"/> */}
+
       <div className="hidden lg:block max-w-c-1235 mx-auto px-6">
         <MegaMenu/>
       </div>
-      <div className="lg:hidden">
-        <MobileTabs/>
+
+      {/* Mobile Navigation */}
+      <div className="w-full grid grid-cols-3 gap-2 lg:hidden px-4 py-2 bg-white shadow-md rounded-md">
+        <button
+          onClick={() => setOpenCategory(true)}
+          className="text-center text-sm font-medium py-3 rounded-md bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition"
+        >
+          All Categories
+        </button>
+        <button className="text-center text-sm font-medium py-3 rounded-md bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition">
+          Suppliers
+        </button>
+        <button className="text-center text-sm font-medium py-3 rounded-md bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition">
+          Services
+        </button>
       </div>
+
+
+      {/* Mobile Category Navigation */}
+      {
+        openCategory && (
+            <CategoryNavigation onClose={setOpenCategory}/>
+        )
+      }
     </div>
   );
 }

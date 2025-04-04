@@ -12,6 +12,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 // Define types
 type Subcategory = {
@@ -158,9 +159,9 @@ export default function MegaMenu() {
                   <ScrollArea className="p-4">
                     <div className="flex flex-col gap-2">
                       {selectedCategory.subcategories.map((sub) => (
-                        <div key={sub.name} className="p-4 cursor-pointer hover:bg-gray-100">
+                        <Link href={'/products'} key={sub.name} className="p-4 cursor-pointer hover:bg-gray-100">
                           <h4 className="font-semibold text-gray-700 mb-2">{sub.name}</h4>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   </ScrollArea>
