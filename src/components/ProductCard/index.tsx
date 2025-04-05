@@ -13,8 +13,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ images, productName, supplier, priceRange, otherSuppliersCount }: ProductCardProps) {
   return (
-    <Link href={'/products/1'}>
-      <div className="rounded-lg overflow-hidden shadow-lg bg-white p-4">
+    <Link href={'/products/1'} className="bg-white p-2 rounded">
+      <div className="rounded-lg overflow-hidden">
         {/* Image Slider */}
         <ImageSlider images={images} autoSlide={true} />
 

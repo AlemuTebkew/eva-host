@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ThemeProvider } from "next-themes";
 import "../styles/index.css";
-import "../styles/prism-vsc-dark-plus.css";
 import { Provider } from "react-redux";
 import { store } from "@/store/app-store";
 import Navbar from "@/components/Navigation";

@@ -32,7 +32,7 @@ const Filter = ({
   };
 
   return (
-    <div className="filter-section p-6 bg-white rounded-lg shadow-lg max-w-xs w-full">
+    <div className="filter-section p-6 bg-white rounded-lg max-w-xs w-full">
       <h3 className="text-2xl font-semibold mb-6 text-gray-800">Filter By</h3>
 
       {/* Category Filter */}

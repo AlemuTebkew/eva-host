@@ -9,10 +9,13 @@ import Filter from '@/components/Filters';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Product } from '@/types/product';
 import Breadcrumb from '../Breadcrumb';
+import { useSearchQuery } from '@/store/app-api';
 
 export default function ProductPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const { data } = useSearchQuery({params: { keyword: "" }});
 
   const categories = ['Category 1', 'Category 2', 'Category 3'];
 
@@ -21,37 +24,13 @@ export default function ProductPage() {
     // setIsFilterOpen(false); // Close filter after selection on mobile
   };
 
-  // Example product list
-  const productList: Product[] = [
-    { id: '1', name: 'Product One', price: 99.99, image: '/images/product-1.jpg', category: 'Category 1', material: 'Material A', rating: 4.5, available: true },
-    { id: '2', name: 'Product Two', price: 149.99, image: '/images/product-2.jpg', category: 'Category 2', material: 'Material B', rating: 4.0, available: true },
-    { id: '3', name: 'Product Three', price: 79.99, image: '/images/product-3.jpg', category: 'Category 3', material: 'Material C', rating: 3.5, available: false },
-    { id: '4', name: 'Product Four', price: 59.99, image: '/images/product-4.jpg', category: 'Category 4', material: 'Material D', rating: 4.7, available: true },
-  ];
-
+  
   const filteredProducts = selectedCategory
-    ? productList.filter((product) => product.category === selectedCategory)
-    : productList;
+    ? data?.filter((product) => product.category === selectedCategory)
+    : data;
 
   return (
-    <main className="max-w-c-1235 mx-auto pb-8 mt-4 px-6">
-      {/* Breadcrumbs */}
-      <Breadcrumb
-        items={[
-          {
-            label: 'Home',
-            href: '/'
-          },
-          {
-            label: 'Building Materials',
-            href: '/products'
-          },
-          {
-            label: 'Cement & Concrete',
-            href: '/products/cement-concrete'
-          }
-        ]}
-      />
+    <main className="max-w-c-1235 mx-auto pb-8 mt-4 px-6 bg-[#F4F4F4]">
       {/* Banner */}
       <ProductBanner
       items={[
@@ -69,6 +48,25 @@ export default function ProductPage() {
         }
       ]} 
       />
+
+      {/* Breadcrumbs */}
+      <Breadcrumb
+      items={[
+        {
+          label: 'Home',
+          href: '/'
+        },
+        {
+          label: 'Building Materials',
+          href: '/products'
+        },
+        {
+          label: 'Cement & Concrete',
+          href: '/products/cement-concrete'
+        }
+      ]}
+      />
+
       {/* Mobile Filter Button */}
       <div className="mb-4 flex justify-between items-center w-full border-b py-2 lg:hidden">
         <h1 className="text-lg font-semibold">All Products</h1>
@@ -76,11 +74,13 @@ export default function ProductPage() {
           <FilterIcon className="w-6 h-6 text-gray-700" />
         </button>
       </div>
+
       <div className="text-center my-8">
         <p>
           <span className="font-semibold text-lg">(103)</span> products found
         </p>
       </div>
+
       {/* Product List Section */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:mt-8">
         {/* Sidebar Filter for Desktop */}
@@ -99,9 +99,13 @@ export default function ProductPage() {
 
         {/* Product Cards Section */}
         <div className="col-span-3">
-          <ProductList products={filteredProducts} filters={filteredProducts}/>
+          {data && (
+            <ProductList products={data} filters={filteredProducts}/>
+          )
+          }
         </div>
       </div>
+
       {/* Mobile Filter Dialog */}
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
         <DialogContent className="fixed bottom-0 w-screen h-screen py-6 bg-white overflow-y-auto">

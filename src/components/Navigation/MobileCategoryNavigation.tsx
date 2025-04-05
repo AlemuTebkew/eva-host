@@ -4,38 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronRight, ChevronLeft, X } from "lucide-react";
-
-type Subcategory = {
-  name: string;
-};
-
-type Category = {
-  name: string;
-  subcategories: Subcategory[];
-};
-
-const categories: Category[] = [
-  {
-    name: "Building Materials",
-    subcategories: [
-      { name: "Cement & Concrete" },
-      { name: "Bricks & Blocks" },
-      { name: "Sand & Gravel" },
-      { name: "Roofing Materials" },
-      { name: "Insulation" },
-    ],
-  },
-  {
-    name: "Tools & Equipment",
-    subcategories: [
-      { name: "Power Tools" },
-      { name: "Hand Tools" },
-      { name: "Scaffolding & Ladders" },
-      { name: "Measuring Instruments" },
-      { name: "Safety Equipment" },
-    ],
-  },
-];
+import { useGetCategoriesQuery } from "@/store/app-api";
+import { Category } from "@/types/category";
 
 interface MobileCategoryNavigationProps {
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,6 +13,7 @@ interface MobileCategoryNavigationProps {
 
 export default function MobileCategoryNavigation({ onClose }: MobileCategoryNavigationProps) {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const { data, isSuccess } = useGetCategoriesQuery();
 
   // Prevent scrolling when the component is open
   useEffect(() => {
@@ -79,43 +50,31 @@ export default function MobileCategoryNavigation({ onClose }: MobileCategoryNavi
 
       {/* Category or Subcategory View */}
       {!selectedCategory ? (
-        <CategoryList onSelect={setSelectedCategory} />
+        <ScrollArea className="flex-1 overflow-y-auto">
+          {data?.map((category) => (
+            <div
+              key={category.name}
+              className="p-4 cursor-pointer hover:bg-gray-100 flex justify-between items-center"
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category.name}
+              <ChevronRight className="h-5 w-5" />
+            </div>
+          ))}
+        </ScrollArea>
       ) : (
-        <SubcategoryList category={selectedCategory} />
+        <ScrollArea className="flex-1 p-4 overflow-y-auto">
+          {selectedCategory?.subCategories.length > 0 ? (
+            selectedCategory.subCategories.map((sub) => (
+              <div key={sub.name} className="p-4 cursor-pointer hover:bg-gray-100">
+                <h4 className="font-semibold text-gray-700">{sub.name}</h4>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No subcategories available</p>
+          )}
+        </ScrollArea>
       )}
     </motion.div>
-  );
-}
-
-function CategoryList({ onSelect }: { onSelect: (category: Category) => void }) {
-  return (
-    <ScrollArea className="flex-1 overflow-y-auto">
-      {categories.map((category) => (
-        <div
-          key={category.name}
-          className="p-4 cursor-pointer hover:bg-gray-100 flex justify-between items-center"
-          onClick={() => onSelect(category)}
-        >
-          {category.name}
-          <ChevronRight className="h-5 w-5" />
-        </div>
-      ))}
-    </ScrollArea>
-  );
-}
-
-function SubcategoryList({ category }: { category: Category }) {
-  return (
-    <ScrollArea className="flex-1 p-4 overflow-y-auto">
-      {category.subcategories.length > 0 ? (
-        category.subcategories.map((sub) => (
-          <div key={sub.name} className="p-4 cursor-pointer hover:bg-gray-100">
-            <h4 className="font-semibold text-gray-700">{sub.name}</h4>
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-500">No subcategories available</p>
-      )}
-    </ScrollArea>
   );
 }

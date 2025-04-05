@@ -1,49 +1,37 @@
-import { Partner } from "@/types/partner";
-import { Product, ProductQueryRequest, ProductResponse } from "@/types/product";
-import { Service } from "@/types/service";
+import { Category } from "@/types/category";
+import { Product } from "@/types/product";
+import { QueryRequest } from "@/types/queryRequest";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const appApi = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5006" }), // Change this to your API
+  baseQuery: fetchBaseQuery({ baseUrl: "http://13.60.253.93:5007" }), // Change this to your API
   endpoints: (builder) => ({
-    getServices: builder.query<Service[], void>({
+    getCategories: builder.query<Category[], void>({
       query: () => ({
-        url: "/api/services",
+        url: "/user/categories",
         method: "GET",
-      })
-    }),
-    getPartners: builder.query<Partner[], void>({
-      query: () => ({
-        url: "/api/partners",
-        method: "GET",
-      })
-    }),
-    getCategory: builder.query<any[], void>({
-      query: () => ({
-        url: "/api/categories",
-        method: "GET",
-      })
-    }),
-    getProducts: builder.query<Product[], void>({
-      query: () => ({
-        url: "/api/products",
-        method: "GET",
-      })
-    }),
-    getProductsWithPrice: builder.query<ProductResponse, ProductQueryRequest>({
-      query: ({ search, limit, page }) => ({
-        url: "/api/product_price",
-        params: { search, limit, page },
       }),
+      transformResponse: (response: { status: boolean; message: string; data: Category[] }) => {
+        return response.data;
+      },
+    }),
+
+    search: builder.query<Product[], QueryRequest>({
+      query: (queryRequest) => ({
+        url: "/user/products/search",
+        method: "GET",
+        params: queryRequest.params
+      }),
+      transformResponse: (response: { status: boolean; message: string; data: Product[] }) => {
+        return response.data;
+      },
     }),
   }),
 });
 
+
 export const { 
-  useGetServicesQuery,
-  useGetPartnersQuery ,
-  useGetCategoryQuery,
-  useGetProductsQuery,
-  useGetProductsWithPriceQuery
+  useGetCategoriesQuery,
+  useSearchQuery
 } = appApi;
