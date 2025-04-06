@@ -39,14 +39,16 @@ export default function MegaMenu() {
                 {/* Main Categories */}
                 <ScrollArea className="border-r">
                   {data?.map((category) => (
-                    <div
-                      key={category.id}
-                      className="p-4 cursor-pointer hover:bg-gray-100 flex justify-between"
-                      onMouseEnter={() => setSelectedCategory(category)}
-                    >
-                      {category.name}
-                      <ChevronRight className="h-5 w-5" />
-                    </div>
+                    <Link href={`/products?category=${category.id}`} key={category.id}>
+                      <div
+                        key={category.id}
+                        className="p-4 cursor-pointer hover:bg-gray-100 flex justify-between"
+                        onMouseEnter={() => setSelectedCategory(category)}
+                      >
+                        {category.name}
+                        <ChevronRight className="h-5 w-5" />
+                      </div>
+                    </Link>
                   ))}
                 </ScrollArea>
 
@@ -55,7 +57,7 @@ export default function MegaMenu() {
                   <ScrollArea className="p-4">
                     <div className="flex flex-col gap-2">
                       {selectedCategory.subCategories.map((sub) => (
-                        <Link href={'/products'} key={sub.id} className="p-4 cursor-pointer hover:bg-gray-100">
+                        <Link href={`/products?categoryId=${selectedCategory.id}&&subCategoryId=${sub.id}`} key={sub.id} className="p-4 cursor-pointer hover:bg-gray-100">
                           <h4 className="font-semibold text-gray-700 mb-2">{sub.name}</h4>
                         </Link>
                       ))}

@@ -1,161 +1,136 @@
-import { useState } from 'react';
+import { useGetCategoriesQuery } from "@/store/app-api"
+import { Category } from "@/types/category"
+import { useState } from "react"
+import Select from "react-select"
+import { Button } from "../ui/button"
+import { useSearchParams } from "next/navigation"
 
-// Define types for the product filters
-interface FilterProps {
-  categories: string[];
-  brands: string[];
-  priceRange: [number, number];
-  materials: string[];
-  sizes: string[];
-  ratings: number[];
-  locations: string[]; // New field for locations
-  handleFilterChange: (filters: any) => void;
+interface Option {
+  label: string
+  value: string
 }
 
-const Filter = ({
-  categories,
-  brands,
-  priceRange,
-  materials,
-  sizes,
-  ratings,
-  locations,
-  handleFilterChange,
-}: FilterProps) => {
-  const [selectedFilters, setSelectedFilters] = useState<any>({});
+interface FilterProps {
 
-  // Handle the changes in filter inputs
-  const handleInputChange = (filterType: string, value: any) => {
-    const newFilters = { ...selectedFilters, [filterType]: value };
-    setSelectedFilters(newFilters);
-    handleFilterChange(newFilters);
+  handleFilterChange: (filters: any) => void
+}
+
+const customSelectStyles = {
+  control: (base: any) => ({
+    ...base,
+    padding: "6px 8px",
+    borderRadius: "0.75rem",
+    borderColor: "#FEC6D4",
+    boxShadow: "none",
+    "&:hover": { borderColor: "#FC2779" },
+  }),
+  placeholder: (base: any) => ({
+    ...base,
+    color: "#A1A1AA",
+    fontSize: "0.875rem",
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    color: "#111827",
+    fontWeight: 500,
+  }),
+}
+
+export default function Filter({
+  handleFilterChange,
+}: FilterProps) {
+  const searchParams = useSearchParams();
+  const categoryIdSearchQuery = searchParams.get('categoryId') || '';
+  const subCategoryIdSearchQuery = searchParams.get('subCategoryId') || '';
+  const { data: categoriesData = [] } = useGetCategoriesQuery();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(categoryIdSearchQuery);
+  const [selectedSubCategoryId, setSelectedSubCategoryId] = useState<string | null>(subCategoryIdSearchQuery);
+  const categoryOptions = categoriesData.map((category: Category) => ({
+    label: category.name,
+    value: category.id,
+  }));
+  
+  const getSubCategoryOptions = (categoryId: string) => {
+    const selectedCategory = categoriesData.find(cat => cat.id === categoryId);
+    if (!selectedCategory) return [];
+  
+    return selectedCategory.subCategories.map(sub => ({
+      label: sub.name,
+      value: sub.id,
+    }));
   };
 
+  const [selectedFilters, setSelectedFilters] = useState<any>({
+    category: null,
+    subCategory: null,
+    minPrice: "",
+    maxPrice: "",
+  })
+
+  const handleInputChange = (filterType: string, value: any) => {
+    const updatedFilters = { ...selectedFilters, [filterType]: value }
+    setSelectedFilters(updatedFilters)
+    handleFilterChange(updatedFilters)
+  }
+
+
   return (
-    <div className="filter-section p-6 bg-white rounded-lg max-w-xs w-full">
-      <h3 className="text-2xl font-semibold mb-6 text-gray-800">Filter By</h3>
+    <div className="p-6 bg-white rounded-lg max-w-xs w-full space-y-6">
+      <h3 className="text-2xl font-semibold text-gray-800">Filter By</h3>
 
-      {/* Category Filter */}
-      <div className="filter-category mb-6">
-        <label className="block text-sm font-medium text-gray-700">Category</label>
-        <select
-          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          onChange={(e) => handleInputChange('category', e.target.value)}
-        >
-          <option value="">All Categories</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Brand Filter */}
-      <div className="filter-brand mb-6">
-        <label className="block text-sm font-medium text-gray-700">Brand</label>
-        <select
-          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          onChange={(e) => handleInputChange('brand', e.target.value)}
-        >
-          <option value="">All Brands</option>
-          {brands.map((brand) => (
-            <option key={brand} value={brand}>
-              {brand}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Price Range Filter */}
-      <div className="filter-price mb-6">
-        <label className="block text-sm font-medium text-gray-700">Price Range (₣)</label>
-        <input
-          type="range"
-          min={priceRange[0]}
-          max={priceRange[1]}
-          onChange={(e) =>
-            handleInputChange('price', parseInt(e.target.value))
-          }
-          className="w-full mt-2"
+      {/* Category */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+        <Select
+            defaultValue={categoryOptions.find((option) => option.value === selectedCategoryId)}
+            options={categoryOptions}
+            isClearable
+            // onChange={(option) => {
+            //   handleInputChange("category", option?.value);
+            //   setSelectedCategoryId(option?.value); // to later get subcategories
+            // }}
         />
-        <div className="flex justify-between text-sm text-gray-600">
-          <span>{priceRange[0]}</span>
-          <span>{priceRange[1]}</span>
-        </div>
       </div>
 
-      {/* Material Type Filter */}
-      <div className="filter-material mb-6">
-        <label className="block text-sm font-medium text-gray-700">Material</label>
-        <select
-          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          onChange={(e) => handleInputChange('material', e.target.value)}
-        >
-          <option value="">All Materials</option>
-          {materials.map((material) => (
-            <option key={material} value={material}>
-              {material}
-            </option>
-          ))}
-        </select>
+      {/* SubCategory */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Sub Category</label>
+        <Select
+          defaultInputValue={getSubCategoryOptions(selectedCategoryId || "").find((option) => option.value === selectedSubCategoryId)?.label}
+          options={getSubCategoryOptions(selectedCategoryId || "")}
+          styles={customSelectStyles}
+          isClearable
+          placeholder="Select sub-category"
+          onChange={(option) => handleInputChange("subCategory", option?.value || "")}
+        />
       </div>
 
-      {/* Size Filter */}
-      <div className="filter-size mb-6">
-        <label className="block text-sm font-medium text-gray-700">Size</label>
-        <select
-          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          onChange={(e) => handleInputChange('size', e.target.value)}
-        >
-          <option value="">All Sizes</option>
-          {sizes.map((size) => (
-            <option key={size} value={size}>
-              {size}
-            </option>
-          ))}
-        </select>
+      {/* Price Range */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Min Price</label>
+        <input
+          type="number"
+          className="w-full p-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
+          placeholder="e.g. 100"
+          value={selectedFilters.minPrice}
+          onChange={(e) => handleInputChange("minPrice", e.target.value)}
+        />
       </div>
 
-      {/* Rating Filter */}
-      <div className="filter-rating mb-6">
-        <label className="block text-sm font-medium text-gray-700">Rating</label>
-        <div className="flex gap-2 mt-2">
-          {ratings.map((rating) => (
-            <div key={rating} className="flex items-center">
-              <input
-                type="radio"
-                id={`rating-${rating}`}
-                name="rating"
-                value={rating}
-                onChange={() => handleInputChange('rating', rating)}
-                className="w-4 h-4 text-pink-500"
-              />
-              <label htmlFor={`rating-${rating}`} className="ml-2 text-sm text-gray-700">
-                {rating}★
-              </label>
-            </div>
-          ))}
-        </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Max Price</label>
+        <input
+          type="number"
+          className="w-full p-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
+          placeholder="e.g. 1000"
+          value={selectedFilters.maxPrice}
+          onChange={(e) => handleInputChange("maxPrice", e.target.value)}
+        />
       </div>
 
-      {/* Location Filter (Proximity) */}
-      <div className="filter-location mb-6">
-        <label className="block text-sm font-medium text-gray-700">Location</label>
-        <select
-          className="w-full p-3 mt-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          onChange={(e) => handleInputChange('location', e.target.value)}
-        >
-          <option value="">All Locations</option>
-          {locations.map((location) => (
-            <option key={location} value={location}>
-              {location}
-            </option>
-          ))}
-        </select>
-      </div>
+      <Button className="w-full flex items-center justify-center">
+        Apply Filters
+      </Button>
     </div>
-  );
-};
-
-export default Filter;
+  )
+}

@@ -1,21 +1,30 @@
 'use client';
 
 import { useState } from 'react';
-import Footer from '@/components/Footer';
 import ProductBanner from '@/components/ProductBanner';
-import { ChevronRight, FilterIcon, X } from 'lucide-react';
+import { FilterIcon } from 'lucide-react';
 import ProductList from '@/components/ProductList';
 import Filter from '@/components/Filters';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Product } from '@/types/product';
+import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import Breadcrumb from '../Breadcrumb';
 import { useSearchQuery } from '@/store/app-api';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProductPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const searchParams = useSearchParams();
+  const categoryIdSearchQuery = searchParams.get('categoryId') || '';
+  const subCategoryIdSearchQuery = searchParams.get('subCategoryId') || '';
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryIdSearchQuery);
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>(subCategoryIdSearchQuery);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const { data } = useSearchQuery({params: { keyword: "" }});
+  const { data } = useSearchQuery({
+    params: {
+      keyword: "",
+      ...(selectedCategory && { categoryId: selectedCategory }),
+      ...(selectedSubCategory && { subCategoryId: selectedSubCategory }),
+    },
+  });
 
   const categories = ['Category 1', 'Category 2', 'Category 3'];
 
@@ -24,7 +33,6 @@ export default function ProductPage() {
     // setIsFilterOpen(false); // Close filter after selection on mobile
   };
 
-  
   const filteredProducts = selectedCategory
     ? data?.filter((product) => product.category === selectedCategory)
     : data;
@@ -86,13 +94,8 @@ export default function ProductPage() {
         {/* Sidebar Filter for Desktop */}
         <div className="hidden lg:block">
           <Filter
-            categories={categories}
-            brands={[]}
-            priceRange={[10, 1000]}
-            materials={[]}
-            sizes={[]}
-            ratings={[1,2,3]}
-            locations={[]}
+            // categories={categories}
+            // subCategories={[]}
             handleFilterChange={handleCategoryChange}
           />
         </div>
@@ -112,16 +115,11 @@ export default function ProductPage() {
           <DialogHeader className="flex justify-between items-center pb-4">
             
           </DialogHeader>
-          <Filter
-            categories={categories}
-            brands={[]}
-            priceRange={[10, 1000]}
-            materials={[]}
-            sizes={[]}
-            ratings={[]}
-            locations={[]}
-            handleFilterChange={handleCategoryChange}
-          />
+            <Filter
+              // categories={categories}
+              // subCategories={[]}
+              handleFilterChange={handleCategoryChange}
+            />
         </DialogContent>
       </Dialog>
     </main>

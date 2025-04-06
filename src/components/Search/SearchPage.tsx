@@ -44,13 +44,8 @@ export default function SearchResultPage() {
         {/* Sidebar Filter for Desktop */}
         <div className="hidden lg:block">
           <Filter
-            categories={categories}
-            brands={[]}
-            priceRange={[10, 1000]}
-            materials={[]}
-            sizes={[]}
-            ratings={[1, 2, 3, 4, 5]}
-            locations={[]}
+            // categories={categories.map((category) => ({ label: category, value: category }))}
+            // subCategories={[]}
             handleFilterChange={handleCategoryChange}
           />
         </div>
@@ -77,16 +72,11 @@ export default function SearchResultPage() {
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
         <DialogContent className="fixed bottom-0 w-screen h-screen py-6 bg-white overflow-y-auto">
           <DialogHeader className="flex justify-between items-center pb-4" />
-          <Filter
-            categories={categories}
-            brands={[]}
-            priceRange={[10, 1000]}
-            materials={[]}
-            sizes={[]}
-            ratings={[]}
-            locations={[]}
-            handleFilterChange={handleCategoryChange}
-          />
+            <Filter
+              // categories={categories.map((category) => ({ label: category, value: category }))}
+              // subCategories={[]}
+              handleFilterChange={handleCategoryChange}
+            />
         </DialogContent>
       </Dialog>
     </main>
