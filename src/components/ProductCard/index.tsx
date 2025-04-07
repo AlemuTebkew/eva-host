@@ -3,22 +3,19 @@ import { Button } from "@/components/ui/button";
 import ImageSlider from "../ImageSlider/ImageSlider";
 import Link from "next/link";
 import { Product } from "@/types/product";
+import { url } from "inspector";
 
 interface ProductCardProps {
-  images: string[];
   product: Product;
-  productName: string;
-  supplier: string;
-  priceRange: string;
   otherSuppliersCount: number;
 }
 
-export default function ProductCard({ images, product, supplier, priceRange, otherSuppliersCount }: ProductCardProps) {
+export default function ProductCard({ product, otherSuppliersCount }: ProductCardProps) {
   return (
     <Link href={`/products/${product.id}`} className="bg-white sm:p-2 rounded">
       <div className="rounded-lg overflow-hidden">
         {/* Image Slider */}
-        <ImageSlider images={images} autoSlide={true} />
+        <ImageSlider images={product.images.map((image)=> `http://13.60.253.93:5007/files/${image}`)} autoSlide={true} />
 
         {/* Product Details */}
         <div className="px-2 mt-3 flex flex-col gap-1">
@@ -26,11 +23,11 @@ export default function ProductCard({ images, product, supplier, priceRange, oth
             {product.name}
           </h3>
 
-          <p className="font-bold lg:text-lg">{product.price}</p>
+          <p className="font-bold lg:text-lg">{product.priceRange? `${product.priceRange.min} - ${product.priceRange.max}` : product.price}</p>
 
           <div className="flex items-center underline">
-            <span className="truncate max-w-full text-gray-700" title={product.vendor.companyName}>
-              {product.vendor.companyName}
+            <span className="truncate max-w-full text-gray-700" title={product.vendor.name}>
+              {product.vendor.name}
             </span>
           </div>
           <div>

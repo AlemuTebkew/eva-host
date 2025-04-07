@@ -12,6 +12,7 @@ import { useFilterProductsQuery } from '@/store/app-api';
 import ProductListSkeleton from '../Skeleton/ProductListSkeleton';
 import { FilterType, SortOption, SortValue } from '@/types/product';
 import SortDropdown from '../Sort';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const sortOptions: SortOption[] = [
   {
@@ -33,7 +34,7 @@ const sortOptions: SortOption[] = [
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const router = useRouter()
-  const searchQuery = searchParams.get('search') || '';
+  const searchQuery = searchParams.get('keyword') || '';
   const categoryIdSearchQuery = searchParams.get('categoryId') || '';
   const subCategoryIdSearchQuery = searchParams.get('subCategoryId') || '';
   const minPriceSearchQuery = searchParams.get('minPrice') || '';
@@ -138,13 +139,14 @@ export default function SearchPage() {
       />
 
       {/* Mobile Filter Button */}
-      <div className="flex justify-end items-center w-full mt-6 mb-2 pr-1 gap-2 lg:hidden">
-          <Button variant={"outline"} className=''>
+      <div className="flex justify-end items-center w-full pr-1 gap-2 lg:hidden my-2">
+          <Button variant={"outline"} className='' onClick={() => setIsFilterOpen(true)}>
             <FilterIcon className="w-8 h-8 text-gray-700" />
           </Button>
-          <Button variant={"outline"} className=''>
+          <SortDropdown sortOptions={sortOptions} selectedSort={selectedSort} onChange={handleSortChange}/>
+          {/* <Button variant={"outline"} className=''>
             <SortDesc className="w-6 h-6 text-gray-700" />
-          </Button>
+          </Button> */}
       </div>
 
       {/* Product List Section */}
@@ -155,9 +157,9 @@ export default function SearchPage() {
       }
       {
         isSuccess && data && (
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 my-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
             <div className="hidden lg:block">
-              <Filter onApplyFilters={handleOnApplyFilter}/>
+              <Filter onApplyFilters={handleOnApplyFilter} onClose={setIsFilterOpen}/>
             </div>
             <div className="col-span-4 flex flex-col">
               <div>
@@ -205,14 +207,32 @@ export default function SearchPage() {
         )
       }
       {/* Mobile Filter Dialog */}
-      <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="fixed bottom-0 w-screen h-screen py-6 bg-white overflow-y-auto">
-          <DialogHeader className="flex justify-between items-center pb-4">
-            
-          </DialogHeader>
-            <Filter onApplyFilters={handleOnApplyFilter}/>
-        </DialogContent>
-      </Dialog>
+      <AnimatePresence>
+        {isFilterOpen && (
+          <>
+            {/* Overlay background */}
+            <motion.div
+              className="fixed inset-0 bg-black bg-opacity-40 z-50 lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsFilterOpen(false)} // Close on click outside
+            />
+
+            {/* Filter panel */}
+            <motion.div
+              className="fixed right-0 top-0 bottom-0 bg-white z-50 h-screen shadow-lg lg:hidden"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+            >
+              <Filter onApplyFilters={handleOnApplyFilter} onClose={setIsFilterOpen}/>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
     </main>
   );
 }

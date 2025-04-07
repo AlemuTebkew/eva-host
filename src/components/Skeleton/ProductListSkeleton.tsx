@@ -4,7 +4,7 @@ const ProductListSkeleton = ({ productCount = 8 }) => {
   return (
     <div className="grid grid-cols-5 pt-8">
       {/* Filter Panel - Hidden on Mobile */}
-      <div className="p-4 hidden lg:block bg-white rounded-lg ">
+      <div className="hidden lg:p-4 lg:block bg-white rounded-lg ">
         <div className="space-y-4">
           {/* Category Filters */}
           <div>
@@ -31,7 +31,7 @@ const ProductListSkeleton = ({ productCount = 8 }) => {
       </div>
 
       {/* Main Product List */}
-      <div className="w-full px-4 col-span-5 lg:col-span-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="w-full col-span-5 lg:col-span-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:px-4">
         {[...Array(productCount)].map((_, index) => (
           <div key={index} className="bg-white rounded-lg p-4 flex flex-col">
             <Skeleton className="h-48 w-full mb-4 rounded" />

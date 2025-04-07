@@ -1,9 +1,10 @@
 import { useGetCategoriesQuery } from "@/store/app-api";
 import { Category } from "@/types/category";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import Select from "react-select";
 import { Button } from "../ui/button";
 import { useSearchParams } from "next/navigation";
+import { on } from "events";
 
 interface Option {
   label: string;
@@ -17,10 +18,7 @@ interface FilterProps {
     minPrice?: string;
     maxPrice?: string;
   }) => void;
-  selectedCategory?: string;
-  selectedSubCategory?: string;
-  minPrice?: string;
-  maxPrice?: string;
+  onClose: React.Dispatch<SetStateAction<boolean>>
 }
 
 const customSelectStyles = {
@@ -44,7 +42,7 @@ const customSelectStyles = {
   }),
 };
 
-export default function Filter({ onApplyFilters }: FilterProps) {
+export default function Filter({ onApplyFilters, onClose }: FilterProps) {
   const searchParams = useSearchParams();
   const categoryIdSearchQuery = searchParams.get("categoryId") || "";
   const subCategoryIdSearchQuery = searchParams.get("subCategoryId") || "";
@@ -99,11 +97,15 @@ export default function Filter({ onApplyFilters }: FilterProps) {
       minPrice: selectedFilters.minPrice,
       maxPrice: selectedFilters.maxPrice,
     });
+    onClose(false);
   };
 
   return (
     <div className="p-6 bg-white rounded-lg max-w-xs w-full h-full space-y-6">
-      <h3 className="text-2xl font-semibold text-gray-800">Filter By</h3>
+      <div className="flex justify-between items-center">
+        <h3 className="text-xl font-semibold text-gray-800">Filter By</h3>
+        <Button variant={"ghost"} className="lg:hidden" onClick={() => onClose(false)}>Cancel</Button>
+      </div>
 
       {/* Category */}
       <div>

@@ -2,21 +2,19 @@
 export interface Product {
   id: string;
   name: string;
-  description: string;
   price: string;
-  image: string | null;
+  image: string;
+  images: string[]
   minOrderQuantity: string | null;
   vendor: {
     id: string;
-    companyName: string;
+    name: string;
     rating: number | null;
   };
-  category: string;
-  brand: string;
-  attributes: Array<{
-    name: string;
-    value: string;
-  }>;
+  priceRange: {
+    min: number,
+    max: number
+  }
 }
 
 export interface PorductFilterResponse {

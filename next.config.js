@@ -6,8 +6,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'ec2-16-171-239-43.eu-north-1.compute.amazonaws.com',
-        port: '5006',
+        hostname: '13.60.253.93',
+        port: '5007',
         pathname: '/**',
       },
       {
@@ -18,7 +18,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'tse2.mm.bing.net',
+        hostname: 'cdn-icons-png.flaticon.com',
         pathname: '/**'
       },
       {

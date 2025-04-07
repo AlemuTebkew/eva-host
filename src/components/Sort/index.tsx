@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { SortDesc } from "lucide-react"
-import { SortOption, SortValue } from "@/types/product"
+import { useEffect, useRef, useState } from "react";
+import { SortDesc } from "lucide-react";
+import { SortOption, SortValue } from "@/types/product";
 
 interface SortDropdownProps {
-  sortOptions: SortOption[]
-  selectedSort: SortValue | null
-  onChange: (value: SortValue) => void
+  sortOptions: SortOption[];
+  selectedSort: SortValue | null;
+  onChange: (value: SortValue) => void;
 }
 
 export default function SortDropdown({
@@ -15,27 +15,41 @@ export default function SortDropdown({
   selectedSort,
   onChange,
 }: SortDropdownProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => setIsOpen((prev) => !prev)
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const isSelected = (option: SortOption) =>
     selectedSort?.sortBy === option.value.sortBy &&
-    selectedSort?.sortOrder === option.value.sortOrder
+    selectedSort?.sortOrder === option.value.sortOrder;
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className="relative w-max">
+    <div ref={dropdownRef} className="relative w-max">
       <button
         onClick={toggleDropdown}
         className="text-sm text-gray-800 border border-gray-300 px-4 py-2 rounded-md flex items-center gap-2 hover:border-gray-400 focus:outline-none"
       >
-        <SortDesc size={16} className="text-gray-500" />
-        Sort By:{" "}
-        {
-          sortOptions.find((option) =>
-            isSelected(option)
-          )?.label ?? "Select"
-        }
+        <SortDesc size={16}/>
+        <span className="hidden lg:inline">
+          Sort By:{" "}
+          {sortOptions.find((option) => isSelected(option))?.label ?? "Select"}
+        </span>
       </button>
 
       {isOpen && (
@@ -50,8 +64,8 @@ export default function SortDropdown({
                     className="mr-2"
                     checked={isSelected(option)}
                     onChange={() => {
-                      onChange(option.value)
-                      setIsOpen(false)
+                      onChange(option.value);
+                      setIsOpen(false);
                     }}
                   />
                   {option.label}
@@ -62,5 +76,5 @@ export default function SortDropdown({
         </div>
       )}
     </div>
-  )
+  );
 }

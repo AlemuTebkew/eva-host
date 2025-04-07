@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "../ui/button";
@@ -9,11 +9,17 @@ import { useLazyGetSearchSuggestionQuery } from "@/store/app-api";
 
 export default function SearchBar() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
   const searchParams = useSearchParams();
   const searchParam = searchParams.get("q") || "";
   const [searchQuery, setSearchQuery] = useState(searchParam);
+
   const router = useRouter();
-  const [GetSuggestions, { data }] = useLazyGetSearchSuggestionQuery()
+  const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [GetSuggestions, { data }] = useLazyGetSearchSuggestionQuery();
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -28,17 +34,35 @@ export default function SearchBar() {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setIsInputFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      {/* Desktop Search Bar */}
-      <div className="relative hidden lg:flex flex-col w-full z-50">
+      {/* Desktop Search */}
+      <div ref={containerRef} className="relative hidden lg:flex flex-col w-full z-50">
         <div className="flex items-center border rounded-full overflow-hidden bg-white w-full relative z-20">
           <input
+            ref={inputRef}
             type="text"
             value={searchQuery}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setTimeout(() => setIsInputFocused(false), 150)}
             onChange={(e) => {
-              setSearchQuery(e.target.value)
-              GetSuggestions({params: { keyword: e.target.value }})
+              setSearchQuery(e.target.value);
+              GetSuggestions({ params: { keyword: e.target.value } });
             }}
             onKeyDown={handleKeyDown}
             placeholder="What are you looking for?"
@@ -49,16 +73,19 @@ export default function SearchBar() {
           </button>
         </div>
 
-        {/* Suggestions Dropdown */}
-        {data && data.length > 0 && searchQuery.trim() && (
-          <div className="absolute top-full mt-1 left-0 w-full bg-white border rounded-md shadow-lg z-10 max-h-64 overflow-y-auto z-99999">
+        {data && data.length > 0 && searchQuery.trim() && isInputFocused && (
+          <div className="absolute top-full mt-1 left-0 w-full bg-white border rounded-md shadow-lg z-50 max-h-64 overflow-y-auto">
+            <div className="px-4 py-2 border-b">
+              <p className="text-sm font-medium text-gray-600">Suggestions</p>
+            </div>
             {data.map((suggestion, index) => (
               <button
                 key={index}
                 onClick={() => {
                   setSearchQuery(suggestion);
-                  router.push(`/search?q=${encodeURIComponent(suggestion)}`);
-                  setIsMobileSearchOpen(false);
+                  router.push(`/search?keyword=${encodeURIComponent(suggestion)}`);
+                  setIsInputFocused(false);
+                  inputRef.current?.blur();
                 }}
                 className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
               >
@@ -69,7 +96,7 @@ export default function SearchBar() {
         )}
       </div>
 
-      {/* Mobile Search Bar */}
+      {/* Mobile Search Trigger */}
       <div
         className="lg:hidden flex items-center border rounded-full px-4 py-2 w-full bg-gray-100"
         onClick={() => setIsMobileSearchOpen(true)}
@@ -84,7 +111,7 @@ export default function SearchBar() {
         />
       </div>
 
-      {/* Mobile Full-Screen Search */}
+      {/* Mobile Search Modal */}
       <AnimatePresence>
         {isMobileSearchOpen && (
           <motion.div
@@ -99,12 +126,13 @@ export default function SearchBar() {
                 <div className="flex-1 flex items-center border rounded-full px-4 py-2 w-full bg-white">
                   <Search size={20} className="text-gray-500 mr-2" />
                   <input
+                    ref={inputRef}
                     type="text"
                     value={searchQuery}
                     onChange={(e) => {
-                      setSearchQuery(e.target.value)
-                      GetSuggestions({params: { keyword: e.target.value }})
-                      }}
+                      setSearchQuery(e.target.value);
+                      GetSuggestions({ params: { keyword: e.target.value } });
+                    }}
                     onKeyDown={handleKeyDown}
                     placeholder="What are you looking for?"
                     className="w-full text-sm focus:outline-none bg-transparent"
@@ -119,7 +147,6 @@ export default function SearchBar() {
 
             <Separator className="border border-[.2px]" />
 
-            {/* Mobile Search Suggestions */}
             {data && data?.length > 0 && searchQuery.trim() !== "" && (
               <div className="px-4 pt-2">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden border">
@@ -132,8 +159,9 @@ export default function SearchBar() {
                       className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm text-gray-800"
                       onClick={() => {
                         setSearchQuery(suggestion);
-                        router.push(`/search?q=${encodeURIComponent(suggestion)}`);
+                        router.push(`/search?keyword=${encodeURIComponent(suggestion)}`);
                         setIsMobileSearchOpen(false);
+                        inputRef.current?.blur();
                       }}
                     >
                       {suggestion}
