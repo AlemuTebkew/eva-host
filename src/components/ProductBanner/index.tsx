@@ -51,7 +51,7 @@ export default function ProductBanner({
   }, [stopAutoSlide]);
 
   return (
-    <div className="relative w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="relative w-full mx-auto bg-white rounded-lg overflow-hidden">
       {/* Image Container with Link */}
       <div
         onMouseEnter={startAutoSlide}

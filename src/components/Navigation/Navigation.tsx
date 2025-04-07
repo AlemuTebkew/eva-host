@@ -29,8 +29,8 @@ export default function MegaMenu() {
     }
   }, [isSuccess, data])
   return (
-    <div className="w-full flex justify-between py-2">
-      <NavigationMenu className="w-full flex justify-between">
+    <div className="w-full flex justify-between py-2 z-40">
+      <NavigationMenu className="w-full flex justify-between z-40">
         <NavigationMenuList className="flex gap-8">
           <NavigationMenuItem>
             <NavigationMenuTrigger className="text-md">All Categories</NavigationMenuTrigger>

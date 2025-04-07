@@ -55,7 +55,7 @@ export default function ImageSlider({
 
 
   return (
-    <div className="z-0 relative w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+    <div className="z-0 relative w-full mx-auto bg-white rounded-lg overflow-hidden cursor-pointer">
       {/* Image Container */}
       <div
         ref={sliderRef}
@@ -79,7 +79,7 @@ export default function ImageSlider({
       </div>
 
       {/* Navigation Arrows */}
-      <Button
+      {/* <Button
         variant="ghost"
         size="icon"
         onClick={prevSlide}
@@ -96,7 +96,7 @@ export default function ImageSlider({
         className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-100 text-gray-800 hover:bg-gray-300 rounded-full"
       >
         <ChevronRight className="w-4 h-4" />
-      </Button>
+      </Button> */}
 
       {/* Pagination */}
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
@@ -114,9 +114,9 @@ export default function ImageSlider({
       </div>
 
       {/* Slide Counter */}
-      <div className="absolute top-2 right-4 bg-gray-800 text-white px-2 py-1 text-xs rounded-lg">
+      {/* <div className="absolute top-2 right-4 bg-gray-800 text-white px-2 py-1 text-xs rounded-lg">
         {currentIndex + 1} / {totalSlides}
-      </div>
+      </div> */}
     </div>
   );
 }

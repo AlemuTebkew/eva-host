@@ -1,13 +1,4 @@
-
-import Footer from "@/components/Footer";
-import ProductBanner from "@/components/ProductBanner";
-import { ChevronRight } from "lucide-react";
 import { Metadata } from "next";
-import ProductList from "@/components/ProductList";
-import { useState } from "react";
-import Filter from "@/components/Filters";
-import { Product } from "@/types/product";
-import ProductPage from "@/components/Product/ProductPage";
 import ProductDetail from "@/components/Product/ProductDetail";
 
 export const metadata: Metadata = {
@@ -21,8 +12,7 @@ export const metadata: Metadata = {
   twitter: {},
 };
 
-export default function Home() {
- 
+export default function ProductDetailPage() {
   return (
     <ProductDetail/>
   );

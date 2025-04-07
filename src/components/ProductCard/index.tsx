@@ -2,42 +2,51 @@ import { BadgeCheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ImageSlider from "../ImageSlider/ImageSlider";
 import Link from "next/link";
+import { Product } from "@/types/product";
 
 interface ProductCardProps {
   images: string[];
+  product: Product;
   productName: string;
   supplier: string;
   priceRange: string;
   otherSuppliersCount: number;
 }
 
-export default function ProductCard({ images, productName, supplier, priceRange, otherSuppliersCount }: ProductCardProps) {
+export default function ProductCard({ images, product, supplier, priceRange, otherSuppliersCount }: ProductCardProps) {
   return (
-    <Link href={'/products/1'} className="bg-white p-2 rounded">
+    <Link href={`/products/${product.id}`} className="bg-white sm:p-2 rounded">
       <div className="rounded-lg overflow-hidden">
         {/* Image Slider */}
         <ImageSlider images={images} autoSlide={true} />
 
         {/* Product Details */}
-        <div className="mt-3">
-          <h3 className="text-lg font-semibold">{productName}</h3>
-          <div className="text-blue-600 font-medium flex items-center">
-            {supplier} <BadgeCheckIcon className="w-4 h-4 ml-1 text-blue-600" />
-          </div>
-          {/* <p className="text-gray-500 text-sm mt-1">Price: {priceRange}</p> */}
-          <p className="text-red-600 font-bold">{priceRange} / Ton</p>
+        <div className="px-2 mt-3 flex flex-col gap-1">
+          <h3 className="truncate text-sm font-medium text-gray-800 max-w-full" title={product.name}>
+            {product.name}
+          </h3>
 
+          <p className="font-bold lg:text-lg">{product.price}</p>
+
+          <div className="flex items-center underline">
+            <span className="truncate max-w-full text-gray-700" title={product.vendor.companyName}>
+              {product.vendor.companyName}
+            </span>
+          </div>
+          <div>
+            <p>Min Order : {product.minOrderQuantity}</p>
+          </div>
           {otherSuppliersCount > 0 && (
-            <p className="text-gray-600 text-sm mt-2">
+            <p className="text-gray-600 text-sm">
               Available from <span className="font-semibold">{otherSuppliersCount}</span> other suppliers
             </p>
           )}
         </div>
 
         {/* Buttons */}
-        <div className="mt-4 space-y-2">
-          <Button className="w-full text-black bg-[#F1F2F4] border border-[#E9EAEC]">
-            View Suppliers
+        <div className="w-full mt-4 mb-4 flex justify-center lg:mb-0">
+          <Button className="text-black bg-[#F1F2F4] border border-[#E9EAEC]">
+            Contact Suppliers
           </Button>
         </div>
       </div>

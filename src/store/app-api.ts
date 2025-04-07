@@ -1,5 +1,5 @@
 import { Category } from "@/types/category";
-import { Product } from "@/types/product";
+import { MetaData, PorductFilterResponse, Product } from "@/types/product";
 import { QueryRequest } from "@/types/queryRequest";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -16,22 +16,45 @@ export const appApi = createApi({
         return response.data;
       },
     }),
-
-    search: builder.query<Product[], QueryRequest>({
+    filterProducts: builder.query<PorductFilterResponse, QueryRequest>({
       query: (queryRequest) => ({
-        url: "/user/products/search",
+        url: "/user/products",
         method: "GET",
         params: queryRequest.params
       }),
-      transformResponse: (response: { status: boolean; message: string; data: Product[] }) => {
-        return response.data;
+      transformResponse: (response: { status: boolean; message: string; data: Product[], meta: MetaData }) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
       },
     }),
+    getProductDetail: builder.query<Product, string>({
+      query: (slug) => ({
+        url: `/user/products/${slug}`,
+        method: "GET",
+      }),
+      transformResponse: (response: { status: boolean; message: string; data: Product }) => {
+        return response.data;
+      }
+    }),
+    getSearchSuggestion: builder.query<string[], QueryRequest>({
+      query: (queryRequest) => ({
+        url: `/user/products/search`,
+        method: "GET",
+        params: queryRequest.params
+      }),
+      transformResponse: (response: { status: boolean; message: string; data: string[] }) => {
+        return response.data
+      }
+    })
   }),
 });
 
 
 export const { 
   useGetCategoriesQuery,
-  useSearchQuery
+  useFilterProductsQuery,
+  useGetProductDetailQuery,
+  useLazyGetSearchSuggestionQuery
 } = appApi;

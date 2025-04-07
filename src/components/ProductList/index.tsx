@@ -1,52 +1,25 @@
-import { Product } from '@/types/product';
+import { MetaData, Product } from '@/types/product';
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../ProductCard';
 import PaginationControls from '../Pagination';
+import GenericPagination from '../Pagination';
+import { on } from 'events';
 
 interface ProductListProps {
   products: Product[];
-  filters: any;
+  metaData: MetaData;
+  onPageChange: (page: number) => void;
 }
 
-const ITEMS_PER_PAGE = 10;
+const ProductList: React.FC<ProductListProps> = ({ products, metaData, onPageChange }) => {
 
-const ProductList: React.FC<ProductListProps> = ({ products, filters }) => {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-
-  useEffect(() => {
-    const applyFilters = () => {
-      let filtered = [...products];
-
-      if (filters.category) {
-        filtered = filtered.filter(product => product.category === filters.category);
-      }
-
-
-      if (filters.price) {
-        filtered = filtered.filter(product => product.price <= filters.price);
-      }
-
-      setCurrentPage(1); // Reset to page 1 when filters change
-      setFilteredProducts(filtered);
-    };
-
-    applyFilters();
-  }, [filters, products]);
-
-  const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
 
   return (
     <section className="w-full lg:px-0">
       {/* Product Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:gap-8">
-        {paginatedProducts.length > 0 ? (
-          paginatedProducts.map((product) => (
+      <div className="grid grid-cols-2 sm:gap-6 sm:grid-cols-3 md:grid-cols-4 lg:gap-4">
+        {products.length > 0 ? (
+          products.map((product) => (
             <ProductCard
               key={product.id}
               images={[
@@ -54,8 +27,9 @@ const ProductList: React.FC<ProductListProps> = ({ products, filters }) => {
                 'https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg',
                 'https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg'
               ]}
+              product={product}
               productName={product.name}
-              supplier={product.vendor.name}
+              supplier={product.vendor.companyName}
               priceRange={product.price.toString()}
               otherSuppliersCount={4}
             />
@@ -69,13 +43,12 @@ const ProductList: React.FC<ProductListProps> = ({ products, filters }) => {
       </div>
 
       {/* Pagination Controls */}
-      {3 > 1 && (
-        <PaginationControls
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
-      )}
+      
+      <GenericPagination
+        currentPage={metaData.page}
+        totalPages={metaData.totalPages}
+        onPageChange={(page) => {onPageChange(page)}}
+      />
     </section>
   );
 };

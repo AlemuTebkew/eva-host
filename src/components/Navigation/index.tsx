@@ -12,7 +12,7 @@ export default function Navbar() {
   const [openCategory, setOpenCategory] = useState(false);
 
   return (
-    <div className="w-full shadow-md">
+    <div className="w-full shadow-md bg-white">
       <nav className="w-full mx-auto flex items-center px-4 py-3 bg-white justify-between gap-4 lg:px-6 lg:gap-12 lg:max-w-c-1235">
         {/* Left Side */}
         <div className="flex items-center gap-4">
