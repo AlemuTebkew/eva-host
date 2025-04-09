@@ -2,6 +2,7 @@ import CallToAction from "@/components/CallToAction";
 import FeaturedSuppliers from "@/components/Features";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import Navbar from "@/components/Navigation";
 import SupplierCallToAction from "@/components/SupplierCallToAction";
 import Testimonials from "@/components/Testimonial";
 import { Metadata } from "next";
@@ -29,11 +30,13 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="max-w-c-1235 mx-auto">
+      <Navbar/>
       <Hero />
       <FeaturedSuppliers/>
       <CallToAction/>
       <Testimonials/>
       <SupplierCallToAction/>
+      <Footer/>
     </main>
   );
 }

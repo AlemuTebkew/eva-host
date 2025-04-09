@@ -157,7 +157,7 @@ export default function SearchPage() {
       }
       {
         isSuccess && data && (
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:mt-8">
             <div className="hidden lg:block">
               <Filter onApplyFilters={handleOnApplyFilter} onClose={setIsFilterOpen}/>
             </div>

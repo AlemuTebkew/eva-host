@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import ProductDetail from "@/components/Product/ProductDetail";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navigation";
 
 export const metadata: Metadata = {
   title: "Home Page",
@@ -14,6 +16,10 @@ export const metadata: Metadata = {
 
 export default function ProductDetailPage() {
   return (
-    <ProductDetail/>
+    <>
+      <Navbar/>
+      <ProductDetail/>
+      <Footer/>
+    </>
   );
 }

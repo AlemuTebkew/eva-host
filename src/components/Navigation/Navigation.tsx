@@ -66,7 +66,7 @@ export default function MegaMenu() {
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className="cursor-pointer hover:text-primary">
+            <NavigationMenuLink href="/register-as-supplier" className="cursor-pointer hover:text-primary">
               Become a Supplier
             </NavigationMenuLink>
           </NavigationMenuItem>

@@ -53,9 +53,11 @@ export default function Navbar() {
             <button className="text-gray-700 hover:text-orange-500">
               <Globe size={24} />
             </button>
-            <button className="text-gray-700 hover:text-orange-500">
-              <User size={24} />
-            </button>
+            <Link href={'/login'}>
+              <button className="text-gray-700 hover:text-orange-500">
+                <User size={24} />
+              </button>
+            </Link>
             <Button className="bg-orange-500 text-white px-8 py-1 rounded-full">
               Sign Up
             </Button>

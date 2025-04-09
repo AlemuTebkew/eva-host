@@ -1,7 +1,6 @@
 "use client";
 
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import { ThemeProvider } from "next-themes";
 import "../styles/index.css";
 import { Provider } from "react-redux";
@@ -26,9 +25,9 @@ export default function RootLayout({
             >
               <Provider store={store}>
                 {/* <Header /> */}
-                <Navbar/>
+                {/* <Navbar/> */}
                 {children}
-                <Footer />
+                {/* <Footer /> */}
               </Provider>
             </ThemeProvider>
       </body>
