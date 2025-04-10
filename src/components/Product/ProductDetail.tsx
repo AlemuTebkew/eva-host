@@ -5,45 +5,13 @@ import Breadcrumb from "../Breadcrumb";
 import ProductDescription from "../ProductDescription";
 import { useParams } from "next/navigation";
 import { useGetProductDetailQuery } from "@/store/app-api";
+import { HtmlRenderer } from "../HtmlRenderer";
+import ProductListSkeleton from "../Skeleton/ProductListSkeleton";
+import ProductDetailSkeleton from "../Skeleton/ProductDetailSkeleton";
+import ProductImageSlider from "../ImageSlider/CustomImageSlider";
+import CustomProductDetail from "./CustomProductDetail";
 
-const ProductDetail = () => {
-  const {slug} = useParams()
-  const {data} = useGetProductDetailQuery(slug as string)
-  return (
-    <div className="container my-4">
-       <Breadcrumb
-          items={[
-            {
-              label: 'Home',
-              href: '/'
-            },
-            {
-              label: 'Building Materials',
-              href: '/products'
-            },
-            {
-              label: 'Cement & Concrete',
-              href: '/products/cement-concrete'
-            },
-            {
-              label: 'Portland  Cement',
-              href: '/products/portland -concrete'
-            }
-          ]}
-        />
-        <div className="flex flex-col md:flex-row md:justify-between bg-white py-6 rounded-lg mx-auto mt-4">
-          {/* Image Slider */}
-          <div className="w-full md:w-1/2">
-            <ImageSlider images={[
-            "https://tse2.mm.bing.net/th?id=OIP.a-YDWw7IcFGxYeuz_1wUrgHaHa&pid=Api",
-            "https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg",
-            "https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg"]} 
-            />
-            {/* Product Description */}  
-            <div className="p-4 bg-white rounded-lg space-y-4 mt-4">
-                <h2 className="text-lg font-semibold text-indigo-600">🔥 High-Performance Portland Cement (Grade 53)</h2>
-                
-                <p className="text-sm"><strong>📝 About the Product:</strong> High-strength, fast-setting cement for heavy-duty construction. Ideal for bridges, skyscrapers, and large infrastructure. Low heat hydration for mass concrete applications like dams and flyovers. Manufactured under strict quality control, meeting international standards.</p>
+const productHtmlFromCKEditor = `<p className="text-sm"><strong>📝 About the Product:</strong> High-strength, fast-setting cement for heavy-duty construction. Ideal for bridges, skyscrapers, and large infrastructure. Low heat hydration for mass concrete applications like dams and flyovers. Manufactured under strict quality control, meeting international standards.</p>
                 
                 <h3 className="text-md font-semibold text-indigo-600">🌟 Key Features & Benefits</h3>
                 <ul className="list-disc list-inside text-sm space-y-2">
@@ -109,69 +77,107 @@ const ProductDetail = () => {
                       <td className="px-3 py-2">BS EN 197-1</td>
                     </tr>
                   </tbody>
-                </table>
-            </div>
-          </div>
-          {/* <ProductDescription
-            productName='HP Intel Core i7 11th Gen 14" FHD Laptop'
-            suppliers={[
-              { name: "Nexus Industrial Supplies", price: 1900, minOrder: 50, discount: { minQuantity: 100, percent: 10 } },
-              { name: "Supplier B", price: 2200, minOrder: 20 },
-              { name: "Supplier C", price: 3600, minOrder: 10, discount: { minQuantity: 50, percent: 5 } },
-              { name: "Supplier D", price: 2500, minOrder: 30 },
-              { name: "Supplier E", price: 2700, minOrder: 15 },
+                </table>`
+
+const ProductDetail = () => {
+  const {slug} = useParams()
+  const {data, isLoading, isSuccess} = useGetProductDetailQuery(slug as string)
+  return (
+    <div className="max-w-c-1235 mx-auto mt-2 lg:mt-4 px-6 bg-white">
+      {
+        false && (
+          <ProductDetailSkeleton/>
+        )
+      }
+      {
+        true && (
+          <div className="flex py-8">
+            <CustomProductDetail
+            images={[
+              'https://www.peekage.com/blog/wp-content/uploads/2020/06/sephora-free-samples-1024x1024.jpg',
+              'https://www.photomarketingwizard.com/wp-content/uploads/2018/02/ecommerce-product-photography-25-768x768.jpg',
+              'https://tse2.mm.bing.net/th?id=OIP.a-YDWw7IcFGxYeuz_1wUrgHaHa&pid=Api',
+
             ]}
-          /> */}
-          {
-            data && (
-              <div className="px-2 mt-3 flex flex-col gap-1">
-                <h3 className="truncate text-sm font-medium text-gray-800" title={data.name}>
-                  {data.name}
-                </h3>
-                
-                <p className="text-xl font-bold">${data.price}</p>
-
-                <div className="flex items-center underline text-md truncate" title={data.vendor.name}>
-                  {data.vendor.name}
-                </div>
-
-                {4 > 0 && (
-                  <p className="text-gray-600 text-sm">
-                    Available from <span className="font-semibold">{4}</span> other supplier{4 > 1 && 's'}
-                  </p>
-                )}
-
-                {/* Contact & Profile Links */}
-                <div className="flex gap-2 mt-2">
-                  <a
-                    href={`/suppliers/${encodeURIComponent(data.vendor.name.toLowerCase().replace(/\s+/g, '-'))}`}
-                    className="text-indigo-600 text-sm underline hover:text-indigo-800 transition"
-                  >
-                    View Supplier Profile
-                  </a>
-
-                  <button
-                    onClick={() => alert('Open contact modal or redirect to contact form')}
-                    className="text-sm text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded transition"
-                  >
-                    Contact Supplier
-                  </button>
-                </div>
-
-                {/* Order Info */}
-                <div className="text-sm mt-3">
-                  <p><strong>Min Order:</strong> {10} units</p>
-                  {true && (
-                    <p className="text-green-600">
-                      💸 <strong>{20}% off</strong> on orders over {100}
-                    </p>
-                  )}
-                </div>
-              </div>
-            )
-          }
-
-        </div>
+            title="Fashion Men's Stainless Steel Design Watch for Men Luxury Custom Logo Wristwatch Relogio Masculinos De Luxo Watches"
+            brand="Some brand"
+            price={data?.price ?? ""}
+            minOrderQty={5}
+            samplePrice={50}
+            rating={4.5}
+            reviews={100}
+            sold={500}
+            variations={['Color', 'Size']}
+            description={data?.description ?? ""}
+            condition={data?.condition ?? ""}
+            attributes={data?.attributes ?? [
+              {
+                name: "Ram",
+                value: "4GB"
+              },
+              {
+                name: "CPU",
+                value: "i5"
+              }
+          ]}
+            priceUpdateDate={data?.priceUpdatedAt ?? ""}
+            vendor={data?.vendor ?? {
+              id: "3",
+              name: "Y Construction Material Supplier",
+              rating: 5
+            }}
+            priceTiers={[
+              {
+                minQty: 5,
+                price: 500
+              },
+              {
+                minQty: 10,
+                price: 800
+              }
+            ]}
+            otherVendors={[
+              {
+                id: "1",
+                price: "",
+                priceRange: {
+                  min: "1000",
+                  max: "2000"
+                },
+                vendor: {
+                  id: "9",
+                  name: "X Supplier"
+                }
+              },
+              {
+                id: "1",
+                price: "",
+                priceRange: {
+                  min: "1000",
+                  max: "2000"
+                },
+                vendor: {
+                  id: "9",
+                  name: "X Supplier"
+                }
+              },
+              {
+                id: "1",
+                price: "",
+                priceRange: {
+                  min: "1000",
+                  max: "2000"
+                },
+                vendor: {
+                  id: "9",
+                  name: "X Supplier"
+                }
+              }
+            ]}
+            />
+          </div>
+        )
+      }
     </div>
   );
 };

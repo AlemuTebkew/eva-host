@@ -1,5 +1,5 @@
 import { Category } from "@/types/category";
-import { MetaData, PorductFilterResponse, Product } from "@/types/product";
+import { MetaData, PorductFilterResponse, Product, ProductDetails } from "@/types/product";
 import { QueryRequest } from "@/types/queryRequest";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -29,12 +29,12 @@ export const appApi = createApi({
         };
       },
     }),
-    getProductDetail: builder.query<Product, string>({
+    getProductDetail: builder.query<ProductDetails, string>({
       query: (slug) => ({
         url: `/user/products/${slug}`,
         method: "GET",
       }),
-      transformResponse: (response: { status: boolean; message: string; data: Product }) => {
+      transformResponse: (response: { status: boolean; message: string; data: ProductDetails }) => {
         return response.data;
       }
     }),
@@ -47,7 +47,7 @@ export const appApi = createApi({
       transformResponse: (response: { status: boolean; message: string; data: string[] }) => {
         return response.data
       }
-    })
+    }),
   }),
 });
 

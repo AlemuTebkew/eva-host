@@ -12,4 +12,4 @@ const SearchPage = () => {
   )
 }
 
-export default SearchResultPage
+export default SearchPage

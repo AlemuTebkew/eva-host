@@ -48,3 +48,42 @@ export interface SortValue {
   sortBy: string;
   sortOrder: string;
 }
+
+export interface ProductDetails {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  minOrderQuantity: string | null;
+  condition: string;
+  images: string[];
+  attributes: Attribute[];
+  vendor: {
+    id: string;
+    name: string;
+    rating: number | null;
+  };
+  priceUpdatedAt: string;
+  priceTiers: {
+    minQty: number,
+    price: number
+  }[]
+  otherVendors: {
+    id: string,
+    price?: string,
+    priceRange?: {
+      min: string,
+      max: string
+    },
+    vendor: {
+      id: string,
+      name: string,
+
+    }
+  }[]
+}
+
+interface Attribute {
+  name: string;
+  value: string;
+}

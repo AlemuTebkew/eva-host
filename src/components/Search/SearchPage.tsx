@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import ProductBanner from '@/components/ProductBanner';
-import { FilterIcon, SortDesc } from 'lucide-react';
+import { FilterIcon } from 'lucide-react';
 import ProductList from '@/components/ProductList';
 import Filter from '@/components/Filters';
-import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
 import { useFilterProductsQuery } from '@/store/app-api';
