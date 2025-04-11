@@ -27,7 +27,6 @@ export default function RootLayout({
                 {/* <Header /> */}
                 {/* <Navbar/> */}
                 {children}
-                {/* <Footer /> */}
               </Provider>
             </ThemeProvider>
       </body>

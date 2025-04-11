@@ -138,10 +138,11 @@ const CustomProductDetail = ({
           }
         </div>
 
-        <div className="flex items-center underline w-full border p-2 rounded">
+        <div className="flex items-center w-full border p-2 rounded justify-between">
           <span className="truncate max-w-full text-gray-700" title={vendor.name}>
             {vendor.name}
           </span>
+          <button className="bg-primary text-white p-2 rounded justify-self-end self-end">Contact Supplier</button>
         </div>
 
         {/* <button className="mt-4 bg-primary text-white px-4 py-2 rounded transition">
