@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import ProductBanner from '@/components/ProductBanner';
+import ProductBanner from '@/components/Banner';
 import { FilterIcon } from 'lucide-react';
-import ProductList from '@/components/ProductList';
-import Filter from '@/components/Filters';
+import ProductList from '@/components/Product/ProductList';
+import Filter from '@/components/Product/ProductFilter';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
 import { useFilterProductsQuery } from '@/store/app-api';
@@ -30,7 +30,12 @@ const sortOptions: SortOption[] = [
   },
 ]
 
-export default function SearchPage() {
+interface SearchPageProps {
+  hideVendor?: boolean
+  bgWite?: boolean
+}
+
+export default function SearchPage({hideVendor, bgWite}: SearchPageProps) {
   const searchParams = useSearchParams();
   const router = useRouter()
   const searchQuery = searchParams.get('keyword') || '';
@@ -118,7 +123,7 @@ export default function SearchPage() {
   }
 
   return (
-    <main className="max-w-c-1235 mx-auto px-2 pb-8 mt-2 lg:mt-4 lg:px-6 bg-[#F4F4F4]">
+    <main className={`max-w-c-1235 mx-auto px-2 pb-8 mt-2 lg:mt-4 lg:px-6 ${bgWite? "bg-white": "bg-[#F4F4F4]"}`}>
       {/* Banner */}
       <ProductBanner
       items={[
@@ -199,7 +204,7 @@ export default function SearchPage() {
                   </div> */}
                   <SortDropdown sortOptions={sortOptions} selectedSort={selectedSort} onChange={handleSortChange}/>
                 </div>
-                <ProductList products={data.data} metaData={data.meta} onPageChange={handleOnPageChange}/>
+                <ProductList products={data.data} metaData={data.meta} onPageChange={handleOnPageChange} hideVendor={hideVendor}/>
               </div>
             </div>
           </div>

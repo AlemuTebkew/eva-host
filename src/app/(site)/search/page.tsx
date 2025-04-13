@@ -7,7 +7,7 @@ const SearchPage = () => {
     <>
       <Navbar/>
       <SearchResultPage/>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 }

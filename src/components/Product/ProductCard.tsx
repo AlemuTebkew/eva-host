@@ -8,9 +8,10 @@ import { url } from "inspector";
 interface ProductCardProps {
   product: Product;
   otherSuppliersCount: number;
+  hideVendor?: boolean
 }
 
-export default function ProductCard({ product, otherSuppliersCount }: ProductCardProps) {
+export default function ProductCard({ product, otherSuppliersCount, hideVendor }: ProductCardProps) {
   return (
     <Link href={`/products/${product.id}`} className="bg-white sm:p-2 rounded">
       <div className="rounded-lg overflow-hidden">
@@ -24,20 +25,27 @@ export default function ProductCard({ product, otherSuppliersCount }: ProductCar
           </h3>
 
           <p className="font-bold lg:text-lg">{product.priceRange? `${product.priceRange.min} - ${product.priceRange.max}` : product.price}</p>
-
-          <div className="flex items-center underline">
-            <span className="truncate max-w-full text-gray-700" title={product.vendor.name}>
-              {product.vendor.name}
-            </span>
-          </div>
-          <div>
-            <p>Min Order : {product.minOrderQuantity}</p>
-          </div>
-          {otherSuppliersCount > 0 && (
+          {
+            !hideVendor && (
+              <div className="flex items-center underline">
+                <span className="truncate max-w-full text-gray-700" title={product.vendor.name}>
+                  {product.vendor.name}
+                </span>
+              </div>
+            )
+          }
+          {
+            product.minOrderQuantity && (
+              <div>
+                <p>Min Order : {parseInt(product.minOrderQuantity).toFixed()}</p>
+              </div>
+            )
+          }
+          {/* {otherSuppliersCount > 0 && (
             <p className="text-gray-600 text-sm">
               Available from <span className="font-semibold">{otherSuppliersCount}</span> other suppliers
             </p>
-          )}
+          )} */}
         </div>
 
         {/* Buttons */}

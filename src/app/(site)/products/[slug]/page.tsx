@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ProductDetail from "@/components/Product/ProductDetail";
+import ProductDetail from "@/components/Product/ProductDetailPage";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navigation";
 
@@ -14,12 +14,12 @@ export const metadata: Metadata = {
   twitter: {},
 };
 
-export default function ProductDetailPage() {
+export default function ProductDetailPage(props: { params: { slug: string } }) {
   return (
     <>
       <Navbar/>
-      <ProductDetail/>
-      <Footer/>
+      <ProductDetail {...props}/>
+      {/* <Footer/> */}
     </>
   );
 }

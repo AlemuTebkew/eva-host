@@ -1,10 +1,8 @@
 'use client';
 import { useEffect, useState } from "react";
-import { Search, ShoppingCart, User, Globe, Menu, Store, Boxes, LayoutGrid } from "lucide-react";
+import { User, Globe, Store, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@radix-ui/react-separator";
-import SearchBar from "../SearchBar/SearchBarComponent";
-import MobileTabs from "../MobileTab";
+import SearchBar from "../Search/SearchBarComponent";
 import MegaMenu from "./Navigation";
 import CategoryNavigation from "./MobileCategoryNavigation";
 import Link from "next/link";

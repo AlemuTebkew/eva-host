@@ -72,13 +72,10 @@ export default function SupplierFilters({ onApplyFilters, onClose }: SupplierFil
 
   return (
     <div className="p-6 bg-white rounded-lg max-w-xs w-full h-full space-y-6 border">
-      <div className="flex justify-between items-center">
-        <h3 className="text-xl font-semibold text-gray-800">Filter Suppliers</h3>
-        <Button variant="ghost" className="lg:hidden" onClick={() => onClose(false)}>
-          Cancel
-        </Button>
+      <div className="flex justify-between items-center gap-4">
+        <h3 className="text-xl font-semibold text-gray-800">Filter By</h3>
+        <Button variant={"ghost"} className="lg:hidden" onClick={() => onClose(false)}>Cancel</Button>
       </div>
-
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Industry</label>
         <Select

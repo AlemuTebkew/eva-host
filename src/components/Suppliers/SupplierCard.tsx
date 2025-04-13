@@ -17,12 +17,11 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
       {/* Supplier Info */}
       <div className="flex flex-col justify-center">
         <div className="font-semibold text-lg">{supplier.companyName}</div>
-        {supplier.location && (
+        {/* {supplier.location && (
           <p className="text-sm text-gray-500">{supplier.location}</p>
-        )}
+        )} */}
         <div className="text-sm mt-1 text-gray-600">
-          {supplier.rating ? `⭐ ${supplier.rating}/5` : "No ratings yet"} ·{" "}
-          {supplier.totalProducts ?? 0} products
+          {supplier.rating ? `⭐ ${supplier.rating}/5` : "No ratings yet"} {" "}
         </div>
       </div>
     </Link>

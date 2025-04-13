@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import SupplierFilters from '@/components/Suppliers/SupplierFilter';
 import SupplierList from '@/components/Suppliers/SupplierList';
 import { Supplier, SupplierFilterType } from '@/types/supplier';
+import { useFilterSupplierQuery } from '@/store/app-api';
 
 const sortOptions: SortOption[] = [
   {
@@ -32,117 +33,115 @@ const sortOptions: SortOption[] = [
 ];
 
 
-export const sampleSuppliers: Supplier[] = [
-  {
-    id: "1",
-    bio: "",
-    companyTIN: "",
-    licensePhoto: "",
-    logo: "",
-    status: "",
-    companyName: "Addis Textiles",
-    industry: "Textiles",
-    location: "Addis Ababa",
-    rating: 4.5,
-    logoUrl: "https://example.com/logos/addis-textiles.png",
-    description: "Leading supplier of traditional and modern textiles.",
-    contactEmail: "info@addistextiles.com",
-    phoneNumber: "+251911223344",
-    website: "https://addistextiles.com",
-    isVerified: true,
-    totalProducts: "120",
-    createdAt: "2023-01-15T10:00:00Z",
-    updatedAt: "2024-03-10T09:30:00Z",
-  },
-  {
-    id: "2",
-    bio: "",
-    companyTIN: "",
-    licensePhoto: "",
-    logo: "",
-    status: "",
-    companyName: "EthioAgro",
-    industry: "Agriculture",
-    location: "Bahir Dar",
-    rating: 4.2,
-    logoUrl: "https://example.com/logos/ethioagro.png",
-    description: "Supplier of organic agricultural products and seeds.",
-    contactEmail: "support@ethioagro.com",
-    phoneNumber: "+251922334455",
-    website: "https://ethioagro.com",
-    isVerified: false,
-    totalProducts: "87",
-    createdAt: "2022-11-20T08:30:00Z",
-    updatedAt: "2024-02-22T14:15:00Z",
-  },
-  {
-    id: "3",
-    bio: "",
-    companyTIN: "",
-    licensePhoto: "",
-    logo: "",
-    status: "",
-    companyName: "Horizon Electronics",
-    industry: "Electronics",
-    location: "Hawassa",
-    rating: 4.7,
-    logoUrl: "https://example.com/logos/horizon-electronics.png",
-    description: "Distributor of household and industrial electronics.",
-    contactEmail: "sales@horizonelectronics.com",
-    phoneNumber: "+251933445566",
-    website: "https://horizonelectronics.com",
-    isVerified: true,
-    totalProducts: "230",
-    createdAt: "2023-04-12T11:20:00Z",
-    updatedAt: "2024-04-01T16:45:00Z",
-  },
-  {
-    id: "4",
-    bio: "",
-    companyTIN: "",
-    licensePhoto: "",
-    logo: "",
-    status: "",
-    companyName: "GreenPack Ethiopia",
-    industry: "Packaging",
-    location: "Adama",
-    rating: 4.0,
-    logoUrl: "https://example.com/logos/greenpack.png",
-    description: "Eco-friendly packaging supplier for food and retail.",
-    contactEmail: "hello@greenpacket.com",
-    phoneNumber: "+251944556677",
-    website: "https://greenpacket.com",
-    isVerified: false,
-    totalProducts: "45",
-    createdAt: "2022-07-18T09:10:00Z",
-    updatedAt: "2024-01-05T12:00:00Z",
-  }
-];
+// export const sampleSuppliers: Supplier[] = [
+//   {
+//     id: "1",
+//     bio: "",
+//     companyTIN: "",
+//     licensePhoto: "",
+//     logo: "",
+//     status: "",
+//     companyName: "Addis Textiles",
+//     industry: "Textiles",
+//     location: "Addis Ababa",
+//     rating: 4.5,
+//     logoUrl: "https://example.com/logos/addis-textiles.png",
+//     description: "Leading supplier of traditional and modern textiles.",
+//     contactEmail: "info@addistextiles.com",
+//     phoneNumber: "+251911223344",
+//     website: "https://addistextiles.com",
+//     isVerified: true,
+//     totalProducts: "120",
+//     createdAt: "2023-01-15T10:00:00Z",
+//     updatedAt: "2024-03-10T09:30:00Z",
+//   },
+//   {
+//     id: "2",
+//     bio: "",
+//     companyTIN: "",
+//     licensePhoto: "",
+//     logo: "",
+//     status: "",
+//     companyName: "EthioAgro",
+//     industry: "Agriculture",
+//     location: "Bahir Dar",
+//     rating: 4.2,
+//     logoUrl: "https://example.com/logos/ethioagro.png",
+//     description: "Supplier of organic agricultural products and seeds.",
+//     contactEmail: "support@ethioagro.com",
+//     phoneNumber: "+251922334455",
+//     website: "https://ethioagro.com",
+//     isVerified: false,
+//     totalProducts: "87",
+//     createdAt: "2022-11-20T08:30:00Z",
+//     updatedAt: "2024-02-22T14:15:00Z",
+//   },
+//   {
+//     id: "3",
+//     bio: "",
+//     companyTIN: "",
+//     licensePhoto: "",
+//     logo: "",
+//     status: "",
+//     companyName: "Horizon Electronics",
+//     industry: "Electronics",
+//     location: "Hawassa",
+//     rating: 4.7,
+//     logoUrl: "https://example.com/logos/horizon-electronics.png",
+//     description: "Distributor of household and industrial electronics.",
+//     contactEmail: "sales@horizonelectronics.com",
+//     phoneNumber: "+251933445566",
+//     website: "https://horizonelectronics.com",
+//     isVerified: true,
+//     totalProducts: "230",
+//     createdAt: "2023-04-12T11:20:00Z",
+//     updatedAt: "2024-04-01T16:45:00Z",
+//   },
+//   {
+//     id: "4",
+//     bio: "",
+//     companyTIN: "",
+//     licensePhoto: "",
+//     logo: "",
+//     status: "",
+//     companyName: "GreenPack Ethiopia",
+//     industry: "Packaging",
+//     location: "Adama",
+//     rating: 4.0,
+//     logoUrl: "https://example.com/logos/greenpack.png",
+//     description: "Eco-friendly packaging supplier for food and retail.",
+//     contactEmail: "hello@greenpacket.com",
+//     phoneNumber: "+251944556677",
+//     website: "https://greenpacket.com",
+//     isVerified: false,
+//     totalProducts: "45",
+//     createdAt: "2022-07-18T09:10:00Z",
+//     updatedAt: "2024-01-05T12:00:00Z",
+//   }
+// ];
 
 export default function SupplierListPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const searchQuery = searchParams.get('keyword') || '';
-  const locationQuery = searchParams.get('location') || '';
+  const categoryQuery = searchParams.get('categoryId') || '';
   const sortByParam = searchParams.get('sortBy') || '';
   const sortOrderParam = searchParams.get('sortOrder') || '';
 
   const [selectedSort, setSelectedSort] = useState<SortValue | null>((sortByParam && sortOrderParam) ? { sortBy: sortByParam, sortOrder: sortOrderParam } : null);
-  const [selectedLocation, setSelectedLocation] = useState<string>(locationQuery);
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryQuery);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  // const { data, refetch, isLoading, isSuccess } = useFilterSuppliersQuery({
-  //   params: {
-  //     keyword: searchQuery,
-  //     ...(selectedLocation && { location: selectedLocation }),
-  //     ...(sortByParam && { sortBy: sortByParam }),
-  //     ...(sortOrderParam && { sortOrder: sortOrderParam }),
-  //     page: currentPage,
-  //     limit: 10,
-  //   },
-  // });
+  const { data, refetch, isLoading, isSuccess } = useFilterSupplierQuery({
+    params: {
+      ...(selectedCategory && { categoryId: selectedCategory }),
+      ...(sortByParam && { sortBy: sortByParam }),
+      ...(sortOrderParam && { sortOrder: sortOrderParam }),
+      page: currentPage,
+      limit: 10,
+    },
+  });
 
   const handleSortChange = (value: SortValue) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -152,19 +151,24 @@ export default function SupplierListPage() {
     }
     router.push(`?${params.toString()}`);
     setSelectedSort(value);
-    // refetch();
+    refetch();
   };
 
   const handleOnPageChange = (page: number) => {
     setCurrentPage(page);
-    // refetch();
+    refetch();
   };
 
   const handleOnApplyFilter = (filters: SupplierFilterType) => {
     const params = new URLSearchParams(searchParams.toString());
-
+    if (filters.category) {
+      setSelectedCategory(filters.category)
+      params.set("categoryId", filters.category)
+    } else {
+      params.delete("categoryId")
+    }
     router.push(`?${params.toString()}`);
-    // refetch();
+    refetch();
   };
 
   return (
@@ -193,19 +197,19 @@ export default function SupplierListPage() {
         <SortDropdown sortOptions={sortOptions} selectedSort={selectedSort} onChange={handleSortChange} />
       </div>
 
-      {false && <SupplierListSkeleton />}
+      {isLoading && <SupplierListSkeleton />}
 
-      {true && (
+      {isSuccess && data && (
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:mt-8">
           <div className="hidden lg:block">
             <SupplierFilters onApplyFilters={handleOnApplyFilter} onClose={setIsFilterOpen} />
           </div>
           <div className="col-span-4 flex flex-col">
             <div className='hidden lg:flex justify-between items-center mb-4'>
-              <p>{`Showing ${5} suppliers`}</p>
+              <p>{`Showing ${data.data.length} suppliers`}</p>
               <SortDropdown sortOptions={sortOptions} selectedSort={selectedSort} onChange={handleSortChange} />
             </div>
-            <SupplierList suppliers={sampleSuppliers} metaData={{limit: 10, page:1, total:40}} onPageChange={handleOnPageChange} />
+            <SupplierList suppliers={data.data} metaData={{limit: 10, page:1, total:40}} onPageChange={handleOnPageChange} />
           </div>
         </div>
       )}

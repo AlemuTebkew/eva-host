@@ -1,15 +1,16 @@
 import { MetaData, Product } from '@/types/product';
 import React from 'react';
-import ProductCard from '../ProductCard';
+import ProductCard from './ProductCard';
 import GenericPagination from '../Pagination';
 
 interface ProductListProps {
   products: Product[];
   metaData: MetaData;
   onPageChange: (page: number) => void;
+  hideVendor?: boolean
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, metaData, onPageChange }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, metaData, onPageChange, hideVendor }) => {
 
   return (
     <section className="w-full lg:px-0">
@@ -21,6 +22,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, metaData, onPageCha
               key={product.id}
               product={product}
               otherSuppliersCount={4}
+              hideVendor={hideVendor}
             />
           ))
         ) : (

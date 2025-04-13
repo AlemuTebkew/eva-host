@@ -1,9 +1,9 @@
 import CallToAction from "@/components/CallToAction";
-import FeaturedSuppliers from "@/components/Features";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navigation";
-import SupplierCallToAction from "@/components/SupplierCallToAction";
+import SupplierCallToAction from "@/components/Suppliers/SupplierCallToAction";
+import FeaturedSuppliers from "@/components/Suppliers/FeaturedSuppliers";
 import Testimonials from "@/components/Testimonial";
 import { Metadata } from "next";
 

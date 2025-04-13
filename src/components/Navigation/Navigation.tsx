@@ -61,11 +61,6 @@ export default function MegaMenu() {
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className="cursor-pointer hover:text-primary">
-              Get App
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
             <NavigationMenuLink href="/register-as-supplier" className="cursor-pointer hover:text-primary">
               Become a Supplier
             </NavigationMenuLink>

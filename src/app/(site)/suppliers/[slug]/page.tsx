@@ -11,11 +11,11 @@ const mockSupplier = {
   productCount: 120,
 };
 
-export default function SupplierDetailPage() {
+export default function SupplierDetailPage(props: { params: { slug: string } }) {
   return (
     <>
       <Navbar/>
-      <SupplierDetail {...mockSupplier} />
+      <SupplierDetail {...props}/>
       {/* You can also show their products list here */}
       {/* <Footer/> */}
     </>

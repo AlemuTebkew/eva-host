@@ -54,15 +54,12 @@ export interface ProductDetails {
   name: string;
   description: string;
   price: string;
+  unit: string;
   minOrderQuantity: string | null;
   condition: string;
   images: string[];
   attributes: Attribute[];
-  vendor: {
-    id: string;
-    name: string;
-    rating: number | null;
-  };
+  vendor: Vendor
   priceUpdatedAt: string;
   priceTiers: {
     minQty: number,
@@ -75,13 +72,17 @@ export interface ProductDetails {
       min: string,
       max: string
     },
-    vendor: {
-      id: string,
-      name: string,
-
-    }
+    vendor: Vendor
   }[]
 }
+
+interface Vendor {
+  id: string;
+  name: string;
+  rating: number | null;
+  logo: string;
+};
+
 
 interface Attribute {
   name: string;

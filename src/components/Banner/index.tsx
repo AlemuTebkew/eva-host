@@ -7,17 +7,17 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface ProductBannerProps {
+interface BannerProps {
   items: { image: string; link: string }[];
   autoSlide?: boolean;
   slideInterval?: number;
 }
 
-export default function ProductBanner({
+export default function Banner({
   items,
   autoSlide = false,
   slideInterval = 3000,
-}: ProductBannerProps) {
+}: BannerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalSlides = items.length;
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
