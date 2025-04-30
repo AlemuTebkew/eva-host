@@ -14,7 +14,7 @@ const mockSupplier = {
 export default function SupplierDetailPage(props: { params: { slug: string } }) {
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       <SupplierDetail {...props}/>
       {/* You can also show their products list here */}
       {/* <Footer/> */}

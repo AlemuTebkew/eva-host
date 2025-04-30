@@ -4,6 +4,7 @@ import ImageSlider from "../ImageSlider/ImageSlider";
 import Link from "next/link";
 import { Product } from "@/types/product";
 import { url } from "inspector";
+import { getImageUrl } from "@/lib/utils";
 
 interface ProductCardProps {
   product: Product;
@@ -16,7 +17,7 @@ export default function ProductCard({ product, otherSuppliersCount, hideVendor }
     <Link href={`/products/${product.id}`} className="bg-white sm:p-2 rounded">
       <div className="rounded-lg overflow-hidden">
         {/* Image Slider */}
-        <ImageSlider images={product.images.map((image)=> `http://13.60.253.93:5007/files/${image}`)} autoSlide={true} />
+        <ImageSlider images={product.images.map((image)=> getImageUrl(image))} autoSlide={true} />
 
         {/* Product Details */}
         <div className="px-2 mt-3 flex flex-col gap-1">

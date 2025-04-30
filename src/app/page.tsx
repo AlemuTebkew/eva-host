@@ -6,6 +6,7 @@ import SupplierCallToAction from "@/components/Suppliers/SupplierCallToAction";
 import FeaturedSuppliers from "@/components/Suppliers/FeaturedSuppliers";
 import Testimonials from "@/components/Testimonial";
 import { Metadata } from "next";
+import Header from "@/components/header";
 
 export const metadata: Metadata = {
   title: "",
@@ -30,12 +31,13 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="max-w-c-1235 mx-auto">
-      <Navbar/>
-      <Hero />
+      {/* <Navbar/> */}
+      <Header/>
+      {/* <Hero />
       <FeaturedSuppliers/>
       <CallToAction/>
       <Testimonials/>
-      <SupplierCallToAction/>
+      <SupplierCallToAction/> */}
       <Footer/>
     </main>
   );

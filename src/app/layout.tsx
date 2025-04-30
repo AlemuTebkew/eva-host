@@ -6,6 +6,7 @@ import "../styles/index.css";
 import { Provider } from "react-redux";
 import { store } from "@/store/app-store";
 import Navbar from "@/components/Navigation";
+import Header from "@/components/header";
 
 export default function RootLayout({
   children,
@@ -24,6 +25,8 @@ export default function RootLayout({
               defaultTheme="light"
             >
               <Provider store={store}>
+                      <Header/>
+                
                 {/* <Header /> */}
                 {/* <Navbar/> */}
                 {children}
