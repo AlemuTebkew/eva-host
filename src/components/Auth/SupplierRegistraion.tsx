@@ -134,9 +134,9 @@ export default function SupplierRegister() {
                 name="contactPerson"
                 render={({ field }) => (
                   <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Contact Person's Full Name *</FormLabel>
+                    <FormLabel className="text-left">Contact Person&apos;s Full Name *</FormLabel>
                     <FormControl className="w-full">
-                      <Input placeholder="Enter contact person's full name" {...field} />
+                      <Input placeholder="Enter contact person&apos;s full name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

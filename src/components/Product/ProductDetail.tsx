@@ -78,8 +78,10 @@ const ProductDetail = ({product}: ProductDetailProps) => {
         <div className="text-sm text-gray-700 flex gap-2">
           <strong>Product Condition:</strong> {product.condition ?? "Used"}
           {
-            product.attributes?.map(attribute => (
-              <><strong>{attribute.name}:</strong> {attribute.value}</>
+            product.attributes?.map((attribute, index) => (
+              <span key={index}>
+                <strong>{attribute.name}:</strong> {attribute.value}
+              </span>
             ))
           }
         </div>
