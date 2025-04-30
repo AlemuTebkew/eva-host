@@ -1,3 +1,4 @@
+'use client'
 import { Shirt, ShoppingBag, Store, Tag, Gem, Handshake } from "lucide-react";
 
 export default function FeaturedSuppliers() {

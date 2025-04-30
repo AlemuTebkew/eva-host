@@ -1,14 +1,21 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import SuppliersList from "@/components/suppliers-list";
-import Header from "@/components/header";
-// import Footer from "@/components/footer";
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navigation"
+import SearchResultPage from "@/components/Search/SearchPage"
+import SupplierListPage from "@/components/Suppliers/SupplierListPage"
+import { Suspense } from "react"
 
 export default function SuppliersPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* <Header /> */}
+    <>
+      <Navbar/>
+      <Suspense fallback={<div>Loading</div>}>
+      <SupplierListPage/>
+      </Suspense>
+      
+      {/* <Footer/> */}
+    </>
+  )
+}
 
       {/* Hero Section */}
       <section className="relative bg-blue-900 text-white">

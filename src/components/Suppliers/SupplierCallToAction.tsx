@@ -1,3 +1,4 @@
+'use client'
 export default function SupplierCallToAction() {
   return (
     <div className="text-center py-10 px-4">
