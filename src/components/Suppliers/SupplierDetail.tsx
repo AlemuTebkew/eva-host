@@ -3,6 +3,7 @@ import { Facebook, LocateIcon, Map, MapIcon, MapPin, MapPinCheck, MapPinCheckIco
 import SearchPage from "../Search/SearchPage";
 import { useGetSupplierDetailQuery } from "@/store/app-api";
 import SupplierListSkeleton from "../Skeleton/SupplierListSkeleton";
+import { Suspense } from "react";
 
 
 
@@ -79,7 +80,10 @@ const SupplierDetail = ({
           {/* Products Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Our Products</h3>
+            <Suspense fallback={<div>Loading</div>}>
             <SearchPage hideVendor={true} bgWite={true}/>
+            </Suspense>
+            
             {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {supplierData.products.map((product) => (
                 <div key={product.id} className="border p-4 rounded-lg space-y-2">

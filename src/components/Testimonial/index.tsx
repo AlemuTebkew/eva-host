@@ -1,3 +1,4 @@
+'use client'
 import { UserCircle, LineChart } from "lucide-react";
 
 export default function Testimonials() {
