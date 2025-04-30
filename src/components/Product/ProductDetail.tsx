@@ -57,8 +57,8 @@ const ProductDetail = ({product}: ProductDetailProps) => {
         {
           product.priceTiers && product.priceTiers.length > 0 ? <div className="flex flex-wrap gap-8">
             {
-              product.priceTiers.map((priceTier) => (
-                <div className="flex flex-col gap-1">
+              product.priceTiers.map((priceTier,index) => (
+                <div className="flex flex-col gap-1" key={index}>
                   <p className="font-normal">{`${priceTier.minQty} ${product.unit}`}</p>
                   <p className="text-2xl font-semibold">{`ETB ${priceTier.price}`}</p>
                 </div>
