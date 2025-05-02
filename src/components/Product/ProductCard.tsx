@@ -52,7 +52,7 @@ export default function ProductCard({ product, otherSuppliersCount, hideVendor }
         {/* Buttons */}
         <div className="w-full mt-4 mb-4 flex justify-center lg:mb-0">
           <Button className="text-black bg-[#F1F2F4] border border-[#E9EAEC]">
-            Contact Suppliers
+            View Details
           </Button>
         </div>
       </div>

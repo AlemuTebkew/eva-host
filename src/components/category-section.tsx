@@ -16,8 +16,7 @@ export default function CategorySection({ categories }: CategorySectionProps) {
               key={category.id}
               title={category.name}
               image={category.image}
-              icon={category.icon}
-              tags={category.tags}
+              subCategories={category.subCategories}
             />
           ))}
         </div>

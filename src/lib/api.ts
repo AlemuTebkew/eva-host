@@ -1,6 +1,7 @@
 import type { Category, Supplier, Product, Testimonial, ApiResponse } from "@/types"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://16.171.71.23:5007"
+// const API_URL =  "http://16.171.71.23:5007/user"
+const API_URL =  "http://127.0.0.1:5007/user"
 
 /**
  * Generic fetch function with error handling
@@ -39,12 +40,18 @@ export async function getCategory(id: string): Promise<Category> {
 /**
  * Supplier API functions
  */
-export async function getSuppliers(limit = 4): Promise<ApiResponse<Supplier[]>> {
-  return fetchApi<ApiResponse<Supplier[]>>(`/suppliers?limit=${limit}`)
+export async function getSuppliers(limit = 10): Promise<ApiResponse<Supplier[]>> {
+  return fetchApi<ApiResponse<Supplier[]>>(`/vendors?limit=${limit}`)
+}
+/**
+ * Supplier API functions
+ */
+export async function getFeaturedSuppliers(limit = 10): Promise<ApiResponse<Supplier[]>> {
+  return fetchApi<ApiResponse<Supplier[]>>(`/featured_vendors?limit=${limit}`)
 }
 
 export async function getSupplier(id: string): Promise<Supplier> {
-  return fetchApi<Supplier>(`/suppliers/${id}`)
+  return fetchApi<Supplier>(`/vendors/${id}`)
 }
 
 /**
@@ -52,11 +59,11 @@ export async function getSupplier(id: string): Promise<Supplier> {
  */
 export async function getProducts(limit = 5, category?: string): Promise<ApiResponse<Product[]>> {
   const categoryParam = category ? `&category=${category}` : ""
-  return fetchApi<ApiResponse<Product[]>>(`/products?limit=${limit}${categoryParam}`)
+  return fetchApi<ApiResponse<Product[]>>(`/featured_products?limit=${limit}${categoryParam}`)
 }
 
 export async function getPopularProducts(limit = 5): Promise<ApiResponse<Product[]>> {
-  return fetchApi<ApiResponse<Product[]>>(`/products/popular?limit=${limit}`)
+  return fetchApi<ApiResponse<Product[]>>(`/products?limit=${limit}`)
 }
 
 export async function getProduct(id: string): Promise<Product> {

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function ProductDetailPage(props: { params: { slug: string } }) {
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       <ProductDetail {...props}/>
       {/* <Footer/> */}
     </>

@@ -3,14 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 
 interface ProductCardProps {
-  title: string;
+  name: string;
   price: number;
-  rating: number;
+  rating?: number;
+  priceRange: { min: number; max: number };
   image: string;
 }
 
 export default function ProductCard({
-  title,
+  name,
+  priceRange,
   price,
   rating,
   image,
@@ -20,13 +22,13 @@ export default function ProductCard({
       <div className="relative h-40 w-full">
         <Image
           src={image || "/placeholder.svg"}
-          alt={title}
+          alt={name}
           fill
           className="object-cover"
         />
       </div>
       <div className="p-4">
-        <h3 className="mb-2 line-clamp-2 text-sm font-medium">{title}</h3>
+        <h3 className="mb-2 line-clamp-2 text-sm font-medium">{name}</h3>
         <div className="mb-2 flex items-center">
           <div className="flex items-center text-yellow-400">
             <Star className="mr-1 h-4 w-4 fill-current" />
@@ -34,7 +36,13 @@ export default function ProductCard({
           </div>
         </div>
         <div className="mb-4">
-          <span className="text-lg font-bold">₹ {price.toLocaleString()}</span>
+          <span className="text-lg font-bold">
+            ETB{" "}
+            {!priceRange
+              ? price.toLocaleString()
+              : priceRange?.min?.toLocaleString()}{" "}
+            - {priceRange?.max ? priceRange.max.toLocaleString() : ""}
+          </span>
         </div>
         <Button
           variant="outline"

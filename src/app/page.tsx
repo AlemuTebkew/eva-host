@@ -32,13 +32,15 @@ export default function Home() {
   return (
     <main className="max-w-c-1235 mx-auto">
       {/* <Navbar/> */}
-      <Header/>
+      {/* <Header/> */}
       {/* <Hero />
       <FeaturedSuppliers/>
       <CallToAction/>
       <Testimonials/>
       <SupplierCallToAction/> */}
-      <Footer/>
+      {/* <Footer/> */}
+
+      
     </main>
   );
 }

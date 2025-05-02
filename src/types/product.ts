@@ -15,6 +15,8 @@ export interface Product {
     min: number,
     max: number
   }
+  rating?: number;
+  condition?: string;
 }
 
 export interface PorductFilterResponse {

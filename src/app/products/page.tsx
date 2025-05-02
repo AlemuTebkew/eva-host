@@ -10,27 +10,35 @@ import TestimonialSection from "@/components/testimonial-section"
 import Newsletter from "@/components/newsletter"
 import Footer from "@/components/footer"
 import Loading from "@/app/loading"
-import { getCategories, getSuppliers, getProducts, getPopularProducts, getTestimonials } from "@/lib/api"
+import { getCategories, getSuppliers, getProducts, getPopularProducts, getTestimonials, getFeaturedSuppliers } from "@/lib/api"
 
 export const revalidate = 60 // Revalidate this page every 60 seconds
 
 async function CategoriesContainer() {
   const { data: categories } = await getCategories()
+
+  console.log("Categories: ", categories);
+  
   return <CategorySection categories={categories} />
 }
 
 async function SuppliersContainer() {
-  const { data: suppliers } = await getSuppliers(4)
+  const { data: suppliers } = await getFeaturedSuppliers(10)
+
+  console.log("Suppliers: ", suppliers);
+  
   return <SupplierSection suppliers={suppliers} />
 }
 
 async function FeaturedProductsContainer() {
   const { data: products } = await getProducts(5)
+  console.log("Featured Products: ", products);
   return <ProductSection title="Featured Products and Services" products={products} viewMoreLink="/products" />
 }
 
 async function PopularProductsContainer() {
   const { data: products } = await getPopularProducts(5)
+  console.log("Popular Products: ", products);
   return <ProductSection title="Most Popular Searched" products={products} viewMoreLink="/products/popular" />
 }
 
@@ -42,13 +50,13 @@ async function TestimonialsContainer() {
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+      {/* <Header /> */}
 
       {/* Hero Section */}
       <section className="relative bg-blue-900 text-white">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=500&width=1920"
+            src="/images/hero/bg-new.jpg"
             alt="Background"
             fill
             className="object-cover opacity-30"
@@ -118,15 +126,15 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <Suspense fallback={<Loading />}>
+      {/* <Suspense fallback={<Loading />}>
         <TestimonialsContainer />
-      </Suspense>
+      </Suspense> */}
 
       {/* Newsletter */}
       <Newsletter />
 
       {/* Footer */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

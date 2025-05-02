@@ -13,25 +13,25 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-  
   return (
     <html suppressHydrationWarning={true} className="!scroll-smooth" lang="en">
       <head />
       <body>
-            <ThemeProvider
-              attribute="class"
-              enableSystem={false}
-              defaultTheme="light"
-            >
-              <Provider store={store}>
-                      <Header/>
-                
-                {/* <Header /> */}
-                {/* <Navbar/> */}
-                {children}
-              </Provider>
-            </ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          enableSystem={false}
+          defaultTheme="light"
+        >
+          <Provider store={store}>
+            <Header />
+
+            {/* <Header /> */}
+            {/* <Navbar/> */}
+            {children}
+
+            <Footer />
+          </Provider>
+        </ThemeProvider>
       </body>
     </html>
   );

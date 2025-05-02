@@ -1,22 +1,36 @@
-import Footer from "@/components/Footer"
-import Navbar from "@/components/Navigation"
-import SearchResultPage from "@/components/Search/SearchPage"
-import SupplierListPage from "@/components/Suppliers/SupplierListPage"
-import { Suspense } from "react"
+"use client";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navigation";
+import SupplierListPage from "@/components/Suppliers/SupplierListPage";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import SuppliersList from "@/components/suppliers-list";
+import Image from "next/image";
+import { Suspense, useState } from "react";
+import { useFilterSupplierQuery } from "@/store/app-api";
+import GenericPagination from "@/components/Pagination";
 
 export default function SuppliersPage() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const { data, refetch, isLoading, isSuccess } = useFilterSupplierQuery({
+    params: {
+      page: currentPage,
+      limit: 10,
+    },
+  });
+
+  console.log("Supplier data", data);
+
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+    refetch();
+  };
+
+  const metaData = data?.meta || { page: 1, total: 1,totalPages:0 }; // Fallback for meta data
+
   return (
     <>
-      <Navbar/>
-      <Suspense fallback={<div>Loading</div>}>
-      <SupplierListPage/>
-      </Suspense>
-      
-      {/* <Footer/> */}
-    </>
-  )
-}
-
       {/* Hero Section */}
       <section className="relative bg-blue-900 text-white">
         <div className="absolute inset-0 z-0">
@@ -71,16 +85,22 @@ export default function SuppliersPage() {
             </div>
           </div>
 
-          <SuppliersList />
+          {isLoading && <p>Loading suppliers...</p>}
+          {isSuccess && data?.data && <SuppliersList suppliers={data?.data} />}
 
           <div className="mt-8 flex justify-center">
-            <Button className="bg-blue-900 hover:bg-blue-800">Show more</Button>
+            <GenericPagination
+              currentPage={metaData.page}
+              totalPages={metaData.totalPages}
+              onPageChange={onPageChange}
+            />
           </div>
         </div>
       </section>
 
       {/* Footer */}
+      {/* Uncomment the Footer if needed */}
       {/* <Footer /> */}
-    </div>
+    </>
   );
 }
