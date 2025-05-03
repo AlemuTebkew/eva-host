@@ -169,39 +169,7 @@ export default function SearchPage({hideVendor, bgWite}: SearchPageProps) {
               <div>
                 <div className='hidden flex justify-between items-center mb-4 lg:flex'>
                   <p>{`Showing ${data.meta.total} products from global suppliers`}</p>
-                  {/* <div className="relative">
-                  <button
-                    onClick={toggleDropdown}
-                    className="text-sm text-gray-800 border border-gray-300 px-4 py-2 rounded-md flex items-center gap-2 hover:border-gray-400 focus:outline-none"
-                  >
-                    <SortDesc size={16} className="text-gray-500" />
-                    Sort By: {sortOptions.find((o) => o.value === selectedSort)?.label}
-                  </button>
-
-                    {isOpen && (
-                      <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                        <ul className="py-2">
-                          {sortOptions.map((option) => (
-                            <li key={option.value}>
-                              <label
-                                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                              >
-                                <input
-                                  type="radio"
-                                  name="sort"
-                                  value={option.value}
-                                  checked={selectedSort === option.value}
-                                  onChange={() => handleSortChange(option.value)}
-                                  className="mr-2"
-                                />
-                                {option.label}
-                              </label>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div> */}
+                  
                   <SortDropdown sortOptions={sortOptions} selectedSort={selectedSort} onChange={handleSortChange}/>
                 </div>
                 <ProductList products={data.data} metaData={data.meta} onPageChange={handleOnPageChange} hideVendor={hideVendor}/>

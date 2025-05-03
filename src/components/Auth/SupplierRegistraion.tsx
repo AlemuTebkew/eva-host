@@ -1,224 +1,185 @@
-'use client';
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { PhoneInput } from "../ui/phone-input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { isValidPhoneNumber } from "react-phone-number-input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
-import Select from 'react-select';
-import { Textarea } from "../ui/textarea";
+"use client";
 
-// Zod Schema for validation
-const supplierRegistrationSchema = z.object({
-  businessName: z.string().min(1, "Business Name is required"),
-  businessType: z.string().min(1, "Business Type is required"),
-  establishmentDate: z.string().min(1, "Establishment Date is required"),
-  contactPerson: z.string().min(1, "Contact Person's full name is required"),
-  phone: z.string().refine(isValidPhoneNumber, { message: "Invalid phone number" }),
-  email: z.string().email("Invalid email address"),
-  mainProducts: z.string().min(1, "Main Products are required"),
-  termsAndConditions: z.boolean().refine(val => val === true, { message: "You must agree to the Terms & Conditions" }),
-});
+import { useState, useEffect } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { Step1 } from "./StepOneForm";
+import StepTwo from "./StepTwoPlans";
+import { getSubscriptionPlans } from "@/lib/api";
+import Image from "next/image";
+import { Button } from "../ui/button";
 
-// Type inference from Zod schema
-type SupplierRegistrationFormData = z.infer<typeof supplierRegistrationSchema>;
+export default function SupplierRegistrationPage() {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState<any>({});
+  const [plans, setPlans] = useState([]);
 
-export default function SupplierRegister() {
-  // Correctly type selectedBusinessType as `string | null`
-  const [selectedBusinessType, setSelectedBusinessType] = useState<string | null>(null);
-
-  // React Hook Form setup
-  const form = useForm<SupplierRegistrationFormData>({
-    resolver: zodResolver(supplierRegistrationSchema),
-    defaultValues: {
-      businessType: ""
-    }
+  const methods = useForm({
+    defaultValues: formData,
   });
 
-  const onSubmit = (data: SupplierRegistrationFormData) => {
-    console.log(data);
+  const nextStep = (data: any) => {
+    setFormData((prev: any) => ({ ...prev, ...data }));
+    setStep(step + 1);
   };
 
-  // Options for the business type select dropdown
-  const businessTypeOptions = [
-    { value: 'retail', label: 'Retail' },
-    { value: 'wholesale', label: 'Wholesale' },
-    { value: 'manufacturer', label: 'Manufacturer' },
-    { value: 'service', label: 'Service' },
-    { value: 'distribution', label: 'Distribution' },
-  ];
+  const prevStep = () => {
+    setStep(step - 1);
+  };
+
+  useEffect(() => {
+    // Fetch subscription plans from API
+    const fetchPlans = async () => {
+      try {
+        const { data } = await getSubscriptionPlans(); // Replace with your API endpoint
+        console.log("Fetched subscription plans:", data);
+        setPlans(data);
+      } catch (error) {
+        console.error("Failed to fetch subscription plans:", error);
+      }
+    };
+
+    fetchPlans();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-white py-4 flex items-center justify-center relative">
-      {/* Back Button */}
-      <Button
-        variant="link"
-        className="absolute top-4 left-4 text-gray-800 hover:text-gray-600 focus:outline-none"
-        onClick={() => window.history.back()}
-      >
-        {/* Replace with your back icon */}
-      </Button>
+    <div className="my-10 flex bg-gray-100  justify-stretch rounded-lg ">
+      {/* Left Ad */}
+      <div className="hidden w-1/6 md:block">
+        <Image
+          src="/images/left-ads.png"
+          alt="Left Ad"
+          className="h-full object-cover"
+          width={150}
+          height={500}
+        />
+      </div>
 
-      {/* Registration Card */}
-      <main className="flex flex-1 items-center justify-center px-4">
-        <div className="w-full max-w-md border rounded-2xl px-8 py-10">
-          <h2 className="text-center text-xl font-semibold mb-6">
-            Supplier Registration
-          </h2>
+      {/* Center Form */}
+      <div className="mx-auto flex w-[80%] flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
+        <div className="space-y-4 text-center">
+          <h1 className="text-xl font-bold text-orange-600">
+            Join EVA as a Supplier
+          </h1>
+          {step === 1 && (
+            <div>
+              <div className="flex items-center justify-center space-x-4">
+                {/* Step 1 */}
+                <div className="flex items-center space-x-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white">
+                    <span className="font-bold text-blue-600">1</span>
+                  </div>
+                  <span className="font-medium text-blue-600">Step 1</span>
+                </div>
+                {/* Connector */}
+                <div className="h-0.5 w-12 bg-gray-300"></div>
+                {/* Step 2 */}
+                <div className="flex items-center space-x-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-100">
+                    <span className="font-bold text-gray-400">2</span>
+                  </div>
+                  <span className="font-medium text-gray-400">Step 2</span>
+                </div>
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Tell Us About Your Business
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Join EVA as a supplier and reach more customers. <br />
+                  Fill in your business details to get started!
+                </p>
+              </div>
+            </div>
+          )}
 
-          {/* ShadCN Form Wrapper */}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
-              
-              {/* Business Name Field */}
-              <FormField
-                control={form.control}
-                name="businessName"
-                render={({ field }) => (
-                  <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Business Name *</FormLabel>
-                    <FormControl className="w-full">
-                      <Input placeholder="Enter your business name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Business Type Field (React Select) */}
-              <FormField
-                control={form.control}
-                name="businessType"
-                render={({ field }) => (
-                  <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Business Type *</FormLabel>
-                    <FormControl className="w-full">
-                      <Select
-                        options={businessTypeOptions}
-                        value={businessTypeOptions.find(option => option.value === selectedBusinessType) || null}
-                        onChange={(selectedOption) => {
-                          const value = selectedOption ? selectedOption.value : null;
-                          setSelectedBusinessType(value);
-                          field.onChange(value); // Update react-hook-form value
-                        }}
-                        placeholder="Select business type"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Establishment Date Field */}
-              <FormField
-                control={form.control}
-                name="establishmentDate"
-                render={({ field }) => (
-                  <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Establishment Date *</FormLabel>
-                    <FormControl className="w-full">
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Contact Person Full Name Field */}
-              <FormField
-                control={form.control}
-                name="contactPerson"
-                render={({ field }) => (
-                  <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Contact Person&apos;s Full Name *</FormLabel>
-                    <FormControl className="w-full">
-                      <Input placeholder="Enter contact person&apos;s full name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Phone Number Field */}
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Phone Number *</FormLabel>
-                    <FormControl className="w-full">
-                      <PhoneInput placeholder="Enter phone number" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Email Address Field */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Email Address *</FormLabel>
-                    <FormControl className="w-full">
-                      <Input placeholder="Enter email address" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Main Products Field */}
-              <FormField
-                control={form.control}
-                name="mainProducts"
-                render={({ field }) => (
-                  <FormItem className="w-full flex flex-col items-start">
-                    <FormLabel className="text-left">Main Products *</FormLabel>
-                    <FormControl className="w-full">
-                      <Textarea placeholder="Enter your main products" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Terms and Conditions Checkbox */}
-              {/* <FormField
-                control={form.control}
-                name="termsAndConditions"
-                render={({ field }) => (
-                  <FormItem className="w-full flex items-center gap-2">
-                    <Checkbox 
-                      {...field} 
-                      checked={field.value}  // Bind the checkbox state to field value
-                      onChange={(e) => field.onChange(e.target.checked)} // Update field value on change
-                    />
-                    <FormLabel className="text-sm text-gray-700">
-                      I agree to the <a href="/terms" className="text-orange-500 hover:underline">EVA Supplier Terms & Conditions</a>
-                    </FormLabel>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
-
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                className="w-full bg-gray-200 text-white cursor-not-allowed"
-              >
-                Register Supplier
-              </Button>
-            </form>
-          </Form>
+          {step === 2 && (
+            <div>
+              <div className="space-y-4 text-center">
+                <div className="flex items-center justify-center space-x-4">
+                  {/* Step 1 */}
+                  <div className="flex items-center space-x-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-blue-600">
+                      <span className="font-bold text-white">✓</span>
+                    </div>
+                    <span className="font-medium text-blue-600">Step 1</span>
+                  </div>
+                  {/* Connector */}
+                  <div className="h-0.5 w-12 bg-gray-300"></div>
+                  {/* Step 2 */}
+                  <div className="flex items-center space-x-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-100">
+                      <span className="font-bold text-gray-400">2</span>
+                    </div>
+                    <span className="font-medium text-gray-400">Step 2</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-800">
+                    Choose a Supplier Package
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    Different supplier packages offer varying features and{" "}
+                    <br />
+                    benefits. Choose the one that fits your business needs.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </main>
+        <FormProvider {...methods}>
+          {step === 1 && (
+            <form
+              className="w-full max-w-5xl"
+              onSubmit={methods.handleSubmit(nextStep)}
+            >
+              <Step1 />
+              <div className="mt-6 flex justify-end">
+                <Button
+                  type="submit"
+                  className="btn btn-primary flex items-center space-x-2 bg-blue-800"
+                >
+                  <span>Next</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </Button>
+              </div>
+            </form>
+          )}
+        </FormProvider>
+
+        {step === 2 && (
+          <StepTwo
+            onBack={prevStep}
+            formData={formData}
+            subscriptionPlans={plans}
+          />
+        )}
+      </div>
+
+      {/* Right Ad */}
+      <div className="hidden w-1/6  md:block">
+    
+        <Image
+          src="/images/right-ads.png"
+          alt="Right Ad"
+          className="h-full object-cover"
+          width={150}
+          height={500}
+        />
+      </div>
     </div>
   );
 }

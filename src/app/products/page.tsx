@@ -8,9 +8,9 @@ import ValueProposition from "@/components/value-proposition"
 import ProductSection from "@/components/product-section"
 import TestimonialSection from "@/components/testimonial-section"
 import Newsletter from "@/components/newsletter"
-import Footer from "@/components/footer"
 import Loading from "@/app/loading"
 import { getCategories, getSuppliers, getProducts, getPopularProducts, getTestimonials, getFeaturedSuppliers } from "@/lib/api"
+import Link from "next/link"
 
 export const revalidate = 60 // Revalidate this page every 60 seconds
 
@@ -70,7 +70,7 @@ export default function Home() {
             <p className="mb-6 text-lg">Explore materials. Connect with Suppliers, and get the best deals</p>
             <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
               <Button className="bg-blue-600 hover:bg-blue-700">Compare Price</Button>
-              <Button className="bg-orange-500 hover:bg-orange-600">Browse Suppliers</Button>
+              <Button className="bg-orange-500 hover:bg-orange-600"><Link href={'/suppliers'}>Browse Suppliers</Link></Button>
             </div>
           </div>
         </div>

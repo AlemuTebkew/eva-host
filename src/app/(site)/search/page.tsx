@@ -6,7 +6,7 @@ import { Suspense } from "react";
 const SearchPage = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Suspense
         fallback={
           <div className="flex h-screen items-center justify-center">

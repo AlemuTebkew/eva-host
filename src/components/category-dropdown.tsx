@@ -13,6 +13,7 @@ import {
   Shield,
 } from "lucide-react";
 import { getImageUrl } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface SubCategory {
   id: string;
@@ -37,26 +38,31 @@ export default function CategoryDropdown({
   categories,
 }: CategoryDropdownProps) {
   const [hoveredCategory, setHoveredCategory] = useState(0);
+  const router = useRouter();
 
   return (
     <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
       {/* Category list */}
       <div className="space-y-1">
         {categories.map((category, index) => (
-          <div
+            <div
             key={category.id}
             className={`flex cursor-pointer items-center rounded-md p-2 transition-colors duration-150 ${
               index === hoveredCategory ? "bg-gray-100" : "hover:bg-gray-50"
             }`}
             onMouseEnter={() => setHoveredCategory(index)}
-          >
+            onClick={() => {
+              if (onClose) onClose();
+              router.push(`/search?categoryId=${category.id}`);
+            }}
+            >
             <img
               src={getImageUrl(category.image as string)}
               alt={category.name}
-              className="mb-1 h-6 w-6"
+              className="mb-1 h-6 w-6 mr-3"
             />{" "}
             <span className="text-sm font-medium">{category.name}</span>
-          </div>
+            </div>
         ))}
       </div>
 

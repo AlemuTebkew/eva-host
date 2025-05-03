@@ -250,18 +250,17 @@ export default function Header() {
               <div className="mr-2">
                 <select className="rounded-md border border-gray-300 px-2 py-1 text-sm">
                   <option>English</option>
-                  <option>Spanish</option>
-                  <option>French</option>
+                  <option>Amharic</option>
                 </select>
               </div>
               <Button className="bg-orange-500 hover:bg-orange-600">
-                Login
+                <Link href="/login">Login</Link>
               </Button>
               <Button
                 variant="outline"
                 className="border-gray-300 text-gray-700 hover:bg-gray-50"
               >
-                Become Supplier
+                <Link href="/register-as-supplier">Become Supplier</Link>
               </Button>
             </div>
           </div>
