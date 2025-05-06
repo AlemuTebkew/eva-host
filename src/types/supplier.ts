@@ -1,4 +1,5 @@
-import { MetaData } from "./product";
+import { Category } from "./category";
+import { MetaData, Product } from "./product";
 
 export type Supplier = {
   id: string;
@@ -11,14 +12,11 @@ export type Supplier = {
   logo: string;
   status: string;
   rating: number;
-  // logoUrl?: string;
-  // description?: string;
-  // contactEmail?: string;
-  // website?: string;
-  // isVerified?: boolean;
-  // createdAt?: string;
-  // updatedAt?: string;
-  // totalProducts: string
+  categories?: Category[];
+  region?: { id: string; name: string };
+  city?: { id: string; name: string };
+  subCity?: { id: string; name: string };
+  products?: Partial<Product[]>;
 };
 
 

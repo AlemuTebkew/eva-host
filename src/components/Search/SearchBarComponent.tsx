@@ -49,11 +49,25 @@ export default function SearchBar() {
     };
   }, []);
 
+  interface SuggestionClickEvent extends React.MouseEvent<HTMLDivElement> {}
+
+  function handleSuggestionClick(e: SuggestionClickEvent, suggestion: string) {
+    e.stopPropagation(); // Prevent the click event from bubbling up to the container
+    e.preventDefault(); // Prevent the default action of the click event
+    setSearchQuery(suggestion);
+    setIsInputFocused(false);
+
+    router.push(`/search?q=${encodeURIComponent(suggestion)}`);
+  }
+
   return (
     <>
       {/* Desktop Search */}
-      <div ref={containerRef} className="relative hidden lg:flex flex-col w-full z-50">
-        <div className="flex items-center border rounded-full overflow-hidden bg-white w-full relative z-20">
+      <div
+        ref={containerRef}
+        className="relative z-50 hidden w-full flex-col lg:flex"
+      >
+        <div className="relative z-20 flex max-w-[600px] items-center overflow-hidden  border bg-white">
           <input
             ref={inputRef}
             type="text"
@@ -66,31 +80,33 @@ export default function SearchBar() {
             }}
             onKeyDown={handleKeyDown}
             placeholder="What are you looking for?"
-            className="px-4 py-2 w-full focus:outline-none"
+            className=" w-full px-4 py-2 focus:outline-none rounded-md"
           />
-          <button onClick={handleSearch} className="bg-orange-500 px-4 py-2 text-white">
-            <Search size={24} />
-          </button>
+          <Button
+            onClick={handleSearch}
+            className="absolute right-0 top-0 h-full w-[100px] rounded-l-none bg-blue-800 hover:bg-blue-800"
+            size="icon"
+          >
+            <Search className="h-4 w-4" />
+            Search
+          </Button>
         </div>
 
         {data && data.length > 0 && searchQuery.trim() && isInputFocused && (
-          <div className="absolute top-full mt-1 left-0 w-full bg-white border rounded-md shadow-lg z-50 max-h-64 overflow-y-auto">
-            <div className="px-4 py-2 border-b">
+          <div className="absolute left-0 top-full z-50 mt-1 max-h-64 w-full overflow-y-auto rounded-md border bg-white shadow-lg">
+            <div className="border-b px-4 py-2">
               <p className="text-sm font-medium text-gray-600">Suggestions</p>
             </div>
             {data.map((suggestion, index) => (
-              <button
+              <div
                 key={index}
-                onClick={() => {
-                  setSearchQuery(suggestion);
-                  router.push(`/search?keyword=${encodeURIComponent(suggestion)}`);
-                  setIsInputFocused(false);
-                  inputRef.current?.blur();
+                onMouseDown={(e) => {
+                  handleSuggestionClick(e, suggestion);
                 }}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+                className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
               >
                 {suggestion}
-              </button>
+              </div>
             ))}
           </div>
         )}
@@ -98,15 +114,15 @@ export default function SearchBar() {
 
       {/* Mobile Search Trigger */}
       <div
-        className="lg:hidden flex items-center border rounded-full px-4 py-2 w-full bg-gray-100"
+        className="flex w-full items-center rounded-full border bg-gray-100 px-4 py-2 lg:hidden"
         onClick={() => setIsMobileSearchOpen(true)}
       >
-        <Search size={20} className="text-gray-500 mr-2" />
+        <Search size={20} className="mr-2 text-gray-500" />
         <input
           type="text"
           value={searchQuery}
           placeholder="What are you looking for?"
-          className="w-full text-sm focus:outline-none bg-transparent truncate"
+          className="w-full truncate bg-transparent text-sm focus:outline-none"
           readOnly
         />
       </div>
@@ -115,16 +131,16 @@ export default function SearchBar() {
       <AnimatePresence>
         {isMobileSearchOpen && (
           <motion.div
-            className="fixed inset-0 bg-gray-100 z-50 flex flex-col h-screen w-screen"
+            className="fixed inset-0 z-50 flex h-screen w-screen flex-col bg-gray-100"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
           >
-            <div className="px-2 pt-2 pb-2">
-              <div className="flex justify-between items-center">
-                <div className="flex-1 flex items-center border rounded-full px-4 py-2 w-full bg-white">
-                  <Search size={20} className="text-gray-500 mr-2" />
+            <div className="px-2 pb-2 pt-2">
+              <div className="flex items-center justify-between">
+                <div className="flex w-full flex-1 items-center rounded-full border bg-white px-4 py-2">
+                  <Search size={20} className="mr-2 text-gray-500" />
                   <input
                     ref={inputRef}
                     type="text"
@@ -135,11 +151,14 @@ export default function SearchBar() {
                     }}
                     onKeyDown={handleKeyDown}
                     placeholder="What are you looking for?"
-                    className="w-full text-sm focus:outline-none bg-transparent"
+                    className="w-full bg-transparent text-sm focus:outline-none"
                     autoFocus
                   />
                 </div>
-                <Button variant="ghost" onClick={() => setIsMobileSearchOpen(false)}>
+                <Button
+                  variant="ghost"
+                  onClick={() => setIsMobileSearchOpen(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -149,17 +168,21 @@ export default function SearchBar() {
 
             {data && data?.length > 0 && searchQuery.trim() !== "" && (
               <div className="px-4 pt-2">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden border">
-                  <div className="px-4 py-2 border-b">
-                    <p className="text-sm font-medium text-gray-600">Suggestions</p>
+                <div className="overflow-hidden rounded-lg border bg-white shadow-md">
+                  <div className="border-b px-4 py-2">
+                    <p className="text-sm font-medium text-gray-600">
+                      Suggestions
+                    </p>
                   </div>
                   {data.map((suggestion, index) => (
                     <button
                       key={index}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm text-gray-800"
+                      className="w-full px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-50"
                       onClick={() => {
                         setSearchQuery(suggestion);
-                        router.push(`/search?keyword=${encodeURIComponent(suggestion)}`);
+                        router.push(
+                          `/search?keyword=${encodeURIComponent(suggestion)}`,
+                        );
                         setIsMobileSearchOpen(false);
                         inputRef.current?.blur();
                       }}

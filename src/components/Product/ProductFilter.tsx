@@ -83,7 +83,7 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
       minPrice: minPriceSearchQuery,
       maxPrice: maxPriceSearchQuery
     });
-  }, [categoryIdSearchQuery, subCategoryIdSearchQuery]);
+  }, [categoryIdSearchQuery, subCategoryIdSearchQuery, minPriceSearchQuery, maxPriceSearchQuery]);
 
   const handleInputChange = (filterType: string, value: any) => {
     const updatedFilters = { ...selectedFilters, [filterType]: value };

@@ -1,9 +1,12 @@
-import Login from "@/components/Auth/Login"
+import Login from "@/components/Auth/Login";
+import SideAdsWrapper from "@/components/Auth/SideAdsWrapper";
 
 const LoginPage = () => {
   return (
-    <Login/>
-  )
-}
+    <SideAdsWrapper>
+      <Login />
+    </SideAdsWrapper>
+  );
+};
 
-export default LoginPage
+export default LoginPage;

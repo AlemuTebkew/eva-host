@@ -34,20 +34,22 @@ export default function Banner({
     setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
   }, [totalSlides]);
 
+  const stopAutoSlide = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  }, []);
+
   const startAutoSlide = useCallback(() => {
     if (!autoSlide) return;
     stopAutoSlide();
     intervalRef.current = setInterval(() => {
       nextSlide();
     }, slideInterval);
-  }, [autoSlide, nextSlide, slideInterval]);
-
-  const stopAutoSlide = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  }, []);
+  }, [autoSlide, nextSlide, slideInterval, stopAutoSlide]);
 
   useEffect(() => {
-    return () => stopAutoSlide(); // Cleanup on unmount
+    return () => stopAutoSlide();
   }, [stopAutoSlide]);
 
   return (
