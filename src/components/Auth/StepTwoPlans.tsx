@@ -6,21 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { register } from "module";
-import { registerSupplier } from "@/lib/api";
+import { registerSupplier, SubscriptionPlan } from "@/lib/api";
 
-interface SubscriptionPlan {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  numberOffProduct: number;
-  isFeatured: boolean;
-  annualDiscountPercent: number;
-  isTrial: boolean;
-  trialDurationInDays: number;
-  supportLevel: 0 | 1 | 2 | 3;
-  canCancelAnytime: boolean;
-}
+
 
 interface StepTwoProps {
   onBack: () => void;
@@ -69,19 +57,19 @@ export default function StepTwo({
     console.log("Submitting payload:", payload);
 
     try {
-      const response = await registerSupplier(JSON.stringify(payload));
+      const response = await registerSupplier(payload);
       console.log("Registration successful:", response);
       // Handle success (e.g., redirect to a success page)
     } catch (error: any) {
       console.error("Registration failed:", error);
       const errorMessage =
-        error?.response?.data?.message || "An unexpected error occurred.";
+        error?.response?.message || "An unexpected error occurred.";
       alert(errorMessage); // Show a user-friendly error message
     }
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-8">
+    <div className="mx-auto w-full max-w-6xl space-y-8 mt-5">
       <div className="grid gap-6 md:grid-cols-3">
         {plans.map((plan) => (
           <Card
@@ -135,7 +123,7 @@ export default function StepTwo({
               </div>
               <p className="mt-4 text-xs text-blue-600">What is Included</p>
               <ul className="mt-4 space-y-2 text-sm text-gray-600">
-                <li>✔ {plan.numberOffProduct} products included</li>
+                <li>✔ {plan.numberOffProducts} products included</li>
                 <li>
                   ✔ Support Level:{" "}
                   {
@@ -198,7 +186,11 @@ export default function StepTwo({
         <Button variant="outline" className="bg-white" onClick={onBack}>
           <span className="mr-2">←</span> Previous
         </Button>
-        <Button className="bg-blue-800" onClick={handleSubmit} disabled={!selectedPlanId}>
+        <Button
+          className="bg-blue-800"
+          onClick={handleSubmit}
+          disabled={!selectedPlanId}
+        >
           Complete <span className="ml-2">✔</span>
         </Button>
       </div>

@@ -14,6 +14,7 @@ export default function CategorySection({ categories }: CategorySectionProps) {
           {categories.map((category) => (
             <CategoryCard
               key={category.id}
+              id={category.id}
               title={category.name}
               image={category.image}
               subCategories={category.subCategories}

@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer";
 import { ThemeProvider } from "next-themes";
 import "../styles/index.css";
 import { Provider } from "react-redux";

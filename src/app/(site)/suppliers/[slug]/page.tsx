@@ -1,4 +1,4 @@
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer1";
 import Navbar from "@/components/Navigation";
 import SupplierDetail from "@/components/Suppliers/SupplierDetail";
 import { Suspense } from "react";

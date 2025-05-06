@@ -21,6 +21,7 @@ export default function ProductSection({ title, products, viewMoreLink }: Produc
         {products.map((product) => (
           <ProductCard
             key={product.id}
+            id={product.id}
             name={product.name}
             priceRange={product.priceRange}
             price={Number(product.price)}

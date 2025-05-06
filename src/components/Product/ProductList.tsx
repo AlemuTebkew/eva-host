@@ -10,12 +10,16 @@ interface ProductListProps {
   hideVendor?: boolean
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, metaData, onPageChange, hideVendor }) => {
-
+const ProductList: React.FC<ProductListProps> = ({
+  products,
+  metaData,
+  onPageChange,
+  hideVendor,
+}) => {
   return (
-    <section className="w-full lg:px-0">
+    <section className="w-full px-4 sm:px-6 lg:px-8">
       {/* Product Grid */}
-      <div className="grid grid-cols-2 gap-2 sm:gap-6 sm:grid-cols-3 md:grid-cols-4 lg:gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
         {products.length > 0 ? (
           products.map((product) => (
             <ProductCard
@@ -32,14 +36,15 @@ const ProductList: React.FC<ProductListProps> = ({ products, metaData, onPageCha
           </div>
         )}
       </div>
-      
+
       {/* Pagination Controls */}
-      
-      <GenericPagination
-        currentPage={metaData.page}
-        totalPages={metaData.totalPages}
-        onPageChange={(page) => {onPageChange(page)}}
-      />
+      <div className="mt-6 flex justify-center">
+        <GenericPagination
+          currentPage={metaData.page}
+          totalPages={metaData.totalPages}
+          onPageChange={onPageChange}
+        />
+      </div>
     </section>
   );
 };

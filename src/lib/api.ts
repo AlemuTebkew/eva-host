@@ -1,23 +1,30 @@
-import type {
-  Category,
-  Supplier,
-  Product,
-  Testimonial,
-  ApiResponse,
-} from "@/types";
+
+import { Category } from "@/types/category";
+import { Supplier } from "@/types/supplier";
+import { Product } from "@/types/product";
+import { Testimonial } from "@/types/testimonial";
+import { ApiResponse, UserProfile } from "@/types/api";
 
 // const API_URL =  "http://16.171.71.23:5007/user"
 const API_URL = "http://127.0.0.1:5007/user";
 const BASE_URL = "http://127.0.0.1:5007";
+// const BASE_URL = "http://16.171.71.23:5007";
 
 /**
  * Generic fetch function with error handling
+ * @param endpoint - The endpoint to fetch from
+ * @returns The response from the endpoint
  */
 async function fetchApi<T>(endpoint: string): Promise<T> {
   try {
+    let token;
+    // if (typeof window !== 'undefined') {
+    //   token = localStorage.getItem('token');
+    // }
     const response = await fetch(`${API_URL}${endpoint}`, {
       headers: {
         "Content-Type": "application/json",
+        // ...(token && { "Authorization": `Bearer ${token}` }),
       },
       next: { revalidate: 60 }, // Revalidate every 60 seconds
     });
@@ -36,7 +43,7 @@ async function fetchApi<T>(endpoint: string): Promise<T> {
 // a function to upload a file to the server
 export async function uploadFile(
   file: File,
-): Promise<ApiResponse<{ filePath: string }>> {
+): Promise<string> {
   const formData = new FormData();
   formData.append("files", file);
 
@@ -66,8 +73,8 @@ export async function getCategories(): Promise<ApiResponse<Category[]>> {
   return fetchApi<ApiResponse<Category[]>>("/categories");
 }
 
-export async function getCategory(id: string): Promise<Category> {
-  return fetchApi<Category>(`/categories/${id}`);
+export async function getCategory(id: string): Promise<ApiResponse<Category>> {
+  return fetchApi<ApiResponse<Category>>(`/categories/${id}`);
 }
 
 /**
@@ -87,8 +94,8 @@ export async function getFeaturedSuppliers(
   return fetchApi<ApiResponse<Supplier[]>>(`/featured_vendors?limit=${limit}`);
 }
 
-export async function getSupplier(id: string): Promise<Supplier> {
-  return fetchApi<Supplier>(`/vendors/${id}`);
+export async function getSupplier(id: string): Promise<ApiResponse<Supplier>> {
+  return fetchApi<ApiResponse<Supplier>>(`/vendors/${id}`);
 }
 
 /**
@@ -110,8 +117,8 @@ export async function getPopularProducts(
   return fetchApi<ApiResponse<Product[]>>(`/products?limit=${limit}`);
 }
 
-export async function getProduct(id: string): Promise<Product> {
-  return fetchApi<Product>(`/products/${id}`);
+export async function getProduct(id: string): Promise<ApiResponse<Product>> {
+  return fetchApi<ApiResponse<Product>>(`/products/${id}`);
 }
 
 /**
@@ -157,7 +164,7 @@ export async function getTestimonials(
   return fetchApi<ApiResponse<Testimonial[]>>(`/testimonials?limit=${limit}`);
 }
 
-interface SubscriptionPlan {
+export interface SubscriptionPlan {
   id: string;
   name: string;
   description: string;
@@ -168,6 +175,8 @@ interface SubscriptionPlan {
   trialDurationInDays: number;
   supportLevel: 0 | 1 | 2 | 3;
   canCancelAnytime: boolean;
+  numberOffProducts: number;
+  numberOfUsers: number;
 }
 
 // aad to fetch subscription plans
@@ -184,9 +193,10 @@ export async function registerSupplier(
     console.log("Registering supplier with data:", data);
     const response = await fetch(`${API_URL}/vendor_registration`, {
       method: "POST",
-      body: data,
+      body: JSON.stringify(data),
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
     });
 
@@ -199,4 +209,79 @@ export async function registerSupplier(
     console.error(`Error registering supplier:`, error);
     throw error;
   }
+}
+
+// write a function to register user
+export async function registerUser(
+  data: any,
+): Promise<ApiResponse<{ userId: string }>> {
+  try {
+    console.log("Registering user with data:", data);
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error(`Error registering user:`, error);
+    throw error;
+  }
+}
+
+// write a function to login user
+export async function loginUser(data: {
+  phone: string;
+  password: string;
+}): Promise<ApiResponse<{ token: string }>> {
+  try {
+    console.log("Logging in user with data:", data);
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error(`Error logging in user:`, error);
+    throw error;
+  }
+}
+
+// a function to fetch user profile
+export async function getUserProfile(): Promise<ApiResponse<UserProfile>> {
+  return fetchApi("/auth/me");
+}
+// afunction to fetch regions from api
+export async function getRegions(): Promise<ApiResponse<{ id: string; name: string }[]>> {
+ return fetchApi('/regions')
+}
+
+// afunction to fetch cities from api
+export async function getCities(regionId: string): Promise<ApiResponse<{ id: string; name: string }[]>> {
+ return fetchApi(`/cities/${regionId}`)
+}
+// afunction to fetch sub cities from api
+export async function getSubCities(cityId: string): Promise<ApiResponse<{ id: string; name: string }[]>> {
+ return fetchApi(`/sub_cities/${cityId}`)
+}
+// afunction to fetch woredas from api
+export async function getWoredas(subCityId: string): Promise<ApiResponse<{ id: string; name: string }[]>> {
+ return fetchApi(`/woredas/${subCityId}`)
 }

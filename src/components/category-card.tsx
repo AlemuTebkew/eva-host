@@ -3,43 +3,45 @@ import { Button } from "@/components/ui/button"
 import { Truck, Grid3X3, PaintBucket, Pipette, Wrench, Home, Zap, Shield } from "lucide-react"
 import { SubCategory } from "@/types/category"
 import { getImageUrl } from "@/lib/utils"
+import Link from "next/link"
 
 interface CategoryCardProps {
+  id: string
   title: string
   image?: string
   subCategories?:SubCategory[]
 }
 
-export default function CategoryCard({ title, image, subCategories }: CategoryCardProps) {
+export default function CategoryCard({ title, image, subCategories,id }: CategoryCardProps) {
   const getIcon = (icon: string) => {
     const icons = [
-      <Truck className="h-5 w-5 text-white" />,
-      <Grid3X3 className="h-5 w-5 text-white" />,
-      <PaintBucket className="h-5 w-5 text-white" />,
-      <Pipette className="h-5 w-5 text-white" />,
-      <Wrench className="h-5 w-5 text-white" />,
-      <Home className="h-5 w-5 text-white" />,
-      <Zap className="h-5 w-5 text-white" />,
-      <Shield className="h-5 w-5 text-white" />,
+      <Truck className="h-5 w-5 text-white" key="cement"/>,
+      <Grid3X3 className="h-5 w-5 text-white" key="tiles"/>,
+      <PaintBucket className="h-5 w-5 text-white" key="paint"/>,
+      <Pipette className="h-5 w-5 text-white" key="pipes"/>,
+      <Wrench className="h-5 w-5 text-white" key="tools"/>,
+      <Home className="h-5 w-5 text-white" key="roofing"/>,
+      <Zap className="h-5 w-5 text-white" key="electrical"/>,
+      <Shield className="h-5 w-5 text-white" key="safety"/>,
     ];
 
     switch (icon) {
       case "cement":
-        return <Truck className="h-5 w-5 text-white" />;
+        return <Truck className="h-5 w-5 text-white" key="cement"/>;
       case "tiles":
-        return <Grid3X3 className="h-5 w-5 text-white" />;
+        return <Grid3X3 className="h-5 w-5 text-white" key="tiles"/>;
       case "paint":
-        return <PaintBucket className="h-5 w-5 text-white" />;
+        return <PaintBucket className="h-5 w-5 text-white" key="paint"/>;
       case "pipes":
-        return <Pipette className="h-5 w-5 text-white" />;
+        return <Pipette className="h-5 w-5 text-white" key="pipes"/>;
       case "tools":
-        return <Wrench className="h-5 w-5 text-white" />;
+        return <Wrench className="h-5 w-5 text-white" key="tools"/>;
       case "roofing":
-        return <Home className="h-5 w-5 text-white" />;
+        return <Home className="h-5 w-5 text-white" key="roofing"/>;
       case "electrical":
-        return <Zap className="h-5 w-5 text-white" />;
+        return <Zap className="h-5 w-5 text-white" key="electrical"/>;
       case "safety":
-        return <Shield className="h-5 w-5 text-white" />;
+        return <Shield className="h-5 w-5 text-white" key="safety"/>;
       default:
         // Randomly select an icon
         return icons[Math.floor(Math.random() * icons.length)];
@@ -67,7 +69,9 @@ export default function CategoryCard({ title, image, subCategories }: CategoryCa
             </span>
           ))}
         </div>
-        <Button className="w-full bg-orange-500 hover:bg-orange-600 text-sm h-9">Explore</Button>
+        <Button className="w-full bg-orange-500 hover:bg-orange-600 text-sm h-9">
+          <Link href={`/search?categoryId=${id}`}>Explore</Link>
+        </Button>
       </div>
     </div>
   )

@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import ProductDetail from "@/components/Product/ProductDetailPage";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer1";
 import Navbar from "@/components/Navigation";
+import SideAdsWrapper from "@/components/Auth/SideAdsWrapper";
 
 export const metadata: Metadata = {
   title: "Home Page",
@@ -18,7 +19,9 @@ export default function ProductDetailPage(props: { params: { slug: string } }) {
   return (
     <>
       {/* <Navbar/> */}
+      <SideAdsWrapper >
       <ProductDetail {...props}/>
+      </SideAdsWrapper>
       {/* <Footer/> */}
     </>
   );

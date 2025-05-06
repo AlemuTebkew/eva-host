@@ -17,17 +17,28 @@ export default function SupplierSection({ suppliers }: SupplierSectionProps) {
             Explore more Suppliers <span className="ml-1">→</span>
           </Link>
         </div>
-        <div className="rounded-lg bg-blue-900 p-4 md:p-6 text-white">
+        <div className="rounded-lg bg-blue-800 p-4 md:p-10 text-white">
           <div className="flex flex-col justify-between md:flex-row">
             <p className="mb-4 md:mb-0">Find the best suppliers for your construction needs</p>
-            <Button className="bg-white text-blue-900 hover:bg-gray-100">Explore more Suppliers</Button>
+            <Button className="bg-white text-blue-800 hover:bg-gray-100">
+
+            <Link href="/suppliers" className="text-sm text-blue-600 hover:underline">
+            Explore more Suppliers
+          </Link>
+            </Button>
           </div>
         </div>
 
         <div className="mt-6 md:mt-8 grid gap-4 md:gap-6 sm:grid-cols-2">
-          {suppliers.map((supplier) => (
-            <SupplierCard key={supplier.id} supplier={supplier} />
-          ))}
+          {suppliers && suppliers.length > 0 ? (
+            suppliers.map((supplier) => (
+              <SupplierCard key={supplier.id} supplier={supplier} />
+            ))
+          ) : (
+            <div className="col-span-2 text-center text-gray-500">
+              No suppliers available at the moment
+            </div>
+          )}
         </div>
 
         <div className="mt-6 flex justify-center md:hidden">

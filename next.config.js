@@ -33,6 +33,15 @@ const nextConfig = {
       }
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/products',
+        permanent: true, // or false if you want a temporary redirect
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

@@ -11,8 +11,8 @@ export default function SuppliersList({suppliers}: { suppliers?: Supplier[] }) {
     <div className="space-y-6">
       {suppliers?.map((supplier, index) => (
         <div key={index} className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-            <div className="md:col-span-1">
+          <div className=" grid-cols-1 md:grid-cols-3 gap-4 p-4 flex justify-between">
+            <div className="md:col-span-1 flex-1">
               <div className="flex items-start space-x-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-900 text-white">A</div>
                 <div>
@@ -44,25 +44,24 @@ export default function SuppliersList({suppliers}: { suppliers?: Supplier[] }) {
               </div>
             </div>
 
-            <div className="md:col-span-2 flex flex-col justify-between">
-              <div className="flex items-center justify-end">
+            <div className=" flex flex-col justify-between">
+              {/* <div className="flex items-center justify-end">
                 { (
                   <div className="flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs text-blue-600">
                     <CheckCircle className="mr-1 h-3 w-3" />
                     Verified Supplier
                   </div>
                 )}
-                <div className="ml-2 rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">PANIC CLEAR</div>
-              </div>
+              </div> */}
 
-              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div className="mt-4 grid grid-cols-2 md:grid-cols-2 gap-2">
                 {supplier?.products?.map((product, imgIndex) => (
                   <div key={imgIndex} className="overflow-hidden rounded-md border border-gray-200">
                     <Image
                       src={product?.image || "/placeholder.svg"}
                       alt={`Product ${imgIndex + 1}`}
-                      width={100}
-                      height={100}
+                      width={50}
+                      height={50}
                       className="h-full w-full object-cover"
                     />
                   </div>

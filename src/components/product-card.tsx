@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
+import Link from "next/link";
 
 interface ProductCardProps {
   name: string;
@@ -8,6 +9,7 @@ interface ProductCardProps {
   rating?: number;
   priceRange: { min: number; max: number };
   image: string;
+  id: string;
 }
 
 export default function ProductCard({
@@ -16,6 +18,7 @@ export default function ProductCard({
   price,
   rating,
   image,
+  id,
 }: ProductCardProps) {
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
@@ -49,7 +52,7 @@ export default function ProductCard({
           size="sm"
           className="w-full border-orange-500 text-orange-500 hover:bg-orange-50"
         >
-          Contact Supplier
+          <Link href={`/products/${id}`}>Contact Supplier</Link>
         </Button>
       </div>
     </div>

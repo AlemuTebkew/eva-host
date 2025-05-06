@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { Step1 } from "./StepOneForm";
 import StepTwo from "./StepTwoPlans";
-import { getSubscriptionPlans } from "@/lib/api";
+import { getSubscriptionPlans, SubscriptionPlan } from "@/lib/api";
 import Image from "next/image";
 import { Button } from "../ui/button";
 
 export default function SupplierRegistrationPage() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
-  const [plans, setPlans] = useState([]);
+  const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
 
   const methods = useForm({
     defaultValues: formData,
@@ -42,17 +42,7 @@ export default function SupplierRegistrationPage() {
   }, []);
 
   return (
-    <div className="my-10 flex bg-gray-100  justify-stretch rounded-lg ">
-      {/* Left Ad */}
-      <div className="hidden w-1/6 md:block">
-        <Image
-          src="/images/left-ads.png"
-          alt="Left Ad"
-          className="h-full object-cover"
-          width={150}
-          height={500}
-        />
-      </div>
+    <div className="my-10 flex  rounded-lg bg-gray-100 ">
 
       {/* Center Form */}
       <div className="mx-auto flex w-[80%] flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
@@ -80,7 +70,7 @@ export default function SupplierRegistrationPage() {
                   <span className="font-medium text-gray-400">Step 2</span>
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <h2 className="text-lg font-semibold text-gray-800">
                   Tell Us About Your Business
                 </h2>
@@ -88,7 +78,7 @@ export default function SupplierRegistrationPage() {
                   Join EVA as a supplier and reach more customers. <br />
                   Fill in your business details to get started!
                 </p>
-              </div>
+              </div> */}
             </div>
           )}
 
@@ -107,21 +97,21 @@ export default function SupplierRegistrationPage() {
                   <div className="h-0.5 w-12 bg-gray-300"></div>
                   {/* Step 2 */}
                   <div className="flex items-center space-x-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-100">
-                      <span className="font-bold text-gray-400">2</span>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-300 bg-blue-100">
+                      <span className="font-bold text-blue-100">2</span>
                     </div>
-                    <span className="font-medium text-gray-400">Step 2</span>
+                    <span className="font-medium text-blue-100">Step 2</span>
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-800">
+                  <h2 className="text-md font-semibold text-gray-800 my-3">
                     Choose a Supplier Package
                   </h2>
-                  <p className="text-sm text-gray-500">
+                  {/* <p className="text-sm text-gray-500">
                     Different supplier packages offer varying features and{" "}
                     <br />
                     benefits. Choose the one that fits your business needs.
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
@@ -130,7 +120,7 @@ export default function SupplierRegistrationPage() {
         <FormProvider {...methods}>
           {step === 1 && (
             <form
-              className="w-full max-w-5xl"
+              className="w-full max-w-5xl mt-5"
               onSubmit={methods.handleSubmit(nextStep)}
             >
               <Step1 />
@@ -169,17 +159,7 @@ export default function SupplierRegistrationPage() {
         )}
       </div>
 
-      {/* Right Ad */}
-      <div className="hidden w-1/6  md:block">
     
-        <Image
-          src="/images/right-ads.png"
-          alt="Right Ad"
-          className="h-full object-cover"
-          width={150}
-          height={500}
-        />
-      </div>
     </div>
   );
 }

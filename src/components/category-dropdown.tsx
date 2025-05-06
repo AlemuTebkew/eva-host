@@ -45,7 +45,7 @@ export default function CategoryDropdown({
       {/* Category list */}
       <div className="space-y-1">
         {categories.map((category, index) => (
-            <div
+          <div
             key={category.id}
             className={`flex cursor-pointer items-center rounded-md p-2 transition-colors duration-150 ${
               index === hoveredCategory ? "bg-gray-100" : "hover:bg-gray-50"
@@ -55,14 +55,14 @@ export default function CategoryDropdown({
               if (onClose) onClose();
               router.push(`/search?categoryId=${category.id}`);
             }}
-            >
+          >
             <img
-              src={getImageUrl(category.image as string)}
+              src={getImageUrl(category?.image as string)}
               alt={category.name}
-              className="mb-1 h-6 w-6 mr-3"
+              className="mb-1 mr-3 h-6 w-6"
             />{" "}
             <span className="text-sm font-medium">{category.name}</span>
-            </div>
+          </div>
         ))}
       </div>
 

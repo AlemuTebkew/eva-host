@@ -1,4 +1,5 @@
-import Footer from "@/components/Footer";
+import SideAdsWrapper from "@/components/Auth/SideAdsWrapper";
+import Footer from "@/components/Footer1";
 import Navbar from "@/components/Navigation";
 import SearchResultPage from "@/components/Search/SearchPage";
 import { Suspense } from "react";
@@ -14,7 +15,9 @@ const SearchPage = () => {
           </div>
         }
       >
+        <SideAdsWrapper>
         <SearchResultPage />
+        </SideAdsWrapper>
       </Suspense>
       {/* <Footer/> */}
     </>

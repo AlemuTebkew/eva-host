@@ -3,6 +3,7 @@ import { CheckCircle } from "lucide-react";
 import { Supplier } from "@/types/supplier";
 import { getImageUrl, getUrl } from "@/lib/utils";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function SupplierCard({ supplier }: { supplier: Supplier }) {
   return (
@@ -23,7 +24,7 @@ export default function SupplierCard({ supplier }: { supplier: Supplier }) {
       </div>
       <div className="m-2 p-3">
         <Button className="h-9 w-full bg-orange-500 text-sm hover:bg-orange-600 ">
-          Contact Supplier
+          <Link href={`/suppliers/${supplier.id}`}>  Contact Supplier</Link>
         </Button>
       </div>
       <div className="grid grid-cols-3 gap-2">

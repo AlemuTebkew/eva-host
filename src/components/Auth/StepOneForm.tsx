@@ -4,11 +4,7 @@ import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { PhoneInput } from "@/components/ui/phone-input";
 import RegionSelector from "./AddressSelector";
 import { FileUploader } from "./FileUploader";
@@ -90,17 +86,14 @@ export const Step1 = () => {
         <FormItem>
           <FormLabel>License Photo (optional)</FormLabel>
           <FileUploader
-            label="Upload License Photo"
-            name="licensePhoto"
-            onFileAccepted={(file) => setValue("licensePhoto", file)}
+            onFileAccepted={(file: string) => setValue("licensePhoto", file)}
           />
         </FormItem>
 
         <FormItem>
           <FormLabel>Company Logo (optional)</FormLabel>
           <FileUploader
-            name="logo"
-            onFileAccepted={(file) => setValue("logo", file)}
+            onFileAccepted={(file: string) => setValue("logo", file)}
           />
         </FormItem>
 
@@ -151,14 +144,10 @@ export const Step1 = () => {
       <MapPickerModal
         open={isMapOpen}
         onClose={() => setIsMapOpen(false)}
-        onSelect={(lat, lng) => {
+        onSelect={({ lat, lng }) => {
           setValue("address.latitude", lat.toString());
           setValue("address.longitude", lng.toString());
           setIsMapOpen(false);
-        }}
-        defaultCoords={{
-          lat: parseFloat(latitude || "0"),
-          lng: parseFloat(longitude || "0"),
         }}
       />
     </div>

@@ -1,20 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, User } from "lucide-react";
 import { useGetCategoriesQuery } from "@/store/app-api";
 import CategoryDropdown from "@/components/category-dropdown";
 import MobileCategoryDropdown from "@/components/mobile-category-dropdown";
+import SearchBar from "./Search/SearchBarComponent";
 
 export default function Header() {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const pathname = usePathname();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
 
   // fetch categories
   const { data: categories, isSuccess } = useGetCategoriesQuery();
@@ -34,6 +38,13 @@ export default function Header() {
     };
   }, [isCategoryOpen]);
 
+  // check if user is authenticated
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
   // Check if a nav link is active
   const isActive = (path: string) => {
     if (path === "/" && pathname === "/") return true;
@@ -60,7 +71,7 @@ export default function Header() {
 
         {/* Mobile Search */}
         <div className="border-t border-gray-200 px-4 py-2">
-          <div className="relative">
+          {/* <div className="relative">
             <Input
               type="text"
               placeholder="what are you looking for?"
@@ -72,11 +83,14 @@ export default function Header() {
             >
               <Search className="h-4 w-4" />
             </Button>
-          </div>
+          </div> */}
+
+          <SearchBar />
+
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex border-t border-gray-200 py-2">
+        <div className="flex border-t border-gray-200 py-2 items-center">
           <button
             onClick={() => setIsCategoryOpen(!isCategoryOpen)}
             className="flex items-center px-4 py-2 text-sm"
@@ -162,8 +176,7 @@ export default function Header() {
               <div className="flex items-center justify-between">
                 <select className="rounded-md border border-gray-300 px-2 py-1 text-sm">
                   <option>English</option>
-                  <option>Spanish</option>
-                  <option>French</option>
+                  <option>Amharic</option>
                 </select>
                 <div className="flex space-x-2">
                   <Button
@@ -231,6 +244,11 @@ export default function Header() {
             </div>
 
             <div className="hidden flex-1 items-center justify-center md:flex">
+              {/* <Suspense> */}
+                <SearchBar />
+              {/* </Suspense> */}
+            </div>
+            {/* <div className="hidden flex-1 items-center justify-center md:flex">
               <div className="relative w-full max-w-md">
                 <Input
                   type="text"
@@ -244,7 +262,7 @@ export default function Header() {
                   <Search className="h-4 w-4" />
                 </Button>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex items-center space-x-2">
               <div className="mr-2">
@@ -253,9 +271,17 @@ export default function Header() {
                   <option>Amharic</option>
                 </select>
               </div>
-              <Button className="bg-orange-500 hover:bg-orange-600">
-                <Link href="/login">Login</Link>
-              </Button>
+              {isAuthenticated ? (
+                <Button className="bg-orange-500 hover:bg-orange-600">
+                  <Link href="/profile">
+                    <User className="h-5 w-5" />
+                  </Link>
+                </Button>
+              ) : (
+                <Button className="bg-orange-500 hover:bg-orange-600">
+                  <Link href="/login">Login</Link>
+                </Button>
+              )}
               <Button
                 variant="outline"
                 className="border-gray-300 text-gray-700 hover:bg-gray-50"

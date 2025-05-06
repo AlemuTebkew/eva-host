@@ -1,6 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { Category } from "@/types/category";  // Assuming Category type is defined elsewhere in your project
+import Image from "next/image";
 
 interface CategoryNavigationProps {
   data: Category[];  // Array of Category objects
@@ -31,10 +32,12 @@ const CategoryNavigation: React.FC<CategoryNavigationProps> = ({ data, selectedC
               }`}
             >
               {/* Category Icon */}
-              <img
-                src={icons[index % icons.length]}
+              <Image
+                src={category.image || icons[index % icons.length]}
                 alt={category.name}
-                className="h-6 w-6 mb-1"
+                width={24}
+                height={24}
+                className="mb-1"
               />
               <span className="text-xs">{category.name}</span>
             </div>

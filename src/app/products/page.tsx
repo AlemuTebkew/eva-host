@@ -23,28 +23,36 @@ async function CategoriesContainer() {
 }
 
 async function SuppliersContainer() {
-  const { data: suppliers } = await getFeaturedSuppliers(10)
-
-  console.log("Suppliers: ", suppliers);
-  
-  return <SupplierSection suppliers={suppliers} />
+  try {
+    const { data: suppliers } = await getFeaturedSuppliers(10)
+    console.log("Suppliers: ", suppliers)
+    return <SupplierSection suppliers={suppliers} />
+  } catch (error) {
+    console.error('Error fetching suppliers:', error)
+    return <div className="text-center text-gray-500 py-8">Failed to load suppliers. Please try again later.</div>
+  }
 }
 
 async function FeaturedProductsContainer() {
   const { data: products } = await getProducts(5)
   console.log("Featured Products: ", products);
-  return <ProductSection title="Featured Products and Services" products={products} viewMoreLink="/products" />
+  return <ProductSection title="Featured Products and Services" products={products} viewMoreLink="/search" />
 }
 
 async function PopularProductsContainer() {
   const { data: products } = await getPopularProducts(5)
   console.log("Popular Products: ", products);
-  return <ProductSection title="Most Popular Searched" products={products} viewMoreLink="/products/popular" />
+  return <ProductSection title="Most Popular Searched" products={products} viewMoreLink="/search" />
 }
 
 async function TestimonialsContainer() {
-  const { data: testimonials } = await getTestimonials()
-  return <TestimonialSection testimonials={testimonials} />
+  try {
+    const { data: testimonials } = await getTestimonials()
+    return <TestimonialSection testimonials={testimonials} />
+  } catch (error) {
+    console.error('Error fetching testimonials:', error)
+    return <div className="text-center text-gray-500 py-8">Failed to load testimonials. Please try again later.</div>
+  }
 }
 
 export default function Home() {
@@ -126,9 +134,9 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      {/* <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
         <TestimonialsContainer />
-      </Suspense> */}
+      </Suspense>
 
       {/* Newsletter */}
       <Newsletter />

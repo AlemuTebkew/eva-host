@@ -1,7 +1,9 @@
 import Image from "next/image"
 import { Star } from "lucide-react"
+import { Testimonial } from "@/types/testimonial"
+import { getImageUrl } from "@/lib/utils"
 
-export default function TestimonialCard() {
+export default function TestimonialCard({testimonial}: {testimonial: Testimonial}) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow">
       <div className="mb-4 flex items-center text-yellow-400">
@@ -10,13 +12,12 @@ export default function TestimonialCard() {
         ))}
       </div>
       <p className="mb-4 text-gray-600">
-        "Our company saved thousands last year, and we found reliable suppliers through Eva. The price comparison
-        feature is invaluable for our procurement process."
+      {testimonial.description}
       </p>
       <div className="flex items-center">
         <div className="mr-3 h-10 w-10 overflow-hidden rounded-full">
           <Image
-            src="/placeholder.svg?height=40&width=40"
+            src={testimonial.photo ? getImageUrl(testimonial.photo) : '/placeholder.png'}
             alt="Customer"
             width={40}
             height={40}
@@ -24,8 +25,8 @@ export default function TestimonialCard() {
           />
         </div>
         <div>
-          <p className="font-medium">John Smith</p>
-          <p className="text-sm text-gray-600">Construction Manager</p>
+          <p className="font-medium">{testimonial.name}</p>
+          <p className="text-sm text-gray-600">{testimonial.title}</p>
         </div>
       </div>
     </div>

@@ -43,11 +43,14 @@ export default function SupplierBanner({
   }, [autoSlide, nextSlide, slideInterval]);
 
   const stopAutoSlide = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  }, []);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, [intervalRef]);
 
   useEffect(() => {
-    return () => stopAutoSlide(); // Cleanup on unmount
+    return () => stopAutoSlide();
   }, [stopAutoSlide]);
 
   return (
