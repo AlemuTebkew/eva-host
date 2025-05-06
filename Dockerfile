@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install project dependencies
-RUN npm install
+RUN npm install --force
 
 # Install ts-node globally for running TypeScript code
 RUN npm install -g ts-node
@@ -36,7 +36,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm install --only=production
+RUN npm install --only=production --force
 
 # Copy the build artifacts from the development stage to the production stage
 COPY --from=development /app/.next ./.next
