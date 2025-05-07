@@ -128,7 +128,6 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
           defaultInputValue={getSubCategoryOptions(selectedCategoryId || "").find((option) => option.value === selectedSubCategoryId)?.label}
           options={getSubCategoryOptions(selectedCategoryId || "")}
           isClearable
-          placeholder="Select sub-category"
           onChange={(option) => handleInputChange("subCategory", option?.value || "")}
         />
       </div>

@@ -1,5 +1,4 @@
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
+// 'use client'
 
 import Footer from "@/components/footer";
 import { ThemeProvider } from "next-themes";
@@ -8,6 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "@/store/app-store";
 import Navbar from "@/components/Navigation";
 import Header from "@/components/header";
+import ClientProviders from "./client-provider";
 
 export default function RootLayout({
   children,
@@ -18,12 +18,12 @@ export default function RootLayout({
     <html suppressHydrationWarning={true} className="!scroll-smooth" lang="en">
       <head />
       <body>
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute="class"
           enableSystem={false}
           defaultTheme="light"
-        >
-          <Provider store={store}>
+        > */}
+          <ClientProviders >
             <Header />
 
             {/* <Header /> */}
@@ -31,8 +31,8 @@ export default function RootLayout({
             {children}
 
             <Footer />
-          </Provider>
-        </ThemeProvider>
+          </ClientProviders>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

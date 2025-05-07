@@ -15,14 +15,20 @@ export const metadata: Metadata = {
   twitter: {},
 };
 
-export default function ProductDetailPage(props: { params: { slug: string } }) {
+interface ProductDetailPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   return (
     <>
       {/* <Navbar/> */}
       <Suspense fallback={<div>Loading...</div>}>
-      <SideAdsWrapper >
-      <ProductDetail {...props}/>
-      </SideAdsWrapper>
+        <SideAdsWrapper>
+          <ProductDetail slug={slug} />
+        </SideAdsWrapper>
       </Suspense>
       {/* <Footer/> */}
     </>

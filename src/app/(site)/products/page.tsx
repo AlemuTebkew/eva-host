@@ -1,7 +1,7 @@
-'use client'
 import { Suspense } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import Header from "@/components/header"
 import CategorySection from "@/components/category-section"
 import SupplierSection from "@/components/supplier-section"
 import ValueProposition from "@/components/value-proposition"
@@ -139,9 +139,7 @@ export default function Home() {
       </Suspense>
 
       {/* Newsletter */}
-      <Suspense fallback={<Loading />}>
-        <Newsletter />
-      </Suspense>
+      <Newsletter />
 
       {/* Footer */}
       {/* <Footer /> */}

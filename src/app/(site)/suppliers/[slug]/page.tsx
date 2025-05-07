@@ -3,10 +3,9 @@ import Navbar from "@/components/Navigation";
 import SupplierDetail from "@/components/Suppliers/SupplierDetail";
 import { Suspense } from "react";
 
-
-export default function SupplierDetailPage(props: {
-  params: { slug: string };
-}) {
+export default async function SupplierDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   return (
     <>
       {/* <Navbar /> */}
@@ -17,7 +16,7 @@ export default function SupplierDetailPage(props: {
           </div>
         }
       >
-        <SupplierDetail {...props} />
+        <SupplierDetail params={{ slug }} />
       </Suspense>
       {/* You can also show their products list here */}
       {/* <Footer/> */}

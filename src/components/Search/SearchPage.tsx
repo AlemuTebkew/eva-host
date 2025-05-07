@@ -163,7 +163,7 @@ export default function SearchPage({ hideVendor, bgWite }: SearchPageProps) {
         items={[
           {
             image:
-              "https://tse2.mm.bing.net/th?id=OIP.a-YDWw7IcFGxYeuz_1wUrgHaHa&pid=Api",
+              "/images/bottom-ads.png",
             link: "/products/1",
           },
           {
@@ -201,8 +201,8 @@ export default function SearchPage({ hideVendor, bgWite }: SearchPageProps) {
       {/* Product List Section */}
       {isLoading && <ProductListSkeleton />}
       {isSuccess && data && (
-        <div className="grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-5">
-          <div className="hidden lg:block">
+        <div className="grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-6">
+          <div className="hidden lg:block lg:col-span-2">
             <Filter
               onApplyFilters={handleOnApplyFilter}
               onClose={setIsFilterOpen}

@@ -1,3 +1,4 @@
+'use client'
 import { CircleDollarSign, ShieldCheck, HeadphonesIcon } from "lucide-react"
 
 interface ValuePropositionProps {

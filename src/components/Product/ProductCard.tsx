@@ -19,7 +19,7 @@ export default function ProductCard({ product, otherSuppliersCount, hideVendor }
     : [];
 
   return (
-    <Link href={`/products/${product.id}`} className="bg-white sm:p-2 rounded">
+    <Link href={`/products/${product.id}`} className="bg-white sm:p-2 rounded ">
       <div className="rounded-lg overflow-hidden">
         {/* IMAGE CONTAINER: fixed height + gray background */}
         <div className="w-full h-48 bg-gray-100">
@@ -64,9 +64,9 @@ export default function ProductCard({ product, otherSuppliersCount, hideVendor }
         </div>
 
         {/* Buttons */}
-        <div className="w-full mt-4 mb-4 flex justify-start ml-5 lg:mb-0">
+        <div className="w-full mt-4 mb-4 flex justify-start  lg:mb-0">
           <Button
-            className="text-blue-800 bg-[rgb(223,226,231)] rounded-lg py-1 text-xs pointer-events-none"
+            className="text-blue-800 w-full bg-[rgb(223,226,231)] rounded-lg text-center pointer-events-none"
             size={"sm"}
           >
             Compare Price
