@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, X, User } from "lucide-react";
+import { Search, Menu, X, User, UserCircle } from "lucide-react";
 import { useGetCategoriesQuery } from "@/store/app-api";
 import CategoryDropdown from "@/components/category-dropdown";
 import MobileCategoryDropdown from "@/components/mobile-category-dropdown";
@@ -17,8 +17,6 @@ export default function Header() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-
 
   // fetch categories
   const { data: categories, isSuccess } = useGetCategoriesQuery();
@@ -40,7 +38,7 @@ export default function Header() {
 
   // check if user is authenticated
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       setIsAuthenticated(true);
     }
@@ -53,7 +51,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow">
+    <header className="sticky top-0 z-40 bg-white shadow">
       {/* Mobile Header */}
       <div className="md:hidden">
         <div className="flex h-16 items-center justify-between px-4">
@@ -71,29 +69,14 @@ export default function Header() {
 
         {/* Mobile Search */}
         <div className="border-t border-gray-200 px-4 py-2">
-          {/* <div className="relative">
-            <Input
-              type="text"
-              placeholder="what are you looking for?"
-              className="w-full pl-4 pr-10"
-            />
-            <Button
-              className="absolute right-0 top-0 h-full rounded-l-none bg-blue-600 hover:bg-blue-700"
-              size="icon"
-            >
-              <Search className="h-4 w-4" />
-            </Button>
-          </div> */}
-
           <SearchBar />
-
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex border-t border-gray-200 py-2 items-center">
+        <div className="flex items-center justify-between border-t z-40 border-gray-200 py-2">
           <button
             onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-            className="flex items-center px-4 py-2 text-sm"
+            className="flex items-center px-4  text-sm"
           >
             <svg
               className="mr-2 h-5 w-5 text-gray-500"
@@ -125,33 +108,33 @@ export default function Header() {
             </svg>
           </button>
 
-          <nav className="flex flex-1 justify-around">
+          <nav className="flex flex-1 justify-around items-center mt-1">
             <Link
               href="/products"
-              className={`border-b-2 pb-2 text-sm font-medium ${
+              className={`border-b-2 pb-1 text-sm font-medium ${
                 isActive("/products")
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-600 hover:text-blue-600"
+                  ? "border-blue-800 text-blue-800"
+                  : "border-transparent text-gray-800 hover:text-blue-800"
               }`}
             >
               Products
             </Link>
             <Link
               href="/suppliers"
-              className={`border-b-2 pb-2 text-sm font-medium ${
+              className={`border-b-2 pb-1 text-sm font-medium ${
                 isActive("/suppliers")
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-600 hover:text-blue-600"
+                  ? "border-blue-800 text-blue-800"
+                  : "border-transparent text-gray-800 hover:text-blue-800"
               }`}
             >
               Suppliers
             </Link>
             <Link
               href="/services"
-              className={`border-b-2 pb-2 text-sm font-medium ${
+              className={`border-b-2 pb-1 text-sm font-medium ${
                 isActive("/services")
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-600 hover:text-blue-600"
+                  ? "border-blue-800 text-blue-800"
+                  : "border-transparent text-gray-800 hover:text-blue-800"
               }`}
             >
               Service
@@ -179,19 +162,37 @@ export default function Header() {
                   <option>Amharic</option>
                 </select>
                 <div className="flex space-x-2">
-                  <Button
-                    className="bg-orange-500 hover:bg-orange-600"
-                    size="sm"
-                  >
-                    Login
-                  </Button>
+                  {!isAuthenticated ? (
+                    <Link href="/login">
+                      <Button
+                        className="bg-orange-500 hover:bg-orange-600"
+                        size="sm"
+                      >
+                        Login
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href="/profile">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex items-center gap-2"
+                      >
+                        <UserCircle className="h-5 w-5" />
+                        Profile
+                      </Button>
+                    </Link>
+                  )}
+                  
+                  <Link href="/register-as-supplier">
                   <Button
                     variant="outline"
                     className="border-gray-300 text-gray-700 hover:bg-gray-50"
                     size="sm"
                   >
                     Become Supplier
-                  </Button>
+                      </Button>
+                    </Link>
                 </div>
               </div>
               <div className="space-y-2">
@@ -200,28 +201,16 @@ export default function Header() {
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
                   <Link
-                    href="#"
+                    href="/contact-us"
                     className="text-sm text-gray-600 hover:text-blue-600"
                   >
-                    About Us
+                    Contact US
                   </Link>
                   <Link
-                    href="#"
-                    className="text-sm text-gray-600 hover:text-blue-600"
-                  >
-                    Contact
-                  </Link>
-                  <Link
-                    href="#"
+                    href="/contact-us"
                     className="text-sm text-gray-600 hover:text-blue-600"
                   >
                     Help Center
-                  </Link>
-                  <Link
-                    href="#"
-                    className="text-sm text-gray-600 hover:text-blue-600"
-                  >
-                    Careers
                   </Link>
                 </div>
               </div>
@@ -245,24 +234,9 @@ export default function Header() {
 
             <div className="hidden flex-1 items-center justify-center md:flex">
               {/* <Suspense> */}
-                <SearchBar />
+              <SearchBar />
               {/* </Suspense> */}
             </div>
-            {/* <div className="hidden flex-1 items-center justify-center md:flex">
-              <div className="relative w-full max-w-md">
-                <Input
-                  type="text"
-                  placeholder="what are you looking for?"
-                  className="w-full pl-4 pr-10"
-                />
-                <Button
-                  className="absolute right-0 top-0 h-full rounded-l-none bg-blue-600 hover:bg-blue-700"
-                  size="icon"
-                >
-                  <Search className="h-4 w-4" />
-                </Button>
-              </div>
-            </div> */}
 
             <div className="flex items-center space-x-2">
               <div className="mr-2">
@@ -368,6 +342,16 @@ export default function Header() {
                 }`}
               >
                 Service
+              </Link>
+              <Link
+                href="/contact-us"
+                className={`border-b-2 pb-2 text-sm font-medium ${
+                  isActive("/contact-us")
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-600 hover:border-blue-600 hover:text-blue-600"
+                }`}
+              >
+                Contact Us
               </Link>
             </nav>
           </div>

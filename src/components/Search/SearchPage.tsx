@@ -33,9 +33,10 @@ const sortOptions: SortOption[] = [
 interface SearchPageProps {
   hideVendor?: boolean;
   bgWite?: boolean;
+  supplierId?: string;
 }
 
-export default function SearchPage({ hideVendor, bgWite }: SearchPageProps) {
+export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPageProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const searchQuery = searchParams.get("keyword") || "";
@@ -89,6 +90,7 @@ export default function SearchPage({ hideVendor, bgWite }: SearchPageProps) {
     const sortOrder = searchParams.get("sortOrder");
     if (sortOrder) params.sortOrder = sortOrder;
 
+    if (supplierId) params.vendorId = supplierId;
     params.page = currentPage;
     params.limit = 10;
 
@@ -201,16 +203,16 @@ export default function SearchPage({ hideVendor, bgWite }: SearchPageProps) {
       {/* Product List Section */}
       {isLoading && <ProductListSkeleton />}
       {isSuccess && data && (
-        <div className="grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-6">
-          <div className="hidden lg:block lg:col-span-2">
+        <div className="grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-5">
+          <div className="hidden lg:block lg:col-span-1">
             <Filter
               onApplyFilters={handleOnApplyFilter}
               onClose={setIsFilterOpen}
             />
           </div>
-          <div className="col-span-4 flex flex-col">
+          <div className="col-span-3 flex flex-col">
             <div>
-              <div className="mb-4 flex hidden items-center justify-between lg:flex">
+              <div className="mb-4 hidden items-center justify-between lg:flex">
                 <p>{`Showing ${data.meta.total} products from global suppliers`}</p>
 
                 <SortDropdown
@@ -244,7 +246,7 @@ export default function SearchPage({ hideVendor, bgWite }: SearchPageProps) {
 
             {/* Filter panel */}
             <motion.div
-              className="fixed bottom-0 right-0 top-0 z-50 h-screen bg-white shadow-lg lg:hidden"
+              className="fixed bottom-0 right-0 top-0 z-50 mt-[150px] h-screen bg-white shadow-lg lg:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

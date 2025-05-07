@@ -16,52 +16,44 @@ const SupplierDetail = ({
   
   return (
     <div className="bg-white border-t">
-      {
-        isLoading && <SupplierListSkeleton/>
-      }
-      {
-        isSuccess && data && (
-        <div className="max-w-c-1235 mx-auto space-y-4 p-6 bg-white">
+      {isLoading && <SupplierListSkeleton />}
+      {isSuccess && data && (
+        <div className="max-w-c-1235 mx-auto space-y-6 p-6 bg-white">
           {/* Supplier Basic Information */}
-          <div className="flex gap-4 lg:gap-2 items-center">
-            <h2 className="text-xl lg:text-2xl font-bold">{data.companyName}</h2>
-            {data.rating && <p className=""> ⭐ {data.rating ?? "No rating yet"}</p>}
+          <div className="flex flex-col gap-4 lg:gap-2">
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">{data.companyName}</h2>
+            {data.rating && <p className="text-lg text-yellow-500">⭐ {data.rating ?? "No rating yet"}</p>}
           </div>
-          <div className="flex flex-col text-sm text-gray-600">
-            <div className="space-y-1">
+          <div className="flex flex-col text-base text-gray-700">
+            <div className="space-y-2">
               <div className="flex gap-8">
                 <div className="flex flex-col">
-                  <p className="text-gray-500">Region</p>
-                  <p className="text-lg">{data.region?.name}</p>
+                  <p className="text-gray-500 font-medium">Region</p>
+                  <p className="text-lg font-semibold">{data.region?.name}</p>
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-gray-500">City</p>
-                  <p className="text-lg">{data.city?.name}</p>
+                  <p className="text-gray-500 font-medium">City</p>
+                  <p className="text-lg font-semibold">{data.city?.name}</p>
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-gray-500">Subcity</p>
-                  <p className="text-lg">{data.subCity?.name}</p>
+                  <p className="text-gray-500 font-medium">Subcity</p>
+                  <p className="text-lg font-semibold">{data.subCity?.name}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {<p className="text-gray-600">{data.bio ?? ""}</p>}
-          {data.phoneNumber && <p className="tex-gray-600">Contact: <a href={`tel:${data.phoneNumber}`}>{data.phoneNumber}</a></p>}
-          {data.email && <p className="text-gray-600">Email: <a href={`mailto:${data.email}`}>{data.email}</a></p>}
+          <p className="text-gray-700 mt-4">{data.bio ?? ""}</p>
+          {data.phoneNumber && <p className="text-gray-700 mt-2">Contact: <a href={`tel:${data.phoneNumber}`} className="text-blue-600 hover:underline">{data.phoneNumber}</a></p>}
+          {data.email && <p className="text-gray-700 mt-2">Email: <a href={`mailto:${data.email}`} className="text-blue-600 hover:underline">{data.email}</a></p>}
           
-          {/* Optional: Contact Supplier button */}
-          <div className="flex gap-2 py-2">
-            <Facebook/>
-            <Send/>
-            <TwitterIcon/>
-          </div>
+      
 
           {/* Products Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Our Products</h3>
-            <Suspense fallback={<div>Loading</div>}>
-            <SearchPage hideVendor={true} bgWite={true}/>
+          <div className="space-y-6 mt-6">
+            <h3 className="text-xl font-semibold text-gray-800">Supplier Products</h3>
+            <Suspense fallback={<div>Loading...</div>}>
+              <SearchPage hideVendor={true} bgWite={true} supplierId={data.id} />
             </Suspense>
             
             {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -79,8 +71,7 @@ const SupplierDetail = ({
             </div> */}
           </div>
         </div>
-        )
-      }
+      )}
     </div>
   );
 };

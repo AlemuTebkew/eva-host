@@ -9,13 +9,18 @@ import Navbar from "@/components/Navigation";
 import Header from "@/components/header";
 import ClientProviders from "./client-provider";
 
+// add inter font
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning={true} className="!scroll-smooth" lang="en">
+    <html suppressHydrationWarning={true} className={`!scroll-smooth ${inter.className}`} lang="en">
       <head />
       <body>
         {/* <ThemeProvider

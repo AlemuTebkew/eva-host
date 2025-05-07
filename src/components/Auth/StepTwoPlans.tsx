@@ -7,8 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { register } from "module";
 import { registerSupplier, SubscriptionPlan } from "@/lib/api";
-
-
+import { toast } from "react-toastify";
 
 interface StepTwoProps {
   onBack: () => void;
@@ -27,6 +26,7 @@ export default function StepTwo({
     "monthly",
   );
   const [paymentMethod, setPaymentMethod] = useState<"cash" | "bank">("cash");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     // Adjust prices based on billing cycle
@@ -42,10 +42,7 @@ export default function StepTwo({
   }, [billingCycle, subscriptionPlans]);
 
   const handleSubmit = async () => {
-    if (!selectedPlanId) {
-      alert("Please select a plan");
-      return;
-    }
+  
 
     const payload = {
       ...formData,
@@ -57,14 +54,18 @@ export default function StepTwo({
     console.log("Submitting payload:", payload);
 
     try {
+      setIsSubmitting(true);
       const response = await registerSupplier(payload);
       console.log("Registration successful:", response);
+      toast.success("Registration successful! We will contact you after approval.");
       // Handle success (e.g., redirect to a success page)
     } catch (error: any) {
       console.error("Registration failed:", error);
       const errorMessage =
         error?.response?.message || "An unexpected error occurred.";
       alert(errorMessage); // Show a user-friendly error message
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -189,9 +190,9 @@ export default function StepTwo({
         <Button
           className="bg-blue-800"
           onClick={handleSubmit}
-          disabled={!selectedPlanId}
+          disabled={!selectedPlanId || isSubmitting}
         >
-          Complete <span className="ml-2">✔</span>
+          {isSubmitting ? "Submitting..." : "Complete"} <span className="ml-2">✔</span>
         </Button>
       </div>
     </div>

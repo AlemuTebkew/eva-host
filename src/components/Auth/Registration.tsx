@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, ChevronLeft, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, ChevronLeft, Eye, EyeOff, Loader } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PhoneInput } from "../ui/phone-input";
@@ -49,12 +49,14 @@ type RegistrationFormData = z.infer<typeof registrationSchema>;
 export default function Registration() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // React Hook Form setup
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
   });
   const onSubmit = async (data: RegistrationFormData) => {
+    setIsSubmitting(true);
     try {
       console.log(data);
       // Call the API to register the user
@@ -65,6 +67,8 @@ export default function Registration() {
     } catch (error) {
       console.error("Registration failed:", error);
       // Handle error (e.g., show error message to the user)
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -73,11 +77,11 @@ export default function Registration() {
       {/* Back Button */}
       <Button
         variant="link"
-        className="absolute left-4 top-4 text-gray-800 hover:text-gray-600 focus:outline-none"
+        className="absolute left-0 -top-4 text-gray-800 hover:text-gray-600 focus:outline-none mb-5 p-10"
         onClick={() => window.history.back()}
       >
-        <ArrowLeft size={40} />
-        </Button>
+        <ArrowLeft size={48} />
+      </Button>
 
       {/* Registration Card */}
       <main className="flex flex-1 items-center justify-center px-4 mt-5">
@@ -198,9 +202,10 @@ export default function Registration() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full cursor-not-allowed bg-blue-800 text-white"
+                className="w-full bg-blue-800 text-white"
+                disabled={isSubmitting}
               >
-                Register
+                {isSubmitting ? <Loader className="animate-spin" /> : "Register"}
               </Button>
             </form>
           </Form>

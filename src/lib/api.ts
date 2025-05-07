@@ -285,3 +285,62 @@ export async function getSubCities(cityId: string): Promise<ApiResponse<{ id: st
 export async function getWoredas(subCityId: string): Promise<ApiResponse<{ id: string; name: string }[]>> {
  return fetchApi(`/woredas/${subCityId}`)
 }
+
+export async function subscribeToNewsletter(email: string, fullName: string, phone: string): Promise<{ message: string, status: boolean }> {
+  try {
+    const response = await fetch(`${API_URL}/newsletter_subscription`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ email, fullName, phone }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error(`Error subscribing to newsletter:`, error);
+    throw error;
+  }
+};
+
+// save contact us message
+export async function saveContactMessage(
+  fullName: string,
+  email: string,
+  phone: string,
+  subject: string,
+  message: string
+): Promise<{ message: string; status: boolean }> {
+  try {
+    const response = await fetch(`${API_URL}/contact_us`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        fullName,
+        email,
+        phone,
+        subject,
+        message,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error(`Error saving contact message:`, error);
+    throw error;
+  }
+}
+
+

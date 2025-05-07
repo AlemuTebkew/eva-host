@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import Link from "next/link";
+import { getImageUrl } from "@/lib/utils";
 
 interface ProductCardProps {
   name: string;
@@ -25,7 +26,7 @@ export default function ProductCard({
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
       <div className="relative h-40 w-full">
         <Image
-          src={image || "/placeholder.svg"}
+          src={getImageUrl(image) || "/placeholder.svg"}
           alt={name}
           fill
           className="object-cover"

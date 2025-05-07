@@ -80,7 +80,7 @@ export default function SearchBar() {
             }}
             onKeyDown={handleKeyDown}
             placeholder="What are you looking for?"
-            className=" w-full px-4 py-2 focus:outline-none rounded-md"
+            className=" w-full rounded-md px-4 py-2 focus:outline-none"
           />
           <Button
             onClick={handleSearch}
@@ -114,17 +114,25 @@ export default function SearchBar() {
 
       {/* Mobile Search Trigger */}
       <div
-        className="flex w-full items-center rounded-full border bg-gray-100 px-4 py-2 lg:hidden"
+        className="relative flex w-full  items-center border bg-white px-4 py-2 lg:hidden"
         onClick={() => setIsMobileSearchOpen(true)}
       >
-        <Search size={20} className="mr-2 text-gray-500" />
         <input
           type="text"
           value={searchQuery}
           placeholder="What are you looking for?"
-          className="w-full truncate bg-transparent text-sm focus:outline-none"
+          className=" w-full rounded-md px-4  focus:outline-none"
           readOnly
         />
+
+        <Button
+          onClick={handleSearch}
+          className="absolute right-0 top-0 h-full w-[100px] rounded-l-none bg-blue-800 hover:bg-blue-800"
+          size="icon"
+        >
+          <Search className="h-4 w-4" />
+          Search
+        </Button>
       </div>
 
       {/* Mobile Search Modal */}
@@ -151,7 +159,7 @@ export default function SearchBar() {
                     }}
                     onKeyDown={handleKeyDown}
                     placeholder="What are you looking for?"
-                    className="w-full bg-transparent text-sm focus:outline-none"
+                    className=" w-full rounded-md px-4  focus:outline-none"
                     autoFocus
                   />
                 </div>

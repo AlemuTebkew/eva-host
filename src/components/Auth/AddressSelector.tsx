@@ -114,17 +114,16 @@ export default function RegionSelector({
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* Region */}
       <div>
-        <label className="mb-1 text-sm">Region</label>
-        <FormLabel>Full Address</FormLabel>
+        <label className="mb-1 text-xs">Region</label>
 
         <select
           value={region}
           onChange={(e) => setRegion(e.target.value)}
-          className="w-full rounded border px-3 py-2"
+          className="w-full rounded border px-3 py-1 text-sm"
         >
-          <option value="">Select Region</option>
+          <option className="text-xs" value="">Select Region</option>
           {regions.map((r) => (
-            <option key={r.id} value={r.id}>
+            <option key={r.id} value={r.id} className="text-xs">
               {r.name}
             </option>
           ))}
@@ -133,16 +132,16 @@ export default function RegionSelector({
 
       {/* City */}
       <div>
-        <label className="mb-1 block">City</label>
+        <label className="mb-1 block text-xs">City</label>
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="w-full rounded border px-3 py-2"
+          className="w-full rounded border px-3 py-1 text-sm"
           disabled={!region}
         >
-          <option value="">Select City</option>
+          <option className="text-sm" value="">Select City</option>
           {cities.map((c) => (
-            <option key={c.id} value={c.id}>
+            <option key={c.id} value={c.id} className="text-sm">
               {c.name}
             </option>
           ))}
@@ -151,16 +150,16 @@ export default function RegionSelector({
 
       {/* SubCity */}
       <div>
-        <label className="mb-1 block">Sub City</label>
+        <label className="mb-1 block text-sm" >Sub City</label>
         <select
           value={subCity}
           onChange={(e) => setSubCity(e.target.value)}
-          className="w-full rounded border px-3 py-2"
+          className="w-full rounded border px-3 py-1 text-sm"
           disabled={!city}
         >
-          <option value="">Select SubCity</option>
+          <option className="text-sm" value="">Select SubCity</option>
           {subCities.map((sc) => (
-            <option key={sc.id} value={sc.id}>
+            <option key={sc.id} value={sc.id} className="text-sm">
               {sc.name}
             </option>
           ))}
@@ -169,16 +168,16 @@ export default function RegionSelector({
 
       {/* Woreda */}
       <div>
-        <label className="mb-1 block">Woreda</label>
+        <label className="mb-1 block text-xs">Woreda</label>
         <select
           value={woreda}
           onChange={(e) => setWoreda(e.target.value)}
-          className="w-full rounded border px-3 py-2"
+          className="w-full rounded border px-3 py-1 text-sm"
           disabled={!subCity}
         >
           <option value="">Select Woreda</option>
           {woredas?.map((w) => (
-            <option key={w.id} value={w.id}>
+            <option key={w.id} value={w.id} className="text-sm">
               {w.name}
             </option>
           ))}

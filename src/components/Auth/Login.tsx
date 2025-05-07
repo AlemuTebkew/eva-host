@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 import { loginUser } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 // Zod Schema for validation
 const loginSchema = z.object({
   phone: z
@@ -66,7 +67,7 @@ export default function Login() {
       localStorage.setItem("token", responseData?.token);
       console.log("Login successful:", response);
       // Redirect or show success message
-      // window.location.href = "/products";
+      window.location.href = "/products";
     } catch (error) {
       console.error("Login failed:", error);
       setError("Login failed. Please check your credentials.");
@@ -82,10 +83,11 @@ export default function Login() {
       {/* Back Button */}
       <Button
         variant="link"
-        className="absolute left-4 top-4 text-gray-800 hover:text-gray-600 focus:outline-none"
+        className="absolute left-0 -top-4 text-gray-800 hover:text-gray-600 focus:outline-none mb-5 p-10"
         onClick={() => window.history.back()}
+        size={"lg"}
       >
-        <ArrowLeft size={40} />
+        <ArrowLeft size={48} />
       </Button>
 
       {/* Login Card */}
@@ -163,15 +165,15 @@ export default function Login() {
               </div>
 
               {/* Submit Button */}
-              <Button type="submit" className="w-full bg-blue-800 text-white">
-                Login
+              <Button type="submit" className="w-full bg-blue-800 text-white" disabled={isLoading}>
+                {isLoading ? <Loader className="animate-spin" /> : "Login"}
               </Button>
             </form>
           </Form>
 
           {/* Sign-Up Link */}
           <div className="mt-6 text-center text-sm">
-            You’re new here?{" "}
+            You're new here?{" "}
             <Link
               href="/register"
               className="font-medium text-orange-500 hover:underline"
