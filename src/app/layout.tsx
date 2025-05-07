@@ -1,4 +1,5 @@
-"use client";
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 import Footer from "@/components/footer";
 import { ThemeProvider } from "next-themes";

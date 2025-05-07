@@ -9,10 +9,12 @@ import CustomProductDetail from "./ProductDetail";
 
 
 const ProductDetailPage = ({
-  params: { slug },
+  params,
 }: {
   params: { slug: string };
 }) => {
+
+  const {slug} =  params;
   const {data, isLoading, isSuccess} = useGetProductDetailQuery(slug)
   return (
     <div className="max-w-c-1235 mx-auto mt-2 lg:mt-4 px-6 bg-white">

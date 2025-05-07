@@ -3,7 +3,7 @@ import ProductDetail from "@/components/Product/ProductDetailPage";
 import Footer from "@/components/Footer1";
 import Navbar from "@/components/Navigation";
 import SideAdsWrapper from "@/components/Auth/SideAdsWrapper";
-
+import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "Home Page",
   description: "Explore a variety of products.",
@@ -19,9 +19,11 @@ export default function ProductDetailPage(props: { params: { slug: string } }) {
   return (
     <>
       {/* <Navbar/> */}
+      <Suspense fallback={<div>Loading...</div>}>
       <SideAdsWrapper >
       <ProductDetail {...props}/>
       </SideAdsWrapper>
+      </Suspense>
       {/* <Footer/> */}
     </>
   );

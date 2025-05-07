@@ -1,3 +1,5 @@
+'use client'
+import React from "react"
 import type { Category } from "@/types/category"
 import CategoryCard from "@/components/category-card"
 

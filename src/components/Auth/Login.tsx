@@ -66,7 +66,7 @@ export default function Login() {
       localStorage.setItem("token", responseData?.token);
       console.log("Login successful:", response);
       // Redirect or show success message
-      window.location.href = "/products";
+      // window.location.href = "/products";
     } catch (error) {
       console.error("Login failed:", error);
       setError("Login failed. Please check your credentials.");

@@ -1,3 +1,4 @@
+'use client'
 import type { Testimonial } from "@/types/testimonial"
 import TestimonialCard from "@/components/testimonial-card"
 
