@@ -67,8 +67,8 @@ export default function ContactUs() {
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">Contact Us</h1>
           <p className="mx-auto max-w-2xl text-lg text-gray-600">
-            Have questions? We'd love to hear from you. Send us a message and
-            we'll respond as soon as possible.
+            Have questions? We&apos;d love to hear from you. Send us a message and
+            we&apos;ll respond as soon as possible.
           </p>
         </div>
 

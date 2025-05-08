@@ -11,6 +11,7 @@ import ClientProviders from "./client-provider";
 
 // add inter font
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,13 +30,15 @@ export default function RootLayout({
           defaultTheme="light"
         > */}
           <ClientProviders >
-            <Header />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Header />
+            </Suspense>
 
-            {/* <Header /> */}
-            {/* <Navbar/> */}
             {children}
 
-            <Footer />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Footer />
+            </Suspense>
           </ClientProviders>
         {/* </ThemeProvider> */}
       </body>

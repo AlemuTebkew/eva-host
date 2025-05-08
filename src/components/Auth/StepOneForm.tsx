@@ -145,7 +145,7 @@ export const Step1 = () => {
             placeholder="Enter full address"
           />
           <FormMessage>
-            {errors?.address?.fullAddress?.message as string}
+            {errors['address.fullAddress']?.message as string}
           </FormMessage>
         </FormItem>
 

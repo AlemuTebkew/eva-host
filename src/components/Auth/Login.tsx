@@ -173,7 +173,7 @@ export default function Login() {
 
           {/* Sign-Up Link */}
           <div className="mt-6 text-center text-sm">
-            You're new here?{" "}
+            You&apos;re new here?{" "}
             <Link
               href="/register"
               className="font-medium text-orange-500 hover:underline"
