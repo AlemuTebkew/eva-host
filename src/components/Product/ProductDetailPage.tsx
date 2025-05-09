@@ -23,7 +23,7 @@ const ProductDetailPage = ({
       }
       {
         isSuccess && data && (
-          <div className="flex py-8">
+          <div className="flex py-8 px-0 ">
             <CustomProductDetail product={data}/>
           </div>
         )

@@ -30,7 +30,7 @@ export default function SupplierCard({ supplier }: { supplier: Supplier }) {
       <div className="grid grid-cols-3 gap-2">
         {/* <div className="mt-3 sm:mt-4 flex flex-wrap gap-1 sm:gap-2"> */}
         {supplier.categories?.map((cat) => (
-          <div key={cat.name} className="flex flex-col items-center">
+          <div key={cat.name} className="flex flex-col items-center justify-center">
             <Image
               src={cat.image ? getImageUrl(cat.image) : "/placeholder.svg"}
               alt={cat.name}
@@ -38,7 +38,7 @@ export default function SupplierCard({ supplier }: { supplier: Supplier }) {
               height={40}
               className="h-10 w-10 object-cover"
             />
-            <div className="text-xs text-gray-600">{cat.name}</div>
+            <div className="text-xs text-gray-600 text-center mt-2">{cat.name}</div>
           </div>
         ))}
         {/* </div> */}

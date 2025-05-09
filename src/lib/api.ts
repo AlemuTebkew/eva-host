@@ -1,4 +1,3 @@
-
 import { Category } from "@/types/category";
 import { Supplier } from "@/types/supplier";
 import { Product } from "@/types/product";
@@ -341,6 +340,10 @@ export async function saveContactMessage(
     console.error(`Error saving contact message:`, error);
     throw error;
   }
+}
+
+export async function getRecommendedProducts(productId: string): Promise<ApiResponse<Product[]>> {
+  return fetchApi<ApiResponse<Product[]>>(`/products/${productId}/recommendations`);
 }
 
 

@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { register } from "module";
 import { registerSupplier, SubscriptionPlan } from "@/lib/api";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 interface StepTwoProps {
   onBack: () => void;
@@ -42,8 +44,6 @@ export default function StepTwo({
   }, [billingCycle, subscriptionPlans]);
 
   const handleSubmit = async () => {
-  
-
     const payload = {
       ...formData,
       subscriptionPlanId: selectedPlanId,
@@ -57,20 +57,23 @@ export default function StepTwo({
       setIsSubmitting(true);
       const response = await registerSupplier(payload);
       console.log("Registration successful:", response);
-      toast.success("Registration successful! We will contact you after approval.");
+      toast.success(
+        "Registration successful! We will contact you after approval.",
+      );
       // Handle success (e.g., redirect to a success page)
     } catch (error: any) {
       console.error("Registration failed:", error);
+      toast.error("Registration failed! Please try again.");
+
       const errorMessage =
         error?.response?.message || "An unexpected error occurred.";
-      alert(errorMessage); // Show a user-friendly error message
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-8 mt-5">
+    <div className="mx-auto mt-5 w-full max-w-6xl space-y-8">
       <div className="grid gap-6 md:grid-cols-3">
         {plans.map((plan) => (
           <Card
@@ -144,7 +147,7 @@ export default function StepTwo({
           </Card>
         ))}
       </div>
-
+      <ToastContainer />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div>
           <Label className="mb-4 block">Billing Cycle</Label>
@@ -192,7 +195,8 @@ export default function StepTwo({
           onClick={handleSubmit}
           disabled={!selectedPlanId || isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Complete"} <span className="ml-2">✔</span>
+          {isSubmitting ? "Submitting..." : "Complete"}{" "}
+          <span className="ml-2">✔</span>
         </Button>
       </div>
     </div>

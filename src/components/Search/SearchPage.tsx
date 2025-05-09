@@ -147,7 +147,6 @@ export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPag
       params.delete("maxPrice");
     }
 
-    // ✅ This updates the route without a full page reload
     router.push(`?${params.toString()}`);
     filters.category && setSelectedCategory(filters.category);
     filters.subCategory && setSelectedSubCategory(filters.subCategory);

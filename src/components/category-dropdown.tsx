@@ -72,6 +72,7 @@ export default function CategoryDropdown({
           <Link
             key={subcategory.id}
             href={`/search?categoryId=${categories[hoveredCategory].id}&subCategoryId=${subcategory.id}`}
+            onClick={() => onClose?.()}
           >
             <div className="cursor-pointer rounded-md p-2 hover:bg-gray-50">
               <span className="text-sm">{subcategory.name}</span>

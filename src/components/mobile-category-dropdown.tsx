@@ -36,9 +36,10 @@ export default function MobileCategoryDropdown({
         {categories?.map((category, index) => (
           <div key={index} className="pb-4">
             <button
-              onClick={() =>
-                handleNavigate(`/search?categoryId=${category.id}`)
-              }
+              onClick={() => {
+                router.push(`/search?categoryId=${category.id}`);
+                onClose?.();
+              }}
               className="mb-2 flex items-center"
             >
               <img
@@ -52,11 +53,10 @@ export default function MobileCategoryDropdown({
               {category.subCategories?.map((subcategory) => (
                 <button
                   key={subcategory.id}
-                  onClick={() =>
-                    handleNavigate(
-                      `/search?categoryId=${category.id}&subCategoryId=${subcategory.id}`
-                    )
-                  }
+                  onClick={() => {
+                    router.push(`/search?categoryId=${category.id}&subCategoryId=${subcategory.id}`);
+                    onClose?.();
+                  }}
                   className="text-sm text-gray-600"
                 >
                   {subcategory?.name}

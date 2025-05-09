@@ -72,6 +72,15 @@ export const appApi = createApi({
         return response.data;
       }
     }),
+    getRecommendedProducts: builder.query<Product[], string>({
+      query: (productId) => ({
+        url: `/user/products/${productId}/recommendations`,
+        method: "GET",
+      }),
+      transformResponse: (response: { status: boolean; message: string; data: Product[] }) => {
+        return response.data;
+      },
+    }),
   }),
 });
 
@@ -81,5 +90,6 @@ export const {
   useGetProductDetailQuery,
   useLazyGetSearchSuggestionQuery,
   useFilterSupplierQuery,
-  useGetSupplierDetailQuery
+  useGetSupplierDetailQuery,
+  useGetRecommendedProductsQuery
 } = appApi;
