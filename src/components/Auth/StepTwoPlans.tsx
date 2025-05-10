@@ -29,6 +29,7 @@ export default function StepTwo({
   );
   const [paymentMethod, setPaymentMethod] = useState<"cash" | "bank">("cash");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   useEffect(() => {
     // Adjust prices based on billing cycle
@@ -57,6 +58,7 @@ export default function StepTwo({
       setIsSubmitting(true);
       const response = await registerSupplier(payload);
       console.log("Registration successful:", response);
+      setShowSuccessDialog(true);
       toast.success(
         "Registration successful! We will contact you after approval.",
       );
@@ -199,6 +201,23 @@ export default function StepTwo({
           <span className="ml-2">✔</span>
         </Button>
       </div>
+
+      {showSuccessDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+            <h2 className="text-2xl font-bold mb-4 text-green-700">Registration Successful!</h2>
+            <p className="mb-6 text-gray-700">
+              We will contact you after approval.
+            </p>
+            <Button
+              className="bg-blue-800 text-white"
+              onClick={() => setShowSuccessDialog(false)}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
