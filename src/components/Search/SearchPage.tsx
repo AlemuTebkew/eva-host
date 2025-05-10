@@ -36,7 +36,11 @@ interface SearchPageProps {
   supplierId?: string;
 }
 
-export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPageProps) {
+export default function SearchPage({
+  hideVendor,
+  bgWite,
+  supplierId,
+}: SearchPageProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const searchQuery = searchParams.get("keyword") || "";
@@ -86,6 +90,18 @@ export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPag
 
     const sortBy = searchParams.get("sortBy");
     if (sortBy) params.sortBy = sortBy;
+
+    const region = searchParams.get("region");
+    if (region) params.region = region;
+
+    const city = searchParams.get("city");
+    if (city) params.city = city;
+
+    const subCity = searchParams.get("subCity");
+    if (subCity) params.subCity = subCity;
+
+    const woreda = searchParams.get("woreda");
+    if (woreda) params.woreda = woreda;
 
     const sortOrder = searchParams.get("sortOrder");
     if (sortOrder) params.sortOrder = sortOrder;
@@ -147,6 +163,28 @@ export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPag
       params.delete("maxPrice");
     }
 
+    if (filters.region) {
+      params.set("region", filters.region);
+    } else {
+      params.delete("region");
+    }
+
+    if (filters.city) {
+      params.set("city", filters.city);
+    } else {
+      params.delete("city");
+    }
+
+    if (filters.subCity) {
+      params.set("subCity", filters.subCity);
+    } else {
+      params.delete("subCity");
+    }
+    if (filters.woreda) {
+      params.set("woreda", filters.woreda);
+    } else {
+      params.delete("woreda");
+    }
     router.push(`?${params.toString()}`);
     filters.category && setSelectedCategory(filters.category);
     filters.subCategory && setSelectedSubCategory(filters.subCategory);
@@ -163,8 +201,7 @@ export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPag
       <ProductBanner
         items={[
           {
-            image:
-              "/images/bottom-ads.png",
+            image: "/images/bottom-ads.png",
             link: "/products/1",
           },
           {
@@ -202,17 +239,17 @@ export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPag
       {/* Product List Section */}
       {isLoading && <ProductListSkeleton />}
       {isSuccess && data && (
-        <div className="grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-5">
-          <div className="hidden lg:block lg:col-span-1">
+        <div className="grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-3">
+          <div className="hidden lg:block ">
             <Filter
               onApplyFilters={handleOnApplyFilter}
               onClose={setIsFilterOpen}
             />
           </div>
-          <div className="col-span-3 flex flex-col">
+          <div className="col-span-2 flex flex-col">
             <div>
               <div className="mb-4 hidden items-center justify-between lg:flex">
-                <p>{`Showing ${data.meta.total} products from global suppliers`}</p>
+                <p>{`Showing ${data.meta.total} products from suppliers`}</p>
 
                 <SortDropdown
                   sortOptions={sortOptions}
@@ -245,7 +282,7 @@ export default function SearchPage({ hideVendor, bgWite, supplierId }: SearchPag
 
             {/* Filter panel */}
             <motion.div
-              className="fixed bottom-0 right-0 top-0 z-50 mt-[150px] h-screen bg-white shadow-lg lg:hidden"
+              className="fixed bottom-0 right-0 top-0 z-50 mt-[0px] h-screen overflow-y-auto bg-white shadow-lg lg:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

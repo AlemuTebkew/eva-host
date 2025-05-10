@@ -5,7 +5,7 @@ import { getImageUrl } from "@/lib/utils"
 
 export default function TestimonialCard({testimonial}: {testimonial: Testimonial}) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow min-h-[300px] flex flex-col justify-stretch">
       <div className="mb-4 flex items-center text-yellow-400">
         {[...Array(5)].map((_, i) => (
           <Star key={i} className="h-4 w-4 fill-current" />

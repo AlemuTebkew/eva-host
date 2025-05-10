@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle } from "lucide-react"
 import { Supplier } from "@/types/supplier"
 import Link from "next/link"
+import { getImageUrl } from "@/lib/utils"
 
 export default function SuppliersList({suppliers}: { suppliers?: Supplier[] }) {
 
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-4">
       {suppliers?.map((supplier, index) => (
         <div key={index} className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
           <div className=" grid-cols-1 md:grid-cols-3 gap-4 p-4 flex justify-between">
@@ -58,11 +59,11 @@ export default function SuppliersList({suppliers}: { suppliers?: Supplier[] }) {
                 {supplier?.products?.map((product, imgIndex) => (
                   <div key={imgIndex} className="overflow-hidden rounded-md border border-gray-200">
                     <Image
-                      src={product?.image || "/placeholder.svg"}
+                      src={getImageUrl(product?.image ?? "") || "/placeholder.svg"}
                       alt={`Product ${imgIndex + 1}`}
                       width={50}
                       height={50}
-                      className="h-full w-full object-cover"
+                      className="max-h-[80px] w-full object-cover"
                     />
                   </div>
                 ))}

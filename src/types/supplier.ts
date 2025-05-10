@@ -17,6 +17,8 @@ export type Supplier = {
   city?: { id: string; name: string };
   subCity?: { id: string; name: string };
   products?: Partial<Product[]>;
+  latitude?: number;
+  longitude?: number;
 };
 
 

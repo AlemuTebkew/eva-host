@@ -36,6 +36,10 @@ export interface FilterType {
   subCategory?: string;
   minPrice?: string;
   maxPrice?: string;
+  region?: string;
+  city?: string;
+  subCity?: string;
+  woreda?: string;
 }
 
 export interface SortOption {

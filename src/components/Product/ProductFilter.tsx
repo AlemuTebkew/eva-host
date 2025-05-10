@@ -4,7 +4,7 @@ import { useState, useEffect, SetStateAction } from "react";
 import Select from "react-select";
 import { Button } from "../ui/button";
 import { useSearchParams } from "next/navigation";
-import { on } from "events";
+import AddressFilter from "./AddressFilter";
 
 interface Option {
   label: string;
@@ -17,30 +17,14 @@ interface FilterProps {
     subCategory?: string;
     minPrice?: string;
     maxPrice?: string;
+    region?: string;
+    city?: string;
+    subCity?: string;
+    woreda?: string;
   }) => void;
   onClose: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const customSelectStyles = {
-  control: (base: any) => ({
-    ...base,
-    padding: "6px 8px",
-    borderRadius: "0.75rem",
-    borderColor: "#FEC6D4",
-    boxShadow: "none",
-    "&:hover": { borderColor: "#FC2779" },
-  }),
-  placeholder: (base: any) => ({
-    ...base,
-    color: "#A1A1AA",
-    fontSize: "0.875rem",
-  }),
-  singleValue: (base: any) => ({
-    ...base,
-    color: "#111827",
-    fontWeight: 500,
-  }),
-};
 
 export default function Filter({ onApplyFilters, onClose }: FilterProps) {
   const searchParams = useSearchParams();
@@ -81,6 +65,13 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
     maxPrice: maxPriceSearchQuery,
   });
 
+  const [locationFilters, setLocationFilters] = useState({
+    region: '',
+    city: '',
+    subCity: '',
+    woreda: '',
+  });
+
   useEffect(() => {
     // Update filters based on query params if they're changed externally
     setSelectedFilters({
@@ -107,7 +98,13 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
       subCategory: selectedFilters.subCategory,
       minPrice: selectedFilters.minPrice,
       maxPrice: selectedFilters.maxPrice,
+      region: locationFilters.region,
+      city: locationFilters.city,
+      subCity: locationFilters.subCity,
+      woreda: locationFilters.woreda,
     });
+    console.log('bbb',locationFilters)
+    console.log('ccc',selectedFilters)
     onClose(false);
   };
 
@@ -191,6 +188,10 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
           onChange={(e) => handleInputChange("maxPrice", e.target.value)}
         />
       </div>
+
+      <AddressFilter
+        onChange={(location) => setLocationFilters(location)}
+      />
 
       <Button
         className="flex w-full items-center justify-center"

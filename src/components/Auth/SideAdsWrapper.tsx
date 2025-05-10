@@ -19,15 +19,15 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
   return (
     <>
       {style === "1" && (
-        <div className="flex flex-col justify-between md:flex-row md:flex-nowrap">
+        <div className="flex flex-col justify-between md:flex-row md:flex-nowrap ">
           {/* Left Ad - Vertically Centered */}
           <div className="hidden -translate-y-1/2 md:block">
             <Image
               src="/images/left-ads.png"
               alt="Left Ad"
               width={150}
-              height={1000}
-              className="min-h-[1000px] object-cover"
+              height={2000}
+              className="min-h-[1500px] object-cover"
             />
           </div>
 
@@ -43,7 +43,7 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
 
           {/* Main Content */}
           {/* <div className="flex-1 flex flex-col justify-between"> */}
-          <div className="flex flex-col justify-between">
+          <div className="flex w-full flex-col justify-between">
             <div className="z-10 mx-auto h-full w-full ">{children}</div>
 
             <div className="flex justify-center">
@@ -64,7 +64,7 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
               alt="Right Ad"
               width={150}
               height={500}
-              className="min-h-[1000px] object-cover"
+              className="min-h-[1500px] object-cover"
             />
           </div>
         </div>
