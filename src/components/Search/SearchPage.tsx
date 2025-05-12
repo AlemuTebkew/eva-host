@@ -73,7 +73,7 @@ export default function SearchPage({
   const buildFilterParams = () => {
     const params: Record<string, string | number> = {};
 
-    const keyword = searchParams.get("keyword");
+    const keyword = searchParams.get("q");
     if (keyword) params.keyword = keyword;
 
     const categoryId = searchParams.get("categoryId");
