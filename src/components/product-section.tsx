@@ -26,7 +26,7 @@ export default function ProductSection({ title, products, viewMoreLink }: Produc
             name={product.name}
             priceRange={product.priceRange}
             price={Number(product.price)}
-            rating={product.rating}
+            vendorName={product.vendor?.name}
             image={product.image || product.images&&product.images[0]}
           />
         ))}

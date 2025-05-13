@@ -61,7 +61,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
           {product.priceTiers && product.priceTiers.length > 0 ? (
             <div className="flex flex-wrap gap-8">
               {product.priceTiers.map((priceTier, index) => (
-                <div className="flex flex-col gap-1" key={index}>
+                <div className="flex flex-col gap-1 bg-gray-200 border rounded-md p-3" key={index}>
                   <p className="font-normal">{`${priceTier.minQty} ${product.unit}`}</p>
                   <p className="text-2xl font-semibold">{`ETB ${priceTier.price}`}</p>
                 </div>
@@ -136,7 +136,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
       </div>
       {/* Recommended Products */}
       <div className="w-full">
-        <h2 className="mb-3 text-lg font-semibold">Recommended Products</h2>
+        <h2 className="mb-3 text-lg font-semibold">Related Products</h2>
         {isLoadingRecommendations ? (
           <p>Loading recommendations...</p>
         ) : (
@@ -150,6 +150,12 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
             ))}
           </div>
         )}
+      </div>
+
+    {/* product description */}
+      <div>
+      <h2 className="mb-3 text-lg font-semibold">Descriptions</h2>
+      {product.description}
       </div>
     </div>
   );
