@@ -239,14 +239,14 @@ export default function SearchPage({
       {/* Product List Section */}
       {isLoading && <ProductListSkeleton />}
       {isSuccess && data && (
-        <div className="grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-3">
-          <div className="hidden lg:block ">
+        <div className="grid grid-cols-1  lg:mt-8 lg:grid-cols-3 gap-[65px] max-w-screen-xxl mx-auto">
+          <div className="hidden lg:block mr-10">
             <Filter
               onApplyFilters={handleOnApplyFilter}
               onClose={setIsFilterOpen}
             />
           </div>
-          <div className="col-span-2 flex flex-col">
+          <div className="col-span-2 flex flex-col md:-ml-[100px] px-0">
             <div>
               <div className="mb-4 hidden items-center justify-between lg:flex">
                 <p>{`Showing ${data.meta.total} products from suppliers`}</p>

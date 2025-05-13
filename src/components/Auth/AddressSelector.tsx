@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getRegions, getCities, getSubCities, getWoredas } from "@/lib/api"; // Import your API functions
 import { FormLabel } from "../ui/form";
+import Select from 'react-select';
+import { useFormContext } from "react-hook-form";
 
 interface RegionSelectorProps {
   onChange: (location: {
@@ -21,15 +23,27 @@ export default function RegionSelector({
   onChange,
   value,
 }: RegionSelectorProps) {
+  const { formState: { errors } } = useFormContext();
   const [regions, setRegions] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
   const [subCities, setSubCities] = useState<any[]>([]);
   const [woredas, setWoredas] = useState<any[]>([]);
 
+  // Initialize state with provided values
   const [region, setRegion] = useState(value?.region || "");
   const [city, setCity] = useState(value?.city || "");
   const [subCity, setSubCity] = useState(value?.subCity || "");
   const [woreda, setWoreda] = useState(value?.woreda || "");
+
+  // Update local state when value prop changes
+  // useEffect(() => {
+  //   if (value) {
+  //     setRegion(value.region || "");
+  //     setCity(value.city || "");
+  //     setSubCity(value.subCity || "");
+  //     setWoreda(value.woreda || "");
+  //   }
+  // }, [value]);
 
   // Fetch regions on component mount
   useEffect(() => {
@@ -51,6 +65,7 @@ export default function RegionSelector({
       if (region) {
         try {
           const { data } = await getCities(region);
+          console.log("Fetched cities:", data);
           setCities(data || []);
         } catch (error) {
           console.error("Failed to fetch cities:", error);
@@ -58,14 +73,17 @@ export default function RegionSelector({
       } else {
         setCities([]);
       }
-      setCity("");
-      setSubCities([]);
-      setSubCity("");
-      setWoredas([]);
-      setWoreda("");
+      // Only reset if region changed
+      if (region !== value?.region) {
+        setCity("");
+        setSubCities([]);
+        setSubCity("");
+        setWoredas([]);
+        setWoreda("");
+      }
     };
     fetchCities();
-  }, [region]);
+  }, [region, value?.region]);
 
   // Fetch sub-cities when a city is selected
   useEffect(() => {
@@ -73,6 +91,7 @@ export default function RegionSelector({
       if (city) {
         try {
           const { data } = await getSubCities(city);
+          console.log("Fetched sub-cities:", data);
           setSubCities(data || []);
         } catch (error) {
           console.error("Failed to fetch sub-cities:", error);
@@ -80,12 +99,15 @@ export default function RegionSelector({
       } else {
         setSubCities([]);
       }
-      setSubCity("");
-      setWoredas([]);
-      setWoreda("");
+      // Only reset if city changed
+      if (city !== value?.city) {
+        setSubCity("");
+        setWoredas([]);
+        setWoreda("");
+      }
     };
     fetchSubCities();
-  }, [city]);
+  }, [city, value?.city]);
 
   // Fetch woredas when a sub-city is selected
   useEffect(() => {
@@ -93,6 +115,7 @@ export default function RegionSelector({
       if (subCity) {
         try {
           const { data } = await getWoredas(subCity);
+          console.log("Fetched woredas:", data);
           setWoredas(data || []);
         } catch (error) {
           console.error("Failed to fetch woredas:", error);
@@ -100,91 +123,133 @@ export default function RegionSelector({
       } else {
         setWoredas([]);
       }
-      setWoreda("");
+      // Only reset if subCity changed
+      if (subCity !== value?.subCity) {
+        setWoreda("");
+      }
     };
     fetchWoredas();
-  }, [subCity]);
+  }, [subCity, value?.subCity]);
 
   // Notify parent component of changes
   useEffect(() => {
     onChange({ region, city, subCity, woreda });
-  }, [region, city, subCity, woreda]);
+  }, [region, city, subCity, woreda, onChange]);
+
+  const customStyles = {
+    control: (base: any, state: { isDisabled: boolean }) => ({
+      ...base,
+      minHeight: '42px',
+      borderColor: errors?.region || errors?.city || errors?.subCity ? '#ef4444' : '#e2e8f0',
+      '&:hover': {
+        borderColor: errors?.region || errors?.city || errors?.subCity ? '#ef4444' : '#94a3b8'
+      },
+      boxShadow: 'none',
+      '&:focus-within': {
+        borderColor: errors?.region || errors?.city || errors?.subCity ? '#ef4444' : '#1e40af',
+        boxShadow: '0 0 0 2px rgba(30, 64, 175, 0.2)'
+      },
+      backgroundColor: state.isDisabled ? '#f1f5f9' : 'white'
+    }),
+    option: (base: any, state: { isSelected: boolean; isFocused: boolean }) => ({
+      ...base,
+      backgroundColor: state.isSelected 
+        ? '#1e40af' 
+        : state.isFocused 
+          ? '#e2e8f0' 
+          : 'white',
+      color: state.isSelected ? 'white' : '#1e293b',
+      '&:hover': {
+        backgroundColor: state.isSelected ? '#1e40af' : '#f1f5f9'
+      }
+    }),
+    menu: (base: any) => ({
+      ...base,
+      zIndex: 9999
+    })
+  };
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* Region */}
-      <div>
-        <label className="mb-1 text-xs">Region</label>
-
-        <select
-          value={region}
-          onChange={(e) => setRegion(e.target.value)}
-          className="w-full rounded border px-3 py-1 text-sm"
+      <div className="space-y-2">
+        <FormLabel className="text-sm font-medium text-gray-700">
+          Region <span className="text-red-500">*</span>
+        </FormLabel>
+        <Select
+          value={regions.find(r => r.id === region) || null}
+          onChange={(option: any) => setRegion(option?.id || "")}
+          options={regions}
+          getOptionLabel={(option: any) => option.name}
+          getOptionValue={(option: any) => option.id}
+          placeholder="Select Region"
+          isClearable
+          isDisabled={regions.length === 0}
           required
-        >
-          <option className="text-xs" value="">Select Region</option>
-          {regions.map((r) => (
-            <option key={r.id} value={r.id} className="text-xs">
-              {r.name}
-            </option>
-          ))}
-        </select>
+        />
+        {errors?.region && (
+          <p className="mt-1 text-sm text-red-500">Region is required</p>
+        )}
       </div>
 
       {/* City */}
-      <div>
-        <label className="mb-1 block text-xs">City</label>
-        <select
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          className="w-full rounded border px-3 py-1 text-sm"
-          disabled={!region}
+      <div className="space-y-2">
+        <FormLabel className="text-sm font-medium text-gray-700">
+          City <span className="text-red-500">*</span>
+        </FormLabel>
+        <Select
+          value={cities.find(c => c.id === city) || null}
+          onChange={(option: any) => setCity(option?.id || "")}
+          options={cities}
+          getOptionLabel={(option: any) => option.name}
+          getOptionValue={(option: any) => option.id}
+          placeholder="Select City"
+          isClearable
+          isDisabled={!region || cities.length === 0}
+          styles={customStyles}
           required
-        >
-          <option className="text-sm" value="">Select City</option>
-          {cities.map((c) => (
-            <option key={c.id} value={c.id} className="text-sm">
-              {c.name}
-            </option>
-          ))}
-        </select>
+        />
+        {errors?.city && (
+          <p className="mt-1 text-sm text-red-500">City is required</p>
+        )}
       </div>
 
       {/* SubCity */}
-      <div>
-        <label className="mb-1 block text-sm">Sub City</label>
-        <select
-          value={subCity}
-          onChange={(e) => setSubCity(e.target.value)}
-          className="w-full rounded border px-3 py-1 text-sm"
-          disabled={!city}
+      <div className="space-y-2">
+        <FormLabel className="text-sm font-medium text-gray-700">
+          Sub City <span className="text-red-500">*</span>
+        </FormLabel>
+        <Select
+          value={subCities.find(sc => sc.id === subCity) || null}
+          onChange={(option: any) => setSubCity(option?.id || "")}
+          options={subCities}
+          getOptionLabel={(option: any) => option.name}
+          getOptionValue={(option: any) => option.id}
+          placeholder="Select SubCity"
+          isClearable
+          isDisabled={!city || subCities.length === 0}
+          styles={customStyles}
           required
-        >
-          <option className="text-sm" value="">Select SubCity</option>
-          {subCities.map((sc) => (
-            <option key={sc.id} value={sc.id} className="text-sm">
-              {sc.name}
-            </option>
-          ))}
-        </select>
+        />
+        {errors?.subCity && (
+          <p className="mt-1 text-sm text-red-500">Sub City is required</p>
+        )}
       </div>
 
       {/* Woreda */}
-      <div>
-        <label className="mb-1 block text-xs">Woreda</label>
-        <select
-          value={woreda}
-          onChange={(e) => setWoreda(e.target.value)}
-          className="w-full rounded border px-3 py-1 text-sm"
-          disabled={!subCity}
-        >
-          <option value="">Select Woreda</option>
-          {woredas?.map((w) => (
-            <option key={w.id} value={w.id} className="text-sm">
-              {w.name}
-            </option>
-          ))}
-        </select>
+      <div className="space-y-2">
+        <FormLabel className="text-sm font-medium text-gray-700">Woreda</FormLabel>
+        <Select
+          value={woredas.find(w => w.id === woreda) || null}
+          onChange={(option: any) => setWoreda(option?.id || "")}
+          options={woredas}
+          getOptionLabel={(option: any) => option.name}
+          getOptionValue={(option: any) => option.id}
+          placeholder="Select Woreda"
+          isClearable
+          isDisabled={!subCity || woredas.length === 0}
+          styles={customStyles}
+        />
       </div>
     </div>
   );

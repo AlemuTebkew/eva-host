@@ -7,11 +7,13 @@ import StepTwo from "./StepTwoPlans";
 import { getSubscriptionPlans, SubscriptionPlan } from "@/lib/api";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function SupplierRegistrationPage() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
   const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const methods = useForm({
     defaultValues: formData,
@@ -27,139 +29,170 @@ export default function SupplierRegistrationPage() {
   };
 
   useEffect(() => {
-    // Fetch subscription plans from API
     const fetchPlans = async () => {
       try {
-        const { data } = await getSubscriptionPlans(); // Replace with your API endpoint
-        console.log("Fetched subscription plans:", data);
+        setIsLoading(true);
+        const { data } = await getSubscriptionPlans();
         setPlans(data);
       } catch (error) {
         console.error("Failed to fetch subscription plans:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchPlans();
   }, []);
 
-  return (
-    <div className="my-10 flex  rounded-lg bg-gray-100 ">
-
-      {/* Center Form */}
-      <div className="mx-auto flex w-[80%] flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
-        <div className="space-y-4 text-center">
-          <h1 className="text-xl font-bold text-orange-600">
-            Join EVA as a Supplier
-          </h1>
-          {step === 1 && (
-            <div>
-              <div className="flex items-center justify-center space-x-4">
-                {/* Step 1 */}
-                <div className="flex items-center space-x-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white">
-                    <span className="font-bold text-blue-600">1</span>
-                  </div>
-                  <span className="font-medium text-blue-600">Step 1</span>
-                </div>
-                {/* Connector */}
-                <div className="h-0.5 w-12 bg-gray-300"></div>
-                {/* Step 2 */}
-                <div className="flex items-center space-x-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-100">
-                    <span className="font-bold text-gray-400">2</span>
-                  </div>
-                  <span className="font-medium text-gray-400">Step 2</span>
-                </div>
-              </div>
-              {/* <div>
-                <h2 className="text-lg font-semibold text-gray-800">
-                  Tell Us About Your Business
-                </h2>
-                <p className="text-sm text-gray-500">
-                  Join EVA as a supplier and reach more customers. <br />
-                  Fill in your business details to get started!
-                </p>
-              </div> */}
-            </div>
-          )}
-
-          {step === 2 && (
-            <div>
-              <div className="space-y-4 text-center">
-                <div className="flex items-center justify-center space-x-4">
-                  {/* Step 1 */}
-                  <div className="flex items-center space-x-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-blue-600">
-                      <span className="font-bold text-white">✓</span>
-                    </div>
-                    <span className="font-medium text-blue-600">Step 1</span>
-                  </div>
-                  {/* Connector */}
-                  <div className="h-0.5 w-12 bg-gray-300"></div>
-                  {/* Step 2 */}
-                  <div className="flex items-center space-x-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-300 bg-blue-100">
-                      <span className="font-bold text-blue-100">2</span>
-                    </div>
-                    <span className="font-medium text-blue-100">Step 2</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-md font-semibold text-gray-800 my-3">
-                    Choose a Supplier Package
-                  </h2>
-                  {/* <p className="text-sm text-gray-500">
-                    Different supplier packages offer varying features and{" "}
-                    <br />
-                    benefits. Choose the one that fits your business needs.
-                  </p> */}
-                </div>
-              </div>
-            </div>
-          )}
+  const StepIndicator = ({ currentStep }: { currentStep: number }) => (
+    <div className="flex items-center justify-center space-x-4">
+      {/* Step 1 */}
+      <div className="flex items-center space-x-2">
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300 ${
+            currentStep === 1
+              ? "border-blue-600 bg-white"
+              : "border-blue-600 bg-blue-600"
+          }`}
+        >
+          <span
+            className={`font-bold ${currentStep === 1 ? "text-blue-600" : "text-white"}`}
+          >
+            {currentStep === 1 ? "1" : "✓"}
+          </span>
         </div>
-        <FormProvider {...methods}>
-          {step === 1 && (
-            <form
-              className="w-full max-w-5xl mt-5"
-              onSubmit={methods.handleSubmit(nextStep)}
-            >
-              <Step1 />
-              <div className="mt-6 flex justify-end">
-                <Button
-                  type="submit"
-                  className="btn btn-primary flex items-center space-x-2 bg-blue-800"
-                >
-                  <span>Next</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </Button>
-              </div>
-            </form>
-          )}
-        </FormProvider>
-
-        {step === 2 && (
-          <StepTwo
-            onBack={prevStep}
-            formData={formData}
-            subscriptionPlans={plans}
-          />
-        )}
+        <span
+          className={`font-medium transition-colors duration-300 ${
+            currentStep === 1 ? "text-blue-600" : "text-blue-600"
+          }`}
+        >
+          Step 1
+        </span>
       </div>
+      {/* Connector */}
+      <div className="h-0.5 w-16 bg-gray-300"></div>
+      {/* Step 2 */}
+      <div className="flex items-center space-x-2">
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300 ${
+            currentStep === 1
+              ? "border-gray-300 bg-gray-100"
+              : "border-blue-600 bg-blue-100"
+          }`}
+        >
+          <span
+            className={`font-bold ${
+              currentStep === 1 ? "text-gray-400" : "text-blue-600"
+            }`}
+          >
+            2
+          </span>
+        </div>
+        <span
+          className={`font-medium transition-colors duration-300 ${
+            currentStep === 1 ? "text-gray-400" : "text-blue-600"
+          }`}
+        >
+          Step 2
+        </span>
+      </div>
+    </div>
+  );
 
-    
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="rounded-xl bg-white p-8 shadow-lg"
+        >
+          <div className="space-y-6">
+            <div className="text-center">
+              <motion.h1
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-3xl font-bold text-gray-900"
+              >
+                Join EVA as a Supplier
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-2 text-sm text-gray-600"
+              >
+                Complete the registration process to start your journey with EVA
+              </motion.p>
+            </div>
+
+            <StepIndicator currentStep={step} />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <FormProvider {...methods}>
+                  {step === 1 ? (
+                    <form
+                      className="mt-8 space-y-6"
+                      onSubmit={methods.handleSubmit(nextStep)}
+                    >
+                      <Step1 />
+                      <div className="flex justify-end">
+                        <Button
+                          type="submit"
+                          className="group relative flex items-center space-x-2 bg-blue-800 px-6 py-3 text-white transition-all duration-300 hover:bg-blue-700 hover:shadow-lg"
+                        >
+                          <span>Next Step</span>
+                          <motion.svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                            className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
+                            initial={{ x: 0 }}
+                            animate={{ x: 0 }}
+                            whileHover={{ x: 4 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M9 5l7 7-7 7"
+                            />
+                          </motion.svg>
+                        </Button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="mt-8">
+                      {isLoading ? (
+                        <div className="flex items-center justify-center py-12">
+                          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+                        </div>
+                      ) : (
+                        <StepTwo
+                          onBack={prevStep}
+                          formData={formData}
+                          subscriptionPlans={plans}
+                        />
+                      )}
+                    </div>
+                  )}
+                </FormProvider>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }

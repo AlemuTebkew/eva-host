@@ -53,19 +53,18 @@ export default function ImageSlider({
     return () => stopAutoSlide(); // Cleanup on unmount
   }, [stopAutoSlide]);
 
-
   return (
-    <div className="z-0 relative w-full mx-auto bg-white rounded-lg overflow-hidden cursor-pointer">
+    <div className="relative z-0 mx-auto w-full cursor-pointer overflow-hidden rounded-lg bg-white">
       {/* Image Container */}
       <div
         ref={sliderRef}
         onMouseEnter={startAutoSlide} // Start auto-slide on hover if enabled
-        onMouseLeave={stopAutoSlide}   // Stop auto-slide when leaving
+        onMouseLeave={stopAutoSlide} // Stop auto-slide when leaving
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((img, index) => (
-          <div key={index} className="relative flex-shrink-0 w-full h-48">
+          <div key={index} className="relative h-48 w-full flex-shrink-0">
             <Image
               src={img}
               alt={`Slide ${index + 1}`}
@@ -78,45 +77,23 @@ export default function ImageSlider({
         ))}
       </div>
 
-      {/* Navigation Arrows */}
-      {/* <Button
-        variant="ghost"
-        size="icon"
-        onClick={prevSlide}
-        aria-label="Previous Slide"
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-100 text-gray-800 hover:bg-gray-300 rounded-full"
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={nextSlide}
-        aria-label="Next Slide"
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-100 text-gray-800 hover:bg-gray-300 rounded-full"
-      >
-        <ChevronRight className="w-4 h-4" />
-      </Button> */}
-
       {/* Pagination */}
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 transform space-x-2">
         {Array.from({ length: totalSlides }).map((_, index) => (
           <button
             key={index}
-            onClick={() => goToSlide(index)}
+            onClick={(e) => {
+              e.stopPropagation();
+              goToSlide(index);
+            }}
             aria-label={`Go to slide ${index + 1}`}
             className={cn(
-              "w-3 h-3 rounded-full transition-all",
-              index === currentIndex ? "bg-white scale-110" : "bg-gray-400"
+              "h-3 w-3 rounded-full transition-all",
+              index === currentIndex ? "scale-110 bg-white" : "bg-gray-400",
             )}
           />
         ))}
       </div>
-
-      {/* Slide Counter */}
-      {/* <div className="absolute top-2 right-4 bg-gray-800 text-white px-2 py-1 text-xs rounded-lg">
-        {currentIndex + 1} / {totalSlides}
-      </div> */}
     </div>
   );
 }

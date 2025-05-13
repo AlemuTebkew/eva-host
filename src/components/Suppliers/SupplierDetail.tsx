@@ -25,7 +25,7 @@ const SupplierDetail = ({ params: { slug } }: { params: { slug: string } }) => {
       {isSuccess && data && (
         <div className="mx-auto max-w-c-1235 space-y-6 bg-white p-6">
           {/* Supplier Basic Information */}
-          <div className="flex justify-between gap-4">
+          <div className="flex justify-between gap-4 flex-wrap md:flex-nowrap">
             <div>
               <div className="flex flex-col gap-4 lg:gap-2">
                 <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">

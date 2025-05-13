@@ -30,7 +30,7 @@ export default function SupplierSection({ suppliers }: SupplierSectionProps) {
           </div>
         </div>
 
-        <div className="mt-6 md:mt-8 grid gap-4 md:gap-6 sm:grid-cols-2">
+        <div className="mt-6 md:mt-8 grid gap-4 md:gap-6 md:grid-cols-4 ">
           {suppliers && suppliers.length > 0 ? (
             suppliers.map((supplier) => (
               <SupplierCard key={supplier.id} supplier={supplier} />

@@ -4,7 +4,7 @@ import { Product } from "@/types/product";
 import { Testimonial } from "@/types/testimonial";
 import { ApiResponse, UserProfile } from "@/types/api";
 
-const API_URL =  "http://16.171.71.23:5007/user"
+const API_URL = "http://16.171.71.23:5007/user";
 // const API_URL = "http://127.0.0.1:5007/user";
 // const BASE_URL = "http://127.0.0.1:5007";
 const BASE_URL = "http://16.171.71.23:5007";
@@ -29,7 +29,8 @@ async function fetchApi<T>(endpoint: string): Promise<T> {
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorData = await response.json();
+      throw errorData;
     }
 
     return response.json();
@@ -40,9 +41,7 @@ async function fetchApi<T>(endpoint: string): Promise<T> {
 }
 
 // a function to upload a file to the server
-export async function uploadFile(
-  file: File,
-): Promise<string> {
+export async function uploadFile(file: File): Promise<string> {
   const formData = new FormData();
   formData.append("files", file);
 
@@ -174,8 +173,12 @@ export interface SubscriptionPlan {
   trialDurationInDays: number;
   supportLevel: 0 | 1 | 2 | 3;
   canCancelAnytime: boolean;
-  numberOffProducts: number;
-  numberOfUsers: number;
+  numberOffProduct: number;
+  numberOfUser: number;
+  searchPriority: number;
+  canPromote: boolean;
+  maxPromotions: number;
+  promotionDay: number;
 }
 
 // aad to fetch subscription plans
@@ -200,7 +203,8 @@ export async function registerSupplier(
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorData = await response.json();
+      throw errorData;
     }
 
     return response.json();
@@ -226,7 +230,8 @@ export async function registerUser(
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorData = await response.json();
+      throw errorData;
     }
 
     return response.json();
@@ -253,7 +258,8 @@ export async function loginUser(data: {
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorData = await response.json();
+      throw errorData;
     }
 
     return response.json();
@@ -268,24 +274,36 @@ export async function getUserProfile(): Promise<ApiResponse<UserProfile>> {
   return fetchApi("/auth/me");
 }
 // afunction to fetch regions from api
-export async function getRegions(): Promise<ApiResponse<{ id: string; name: string }[]>> {
- return fetchApi('/regions')
+export async function getRegions(): Promise<
+  ApiResponse<{ id: string; name: string }[]>
+> {
+  return fetchApi("/regions");
 }
 
 // afunction to fetch cities from api
-export async function getCities(regionId: string): Promise<ApiResponse<{ id: string; name: string }[]>> {
- return fetchApi(`/cities/${regionId}`)
+export async function getCities(
+  regionId: string,
+): Promise<ApiResponse<{ id: string; name: string }[]>> {
+  return fetchApi(`/cities/${regionId}`);
 }
 // afunction to fetch sub cities from api
-export async function getSubCities(cityId: string): Promise<ApiResponse<{ id: string; name: string }[]>> {
- return fetchApi(`/sub_cities/${cityId}`)
+export async function getSubCities(
+  cityId: string,
+): Promise<ApiResponse<{ id: string; name: string }[]>> {
+  return fetchApi(`/sub_cities/${cityId}`);
 }
 // afunction to fetch woredas from api
-export async function getWoredas(subCityId: string): Promise<ApiResponse<{ id: string; name: string }[]>> {
- return fetchApi(`/woredas/${subCityId}`)
+export async function getWoredas(
+  subCityId: string,
+): Promise<ApiResponse<{ id: string; name: string }[]>> {
+  return fetchApi(`/woredas/${subCityId}`);
 }
 
-export async function subscribeToNewsletter(email: string, fullName: string, phone: string): Promise<{ message: string, status: boolean }> {
+export async function subscribeToNewsletter(
+  email: string,
+  fullName: string,
+  phone: string,
+): Promise<{ message: string; status: boolean }> {
   try {
     const response = await fetch(`${API_URL}/newsletter_subscription`, {
       method: "POST",
@@ -297,7 +315,8 @@ export async function subscribeToNewsletter(email: string, fullName: string, pho
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorData = await response.json();
+      throw errorData;
     }
 
     return response.json();
@@ -305,7 +324,7 @@ export async function subscribeToNewsletter(email: string, fullName: string, pho
     console.error(`Error subscribing to newsletter:`, error);
     throw error;
   }
-};
+}
 
 // save contact us message
 export async function saveContactMessage(
@@ -313,7 +332,7 @@ export async function saveContactMessage(
   email: string,
   phone: string,
   subject: string,
-  message: string
+  message: string,
 ): Promise<{ message: string; status: boolean }> {
   try {
     const response = await fetch(`${API_URL}/contact_us`, {
@@ -332,7 +351,8 @@ export async function saveContactMessage(
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorData = await response.json();
+      throw errorData;
     }
 
     return response.json();
@@ -342,8 +362,10 @@ export async function saveContactMessage(
   }
 }
 
-export async function getRecommendedProducts(productId: string): Promise<ApiResponse<Product[]>> {
-  return fetchApi<ApiResponse<Product[]>>(`/products/${productId}/recommendations`);
+export async function getRecommendedProducts(
+  productId: string,
+): Promise<ApiResponse<Product[]>> {
+  return fetchApi<ApiResponse<Product[]>>(
+    `/products/${productId}/recommendations`,
+  );
 }
-
-

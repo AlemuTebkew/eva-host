@@ -54,9 +54,9 @@ export default function Newsletter() {
               newsletters
             </h2>
             <p className="text-sm md:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-              aliquam, purus sit amet luctus venenatis, lectus magna fringilla
-              urna, porttitor. Lorem ipsum dolor sit amet, consectetur.
+              Subscribe to our newsletter and be the first to receive updates on new products, 
+              exclusive offers, and industry insights. Stay informed about the latest trends 
+              and developments in our field.
             </p>
           </div>
 
@@ -79,7 +79,7 @@ export default function Newsletter() {
                 </label>
                 <Input
                   type="email"
-                  placeholder="e.g. john.dowry@example.com"
+                  placeholder="e.g. john@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -91,7 +91,7 @@ export default function Newsletter() {
 
                 <Input
                   type="tel"
-                  placeholder="e.g. +1234567890"
+                  placeholder="e.g. +251999678990"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
@@ -100,14 +100,14 @@ export default function Newsletter() {
               <div className="flex items-start space-x-4">
                 <Button
                   type="submit"
-                  className="bg-blue-700 hover:bg-blue-800"
+                  className="bg-blue-800 hover:bg-blue-800"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Subscribing..." : "Subscribe"}
                 </Button>
                 <p className="text-xs text-gray-500">
                   Your data is in safe hands. Check out our{" "}
-                  <a href="#" className="font-medium text-blue-600 underline">
+                  <a href="#" className="font-medium text-blue-800 underline">
                     Privacy policy
                   </a>
                   .
