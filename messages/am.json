@@ -1,0 +1,116 @@
+{
+  "common": {
+    "comparePrice": "ዋጋ አወዳድር",
+    "minOrder": "ዝቅተኛ ትዕዛዝ",
+    "units": "ክፍሎች",
+    "noImage": "ምስል የለም",
+    "suppliers": "ሻጮች",
+    "search": "ፈልግ",
+    "loading": "በመጫን ላይ..."
+  },
+  "product": {
+    "details": "የምርት ዝርዝሮች",
+    "price": "ዋጋ",
+    "contactSupplier": "አምራቹን ያግኙ",
+    "share": "አጋራ",
+    "addToWishlist": "ወደ ምኞት ዝርዝር አክል",
+    "removeFromWishlist": "ከምኞት ዝርዝር አስወግድ"
+  },
+  "auth": {
+    "login": "ግባ",
+    "register": "ይመዝገቡ",
+    "logout": "ውጣ",
+    "email": "ኢሜይል",
+    "password": "የይለፍ ቃል",
+    "confirmPassword": "የይለፍ ቃል ያረጋግጡ",
+    "forgotPassword": "የይለፍ ቃልዎን ረሱ?",
+    "noAccount": "መለያ የሎትዎ?",
+    "hasAccount": "አስቀድመው መለያ አለዎት?"
+  },
+  "navigation": {
+    "home": "መነሻ",
+    "products": "ምርቶች",
+    "about": "ስለ እኛ",
+    "contact": "ያግኙን",
+    "profile": "መገለጫ",
+    "settings": "ቅንብሮች"
+  },
+  "header": {
+    "allCategories": "ሁሉም ምድቦች",
+    "products": "ምርቶች",
+    "suppliers": "ሻጮች",
+    "services": "አገልግሎቶች",
+    "contactUs": "ያግኙን",
+    "login": "ግባ",
+    "profile": "መገለጫ",
+    "becomeSupplier": "ሻጭ ይሁኑ",
+    "quickLinks": "ፈጣን አገናኞች",
+    "helpCenter": "እርዳታ ማዕከል"
+  },
+  "search": {
+    "placeholder": "ምርቶችን፣ አቅራቢዎችን፣ ወይም አገልግሎቶችን ይፈልጉ...",
+    "search": "ፈልግ"
+  },
+  "products": {
+    "heroBackgroundAlt": "እንደ መነሻ አስተዋፅኦ ያለው አምራቾችና አገልግሎቶች ምርጫ",
+    "heroTitle": "ምርቶችን እና አገልግሎቶችን በቀላሉ ያግኙ",
+    "heroDescription": "በኢትዮጵያ ውስጥ የምትገኙትን ምርቶችና አገልግሎቶች በቀላሉ ያንብቡ።",
+    "comparePriceButton": "ዋጋዎችን አንጻር ይመልከቱ",
+    "browseSuppliersButton": "አቅራቢዎችን ይመልከቱ",
+    "whyEvaTitle": "ለምን ኢቫ?",
+    "comparePricesTitle": "ዋጋዎችን አንጻር ይመልከቱ",
+    "comparePricesDescription": "በቀላሉ የተለያዩ አቅራቢዎችን ዋጋዎችን እና አገልግሎቶችን አንጻር ይመልከቱ።",
+    "verifiedSuppliersTitle": "የተረጋገጡ አቅራቢዎች",
+    "verifiedSuppliersDescription": "በእርግጠኝነት የተረጋገጡ እና የተታመኑ አቅራቢዎችን ያግኙ።",
+    "professionalSupportTitle": "ሙያዊ ድጋፍ",
+    "professionalSupportDescription": "በሙያዊ ድጋፍ የተደገፉ አገልግሎቶችን ያግኙ።",
+    "featuredProductsTitle": "የተለዩ ምርቶችና አገልግሎቶች",
+    "mostPopularTitle": "በብዛት የተፈለጉት",
+    "testimonialsTitle": "የደንበኞች አስተያየቶች",
+    "newsletterTitle": "ዜና እና ማሳወቂያዎችን ያግኙ",
+    "newsletterDescription": "የኢቫ እና የአቅራቢዎች ምርቶችና አገልግሎቶች ላይ ዝርዝር መረጃዎችን ያግኙ።",
+    "subscribeButton": "ይመዝገቡ"
+  },
+  "newsletter": {
+    "title": "በዜናችን ይቀመጡ",
+    "description": "በዜናችን ይመዝገቡ እና ስለ አዲስ ምርቶች፣ ልዩ ቅናሾች፣ እና የኢንዱስትሪ መረጃዎች መመልከት ይቀድሙ።",
+    "fullNameLabel": "ሙሉ ስም",
+    "fullNamePlaceholder": "ለምሳሌ፡ ጆን ዶዊ",
+    "emailLabel": "ኢሜል አድራሻ",
+    "emailPlaceholder": "ለምሳሌ፡ john@gmail.com",
+    "phoneNumberLabel": "ስልክ ቁጥር",
+    "phoneNumberPlaceholder": "ለምሳሌ፡ +251999678990",
+    "phoneNumberRequired": "ስልክ ቁጥር ያስፈልጋል።",
+    "subscribing": "በመመዝገብ ላይ...",
+    "subscribeButton": "ይመዝገቡ",
+    "privacyPolicyText": "የእናንተን መረጃ በደህና እንያዝ። የግላዊነት ፖሊሲያችንን ይመልከቱ",
+    "privacyPolicyLink": "የግላዊነት ፖሊሲ",
+    "successMessage": "እናመሰግናለን፣ በዜናችን ተመዝግበዋል!",
+    "errorMessage": "በመመዝገብ ላይ ስህተት አጋጥሟል። እባኮትን እንደገና ይሞክሩ።"
+  },
+  "category": {
+    "topCategories": "ከፍተኛ ምድቦች"
+  },
+  "supplierSection": {
+    "featuredSuppliers": "የተለዩ አቅራቢዎች",
+    "exploreMore": "ተጨማሪ አቅራቢዎችን ያስሱ",
+    "findBestSuppliers": "ለግንባታ ፍላጎቶችዎ በጣም የሚሆኑ አቅራቢዎችን ያግኙ",
+    "noSuppliers": "በአሁኑ ጊዜ አቅራቢዎች አልተገኙም"
+  },
+  "testimonialSection": {
+    "title": "የደንበኞቻችን አስተያየት",
+    "previous": "ወደ ኋላ",
+    "next": "ወደ ፊት",
+    "goToTestimonial": "ወደ አስተያየት {number} ይሂዱ"
+  },
+  "productSection": {
+    "seeMore": "ተጨማሪ ይመልከቱ",
+    "productCard": {
+      "featured": "የተለየ",
+      "promoted": "የተሻሻለ",
+      "promotionPrice": "የልዩ ቅናሽ ዋጋ",
+      "contactSupplier": "አቅራቢን ያነጋግሩ",
+      "shareText": "{name} በመድረክ ላይ ይመልከቱ!"
+    }
+  }
+}

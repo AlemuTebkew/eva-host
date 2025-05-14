@@ -1,0 +1,110 @@
+{
+  "common": {
+    "comparePrice": "Compare Price",
+    "minOrder": "Min Order",
+    "units": "Units",
+    "noImage": "No Image Available",
+    "suppliers": "Suppliers",
+    "search": "Search",
+    "loading": "Loading..."
+  },
+  "product": {
+    "details": "Product Details",
+    "price": "Price",
+    "contactSupplier": "Contact Supplier",
+    "share": "Share",
+    "addToWishlist": "Add to Wishlist",
+    "removeFromWishlist": "Remove from Wishlist"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "header": {
+    "allCategories": "All Categories",
+    "products": "Products",
+    "suppliers": "Suppliers",
+    "services": "Services",
+    "contactUs": "Contact Us",
+    "login": "Login",
+    "profile": "Profile",
+    "becomeSupplier": "Become Supplier",
+    "quickLinks": "Quick Links",
+    "helpCenter": "Help Center"
+  },
+  "search": {
+    "placeholder": "Search for products, suppliers, or services...",
+    "search": "Search"
+  },
+  "products": {
+    "heroBackgroundAlt": "Background image of construction materials",
+    "heroTitle": "Compare Prices. Choose Smart. Build with Eva",
+    "heroDescription": "Explore materials. Connect with Suppliers, and get the best deals",
+    "comparePriceButton": "Compare Price",
+    "browseSuppliersButton": "Browse Suppliers",
+    "whyEvaTitle": "Why Eva?",
+    "comparePricesTitle": "Compare prices you buy",
+    "comparePricesDescription": "Easily compare prices across multiple suppliers to ensure you get the best deals for your projects.",
+    "verifiedSuppliersTitle": "Verified Suppliers",
+    "verifiedSuppliersDescription": "All suppliers on our platform are thoroughly vetted to ensure quality products and reliable service.",
+    "professionalSupportTitle": "Professional Support",
+    "professionalSupportDescription": "Our dedicated team is available to assist you with any questions or issues throughout your buying journey."
+  },
+  "newsletter": {
+    "title": "Subscribe to Our Newsletter",
+    "description": "Sign up for our newsletter and stay updated on new products, exclusive discounts, and industry insights.",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "e.g., John Doe",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "e.g., john@gmail.com",
+    "phoneNumberLabel": "Phone Number",
+    "phoneNumberPlaceholder": "e.g., +251999678990",
+    "phoneNumberRequired": "Phone number is required.",
+    "subscribing": "Subscribing...",
+    "subscribeButton": "Subscribe",
+    "privacyPolicyText": "We value your privacy. Read our",
+    "privacyPolicyLink": "Privacy Policy",
+    "successMessage": "Thank you for subscribing to our newsletter!",
+    "errorMessage": "An error occurred while subscribing. Please try again."
+  },
+  "category": {
+    "topCategories": "Top Categories"
+  },
+  "supplierSection": {
+    "featuredSuppliers": "Featured Suppliers",
+    "exploreMore": "Explore more Suppliers",
+    "findBestSuppliers": "Find the best suppliers for your construction needs",
+    "noSuppliers": "No suppliers available at the moment"
+  },
+  "testimonialSection": {
+    "title": "What Our Customers Say",
+    "previous": "Previous",
+    "next": "Next",
+    "goToTestimonial": "Go to testimonial {number}"
+  },
+  "productSection": {
+    "seeMore": "See More",
+    "productCard": {
+      "featured": "Featured",
+      "promoted": "Promoted",
+      "promotionPrice": "Special promotion price",
+      "contactSupplier": "Contact Supplier",
+      "shareText": "Check out {name} on our platform!"
+    }
+  }
+}

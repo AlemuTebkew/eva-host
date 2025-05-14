@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { subscribeToNewsletter } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 export default function Newsletter() {
+  const t = useTranslations("newsletter"); // Use the "newsletter" namespace for translations
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -17,11 +19,10 @@ export default function Newsletter() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneNumber) {
-      setError("Phone number is required.");
+      setError(t("phoneNumberRequired")); // Use translated error message
       return;
     }
     setError("");
-    // Mock API call
     setIsSubmitting(true);
     try {
       const { status, message } = await subscribeToNewsletter(
@@ -50,14 +51,9 @@ export default function Newsletter() {
           {/* Left: Orange Background */}
           <div className="bg-gradient-to-br from-orange-600 to-orange-200 p-6 text-white md:w-1/2 md:p-10">
             <h2 className="mb-4 text-2xl font-bold leading-tight md:text-3xl">
-              Stay up to date with our <br className="hidden md:block" />{" "}
-              newsletters
+              {t("title")}
             </h2>
-            <p className="text-sm md:text-base">
-              Subscribe to our newsletter and be the first to receive updates on new products, 
-              exclusive offers, and industry insights. Stay informed about the latest trends 
-              and developments in our field.
-            </p>
+            <p className="text-sm md:text-base">{t("description")}</p>
           </div>
 
           {/* Right: Form Section */}
@@ -65,33 +61,33 @@ export default function Newsletter() {
             <form onSubmit={handleSubmit} className="mb-4 space-y-2">
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">
-                  Full Name
+                  {t("fullNameLabel")}
                 </label>
                 <Input
-                  placeholder="e.g. John Dowry"
+                  placeholder={t("fullNamePlaceholder")}
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                 />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">
-                  Email Address
+                  {t("emailLabel")}
                 </label>
                 <Input
                   type="email"
-                  placeholder="e.g. john@gmail.com"
+                  placeholder={t("emailPlaceholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">
-                  Phone Number
+                  {t("phoneNumberLabel")}
                 </label>
 
                 <Input
                   type="tel"
-                  placeholder="e.g. +251999678990"
+                  placeholder={t("phoneNumberPlaceholder")}
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
@@ -103,22 +99,22 @@ export default function Newsletter() {
                   className="bg-blue-800 hover:bg-blue-800"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Subscribing..." : "Subscribe"}
+                  {isSubmitting ? t("subscribing") : t("subscribeButton")}
                 </Button>
                 <p className="text-xs text-gray-500">
-                  Your data is in safe hands. Check out our{" "}
+                  {t("privacyPolicyText")}{" "}
                   <a href="#" className="font-medium text-blue-800 underline">
-                    Privacy policy
+                    {t("privacyPolicyLink")}
                   </a>
                   .
                 </p>
               </div>
             </form>
             {submitStatus === "success" && (
-              <p className="mt-4 text-green-600">Thank you for subscribing!</p>
+              <p className="mt-4 text-green-600">{t("successMessage")}</p>
             )}
             {submitStatus === "error" && (
-              <p className="mt-4 text-red-600">There was an error subscribing. Please try again.</p>
+              <p className="mt-4 text-red-600">{t("errorMessage")}</p>
             )}
           </div>
         </div>

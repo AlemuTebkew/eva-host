@@ -3,6 +3,7 @@ import type { Testimonial } from "@/types/testimonial";
 import TestimonialCard from "@/components/testimonial-card";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface TestimonialSectionProps {
   testimonials: Testimonial[];
@@ -11,6 +12,7 @@ interface TestimonialSectionProps {
 export default function TestimonialSection({
   testimonials,
 }: TestimonialSectionProps) {
+  const t = useTranslations("testimonialSection"); // Use the "testimonialSection" namespace for translations
   const [current, setCurrent] = useState(0);
 
   // Calculate the indices to show
@@ -39,14 +41,14 @@ export default function TestimonialSection({
     <section className="bg-white py-8 md:py-12">
       <div className="container mx-auto px-4">
         <h2 className="mb-6 text-xl font-bold md:mb-8 md:text-2xl px-5">
-          What Our Customers Say
+          {t("title")} {/* Translated title */}
         </h2>
         <div className="relative flex items-center justify-between">
           {/* Bolder, larger arrows */}
           <button
             onClick={prev}
             className="absolute left-3 z-10 p-2 text-4xl font-extrabold text-gray-700 hover:text-blue-700"
-            aria-label="Previous"
+            aria-label={t("previous")} // Translated aria-label
           >
             <ArrowLeft size={30} />
           </button>
@@ -79,7 +81,7 @@ export default function TestimonialSection({
           <button
             onClick={next}
             className="absolute right-0 z-10 p-2 text-4xl font-extrabold text-gray-700 hover:text-blue-700"
-            aria-label="Next"
+            aria-label={t("next")} // Translated aria-label
           >
             <ArrowRight size={30} />
           </button>
@@ -89,9 +91,11 @@ export default function TestimonialSection({
           {testimonials.map((_, idx) => (
             <button
               key={idx}
-              className={`h-2 w-2 rounded-full ${idx === current ? "bg-blue-600" : "bg-gray-300"}`}
+              className={`h-2 w-2 rounded-full ${
+                idx === current ? "bg-blue-600" : "bg-gray-300"
+              }`}
               onClick={() => setCurrent(idx)}
-              aria-label={`Go to testimonial ${idx + 1}`}
+              aria-label={t("goToTestimonial", { number: idx + 1 })} // Translated aria-label
             />
           ))}
         </div>

@@ -7,7 +7,9 @@ import FeaturedSuppliers from "@/components/Suppliers/FeaturedSuppliers";
 import Testimonials from "@/components/Testimonial";
 import { Metadata } from "next";
 import Header from "@/components/header";
-
+import {useTranslations} from 'next-intl';
+import {Link} from '@/i18n/navigation';
+ 
 export const metadata: Metadata = {
   title: "",
   description: "",
@@ -29,6 +31,8 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+  const t = useTranslations('navigation');
+
   return (
     <main className="max-w-c-1235 mx-auto">
       {/* <Navbar/> */}
@@ -40,7 +44,10 @@ export default function Home() {
       <SupplierCallToAction/> */}
       {/* <Footer/> */}
 
-      
+      <div>
+      <h1>{t('home')}</h1>
+      <Link href="/about">{t('about')}</Link>
+    </div>
     </main>
   );
 }

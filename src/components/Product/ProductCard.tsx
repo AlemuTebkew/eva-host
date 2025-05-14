@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Product } from "@/types/product";
 import { getImageUrl } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import { useRouter } from 'next/router';
+import { translate } from '@/i18n/utils';
+import { i18n, Locale } from '@/i18n/config';
 
 interface ProductCardProps {
   product: Product;
@@ -13,7 +16,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, otherSuppliersCount, hideVendor }: ProductCardProps) {
-  // map raw image ids → URLs
+  const router = useRouter();
+  const currentLocale = (router.locale || i18n.defaultLocale) as Locale;
   const imageUrls = product.images?.length
     ? product.images.map((img) => getImageUrl(img))
     : [];
@@ -28,12 +32,11 @@ export default function ProductCard({ product, otherSuppliersCount, hideVendor }
         <div className="w-full h-48 bg-gray-100 overflow-hidden">
           {imageUrls.length > 0 ? (
             <div className="transition-transform duration-300 group-hover:scale-105">
-              <ImageSlider images={imageUrls} autoSlide={true} />
+            <ImageSlider images={imageUrls} autoSlide={true} />
             </div>
           ) : (
-            // Placeholder when no images
             <div className="w-full h-full flex items-center justify-center text-gray-400">
-              No Image Available
+              {translate('common.noImage', currentLocale)}
             </div>
           )}
         </div>
@@ -63,7 +66,9 @@ export default function ProductCard({ product, otherSuppliersCount, hideVendor }
           </p>
           {product.minOrderQuantity && (
             <div className="flex items-center gap-1 text-sm text-gray-600">
-              <p>Min Order: {parseInt(product.minOrderQuantity).toLocaleString()} units</p>
+              <p>
+                {translate('common.minOrder', currentLocale)}: {parseInt(product.minOrderQuantity).toLocaleString()} {translate('common.units', currentLocale)}
+              </p>
             </div>
           )}
         </div>
@@ -74,7 +79,7 @@ export default function ProductCard({ product, otherSuppliersCount, hideVendor }
             className="w-full bg-gray-100 text-blue-800 rounded-lg text-center transition-all duration-200 hover:bg-gray-200 focus:ring-2 focus:ring-blue-800/20"
             size="sm"
           >
-            Compare Price
+            {translate('common.comparePrice', currentLocale)}
           </Button>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Menu, X, User, UserCircle } from "lucide-react";
@@ -10,14 +10,20 @@ import { useGetCategoriesQuery } from "@/store/app-api";
 import CategoryDropdown from "@/components/category-dropdown";
 import MobileCategoryDropdown from "@/components/mobile-category-dropdown";
 import SearchBar from "./Search/SearchBarComponent";
+import LanguageSwitcher from "./language-switcher";
+import { useTranslations } from "next-intl";
 
 export default function Header() {
+  const t = useTranslations("header");
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const router = useRouter();
+  const params = useParams();
+  const locale = params.locale as string;
+  const [currentLocale, setCurrentLocale] = useState(locale);
   // fetch categories
   const { data: categories, isSuccess } = useGetCategoriesQuery();
 
@@ -50,6 +56,14 @@ export default function Header() {
     return false;
   };
 
+  const handleLocaleChange = (newLocale: string) => {
+    setCurrentLocale(newLocale);
+    const currentPath = window.location.pathname.replace(
+      /^\/[a-z]{2}(?=\/|$)/,
+      "",
+    );
+    router.push(`/${newLocale}${currentPath}`);
+  };
   return (
     <header className="sticky top-0 z-40 bg-white shadow">
       {/* Mobile Header */}
@@ -73,10 +87,10 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex items-center justify-between border-t z-40 border-gray-200 py-2">
+        <div className="z-40 flex items-center justify-between border-t border-gray-200 py-2">
           <button
             onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-            className="flex items-center px-4  text-sm"
+            className="flex items-center px-4 text-sm"
           >
             <svg
               className="mr-2 h-5 w-5 text-gray-500"
@@ -91,7 +105,7 @@ export default function Header() {
                 d="M4 6h16M4 12h16M4 18h16"
               />
             </svg>
-            All Category
+            {t("allCategories")}
             <svg
               className={`ml-2 h-4 w-4 transition-transform duration-200 ${isCategoryOpen ? "rotate-180" : ""}`}
               fill="none"
@@ -108,7 +122,7 @@ export default function Header() {
             </svg>
           </button>
 
-          <nav className="flex flex-1 justify-around items-center mt-1">
+          <nav className="mt-1 flex flex-1 items-center justify-around">
             <Link
               href="/products"
               className={`border-b-2 pb-1 text-sm font-medium ${
@@ -117,7 +131,7 @@ export default function Header() {
                   : "border-transparent text-gray-800 hover:text-blue-800"
               }`}
             >
-              Products
+              {t("products")}
             </Link>
             <Link
               href="/suppliers"
@@ -127,7 +141,7 @@ export default function Header() {
                   : "border-transparent text-gray-800 hover:text-blue-800"
               }`}
             >
-              Suppliers
+              {t("suppliers")}
             </Link>
             <Link
               href="/services"
@@ -137,7 +151,7 @@ export default function Header() {
                   : "border-transparent text-gray-800 hover:text-blue-800"
               }`}
             >
-              Service
+              {t("services")}
             </Link>
           </nav>
         </div>
@@ -157,10 +171,7 @@ export default function Header() {
           <div className="absolute left-0 right-0 z-50 border-b border-gray-200 bg-white px-4 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">
               <div className="flex items-center justify-between">
-                <select className="rounded-md border border-gray-300 px-2 py-1 text-sm">
-                  <option>English</option>
-                  <option>Amharic</option>
-                </select>
+                <LanguageSwitcher />
                 <div className="flex space-x-2">
                   {!isAuthenticated ? (
                     <Link href="/login">
@@ -168,7 +179,7 @@ export default function Header() {
                         className="bg-orange-500 hover:bg-orange-600"
                         size="sm"
                       >
-                        Login
+                        {t("login")}
                       </Button>
                     </Link>
                   ) : (
@@ -179,38 +190,38 @@ export default function Header() {
                         className="flex items-center gap-2"
                       >
                         <UserCircle className="h-5 w-5" />
-                        Profile
+                        {t("profile")}
                       </Button>
                     </Link>
                   )}
-                  
+
                   <Link href="/register-as-supplier">
-                  <Button
-                    variant="outline"
-                    className="border-gray-300 text-gray-700 hover:bg-gray-50"
-                    size="sm"
-                  >
-                    Become Supplier
-                      </Button>
-                    </Link>
+                    <Button
+                      variant="outline"
+                      className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                      size="sm"
+                    >
+                      {t("becomeSupplier")}
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <div className="space-y-2">
                 <h3 className="text-sm font-medium text-gray-500">
-                  Quick Links
+                  {t("quickLinks")}
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
                   <Link
                     href="/contact-us"
                     className="text-sm text-gray-600 hover:text-blue-600"
                   >
-                    Contact US
+                    {t("contactUs")}
                   </Link>
                   <Link
-                    href="/contact-us"
+                    href="/help-center"
                     className="text-sm text-gray-600 hover:text-blue-600"
                   >
-                    Help Center
+                    {t("helpCenter")}
                   </Link>
                 </div>
               </div>
@@ -239,12 +250,7 @@ export default function Header() {
             </div>
 
             <div className="flex items-center space-x-2">
-              <div className="mr-2">
-                <select className="rounded-md border border-gray-300 px-2 py-1 text-sm">
-                  <option>English</option>
-                  <option>Amharic</option>
-                </select>
-              </div>
+              <LanguageSwitcher />
               {isAuthenticated ? (
                 <Button className="bg-orange-500 hover:bg-orange-600">
                   <Link href="/profile">
@@ -253,14 +259,14 @@ export default function Header() {
                 </Button>
               ) : (
                 <Button className="bg-orange-500 hover:bg-orange-600">
-                  <Link href="/login">Login</Link>
+                  <Link href="/login">{t("login")}</Link>
                 </Button>
               )}
               <Button
                 variant="outline"
                 className="border-gray-300 text-gray-700 hover:bg-gray-50"
               >
-                <Link href="/register-as-supplier">Become Supplier</Link>
+                <Link href="/register-as-supplier">{t("becomeSupplier")}</Link>
               </Button>
             </div>
           </div>
@@ -285,7 +291,7 @@ export default function Header() {
                     d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>
-                All Category
+                {t("allCategories")}
                 <svg
                   className={`ml-2 h-4 w-4 transition-transform duration-200 ${isCategoryOpen ? "rotate-180" : ""}`}
                   fill="none"
@@ -321,7 +327,7 @@ export default function Header() {
                     : "border-transparent text-gray-600 hover:border-blue-600 hover:text-blue-600"
                 }`}
               >
-                Products
+                {t("products")}
               </Link>
               <Link
                 href="/suppliers"
@@ -331,7 +337,7 @@ export default function Header() {
                     : "border-transparent text-gray-600 hover:border-blue-600 hover:text-blue-600"
                 }`}
               >
-                Suppliers
+                {t("suppliers")}
               </Link>
               <Link
                 href="/services"
@@ -341,7 +347,7 @@ export default function Header() {
                     : "border-transparent text-gray-600 hover:border-blue-600 hover:text-blue-600"
                 }`}
               >
-                Service
+                {t("services")}
               </Link>
               <Link
                 href="/contact-us"
@@ -351,7 +357,7 @@ export default function Header() {
                     : "border-transparent text-gray-600 hover:border-blue-600 hover:text-blue-600"
                 }`}
               >
-                Contact Us
+                {t("contactUs")}
               </Link>
             </nav>
           </div>

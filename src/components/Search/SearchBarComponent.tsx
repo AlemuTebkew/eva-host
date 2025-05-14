@@ -6,8 +6,10 @@ import { Button } from "../ui/button";
 import { Separator } from "@radix-ui/react-separator";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLazyGetSearchSuggestionQuery } from "@/store/app-api";
+import { useTranslations } from "next-intl";
 
 export default function SearchBar() {
+  const t = useTranslations("search"); // Use the "search" namespace for translations
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -21,7 +23,8 @@ export default function SearchBar() {
 
   const [GetSuggestions, { data }] = useLazyGetSearchSuggestionQuery();
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setIsMobileSearchOpen(false);
@@ -30,7 +33,7 @@ export default function SearchBar() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSearch();
+      handleSearch(e);
     }
   };
 
@@ -79,7 +82,7 @@ export default function SearchBar() {
               GetSuggestions({ params: { keyword: e.target.value } });
             }}
             onKeyDown={handleKeyDown}
-            placeholder="What are you looking for?"
+            placeholder={t("placeholder")} // Use the translated placeholder
             className=" w-full rounded-md px-4 py-2 focus:outline-none"
           />
           <Button
@@ -88,7 +91,7 @@ export default function SearchBar() {
             size="icon"
           >
             <Search className="h-4 w-4" />
-            Search
+            {t("search")} {/* Use the translated button text */}
           </Button>
         </div>
 
@@ -120,7 +123,7 @@ export default function SearchBar() {
         <input
           type="text"
           value={searchQuery}
-          placeholder="What are you looking for?"
+          placeholder={t("placeholder")}
           className=" w-full rounded-md px-4  focus:outline-none"
           readOnly
         />
@@ -131,7 +134,7 @@ export default function SearchBar() {
           size="icon"
         >
           <Search className="h-4 w-4" />
-          Search
+          {t("search")} {/* Use the translated button text */}
         </Button>
       </div>
 
@@ -158,7 +161,7 @@ export default function SearchBar() {
                       GetSuggestions({ params: { keyword: e.target.value } });
                     }}
                     onKeyDown={handleKeyDown}
-                    placeholder="What are you looking for?"
+                    placeholder={t("placeholder")}
                     className=" w-full rounded-md px-4  focus:outline-none"
                     autoFocus
                   />
@@ -172,7 +175,7 @@ export default function SearchBar() {
               </div>
             </div>
 
-            <Separator className="border border-[.2px]" />
+            <Separator className="border-[1.2px]" />
 
             {data && data?.length > 0 && searchQuery.trim() !== "" && (
               <div className="px-4 pt-2">
