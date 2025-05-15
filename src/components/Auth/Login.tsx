@@ -67,7 +67,10 @@ export default function Login() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
-      const response = await loginUser(data);
+      const response = await loginUser({
+        phoneNumber: data.phone,
+        password: data.password,
+      });
       const responseData = response?.data;
       localStorage.setItem("token", responseData?.token);
       setDialogState({
@@ -85,7 +88,8 @@ export default function Login() {
         isOpen: true,
         type: "error",
         title: "Login Failed",
-        message: error.message || "Please check your credentials and try again.",
+        message:
+          error.message || "Please check your credentials and try again.",
       });
     } finally {
       setIsLoading(false);
@@ -93,11 +97,11 @@ export default function Login() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-orange-50 py-4">
+    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-orange-50 py-4">
       {/* Back Button */}
       <Button
         variant="ghost"
-        className="absolute left-4 top-4 text-gray-800 hover:text-gray-600 focus:outline-none transition-colors duration-200"
+        className="absolute left-4 top-4 text-gray-800 transition-colors duration-200 hover:text-gray-600 focus:outline-none"
         onClick={() => window.history.back()}
         size="icon"
       >
@@ -109,12 +113,14 @@ export default function Login() {
         <div className="relative overflow-hidden rounded-2xl border border-blue-800/20 bg-white p-8 shadow-xl transition-all duration-300 hover:shadow-2xl">
           {/* Background decorations */}
           <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-orange-500 to-blue-800 opacity-10"></div>
-          <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-gradient-to-br from-blue-800 to-orange-500 opacity-10"></div>
-          
+          <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-gradient-to-br from-blue-800 to-orange-500 opacity-10"></div>
+
           {/* Header */}
           <div className="relative mb-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
-            <p className="mt-2 text-sm text-gray-600">Please sign in to your account</p>
+            <p className="mt-2 text-sm text-gray-600">
+              Please sign in to your account
+            </p>
           </div>
 
           {/* Form */}
@@ -195,7 +201,7 @@ export default function Login() {
                 </div>
                 <Link
                   href="/forgot-password"
-                  className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors duration-200"
+                  className="text-sm font-medium text-orange-500 transition-colors duration-200 hover:text-orange-600"
                 >
                   Forgot password?
                 </Link>
@@ -221,7 +227,7 @@ export default function Login() {
               Don&apos;t have an account?{" "}
               <Link
                 href="/register"
-                className="font-medium text-orange-500 hover:text-orange-600 transition-colors duration-200"
+                className="font-medium text-orange-500 transition-colors duration-200 hover:text-orange-600"
               >
                 Create one now
               </Link>

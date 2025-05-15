@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { EyeIcon, PencilIcon } from "lucide-react";
+import { EyeIcon, PencilIcon, LogOutIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-import { getUserProfile, } from "@/lib/api";
 import { UserProfile } from "@/types/api";
 import { getUrl } from "@/lib/utils";
 
@@ -19,54 +19,64 @@ export default function UserProfilePage() {
   });
 
   const [editPersonalInfo, setEditPersonalInfo] = useState(false);
-  const [editAddress, setEditAddress] = useState(false);
   const [token, setToken] = useState<string | null>(null);
-  
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // check token exist 
+  // Check token existence
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      window.location.href = '/login';
+      window.location.href = "/login";
     }
     setToken(token);
-
   }, []);
 
-  // ❷ Fetch on mount
+  // Fetch profile on mount
   useEffect(() => {
     async function loadProfile() {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         const res = await fetch(`${getUrl()}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-  
+
         if (!res.ok) throw new Error("Failed to fetch profile");
-  
+
         const { data } = await res.json();
         setProfile(data);
       } catch (err: any) {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-        console.error("Failed to load profile", err);
+        localStorage.removeItem("token");
+        window.location.href = "/login";
         setError(err.message || "Failed to load profile");
       } finally {
         setLoading(false);
       }
     }
-  
+
     loadProfile();
   }, []);
 
-  // ❸ Loading / Error states
+  // Logout functionality
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
+  // Loading / Error states
   if (loading) {
-    return <div className="p-6 text-center">Loading profile…</div>;
+    return (
+      <div className="p-6">
+        <Skeleton className="mb-4" />
+        <Skeleton className="mb-2 h-20" />
+        <Skeleton className="mb-2 h-20" />
+        <Skeleton className="mb-2 h-20" />
+        <Skeleton className="mb-2 h-20" />
+      </div>
+    );
   }
   if (error) {
     return (
@@ -82,14 +92,13 @@ export default function UserProfilePage() {
   return (
     <div className="flex min-h-screen flex-col gap-6 bg-gray-50 p-6 lg:flex-row">
       {/* Sidebar */}
-      <Card className="flex w-full flex-col items-center p-6 text-center lg:w-72">
-        <img
-          src="https://via.placeholder.com/80"
-          alt="Profile"
-          className="mb-4 h-20 w-20 rounded-full object-cover"
-        />
-        <h2 className="text-lg font-semibold">Pristia Candra</h2>
-        <p className="text-sm text-gray-500">User</p>
+      <Card className="flex w-full flex-col items-center p-6 text-center shadow-md transition-shadow duration-300 hover:shadow-lg lg:w-72">
+        <div className="relative h-24 w-24 overflow-hidden rounded-full bg-gray-200">
+          <Skeleton className="h-20 w-20" />
+        </div>
+        <h2 className="mt-4 text-lg font-semibold text-gray-800">
+          {profile.fullName}
+        </h2>
         <div className="mt-4 w-full space-y-2 text-left text-sm">
           <p className="flex items-center gap-2 text-gray-700">
             <svg width="16" height="16" fill="currentColor">
@@ -105,14 +114,18 @@ export default function UserProfilePage() {
           </p>
         </div>
         <div className="mt-6 w-full border-t pt-4">
-          <button className="w-full text-left text-sm text-blue-600 hover:underline">
-            Saved Product
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm text-white transition hover:bg-red-700"
+          >
+            <LogOutIcon size={16} />
+            Logout
           </button>
         </div>
       </Card>
 
       {/* Main Content */}
-      <Card className="w-full flex-1 p-6">
+      <Card className="w-full flex-1 p-6 shadow-md transition-shadow duration-300 hover:shadow-lg">
         <Tabs defaultValue="profile">
           <TabsList className="flex flex-wrap">
             <TabsTrigger value="profile">User Profile</TabsTrigger>
@@ -125,9 +138,10 @@ export default function UserProfilePage() {
               <h3 className="text-lg font-semibold">Personal Info</h3>
               <div
                 onClick={() => setEditPersonalInfo(!editPersonalInfo)}
-                className="flex items-center gap-1 text-blue-800 hover:underline"
+                className="flex cursor-pointer items-center gap-1 text-blue-800 hover:underline"
               >
                 <PencilIcon size={16} />
+                Edit
               </div>
             </div>
             <form className="grid gap-4 md:grid-cols-2">
@@ -201,64 +215,8 @@ export default function UserProfilePage() {
                   <option value="Ethiopia">Ethiopia</option>
                 </select>
               </div>
-
-              <div className="col-span-full mt-4">
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="text-lg font-semibold">Address</h3>
-                  <div
-                    onClick={() => setEditAddress(!editAddress)}
-                    className="flex cursor-pointer items-center gap-1 text-blue-800 hover:underline"
-                  >
-                    <PencilIcon size={16} />
-                  </div>
-                </div>
-                <div className="grid gap-4 md:grid-cols-3">
-                  <div>
-                    <Label htmlFor="country">Country</Label>
-                    {editAddress ? (
-                      <Input
-                        id="country"
-                        name="country"
-                        defaultValue={profile.country}
-                      />
-                    ) : (
-                      <p className="rounded bg-gray-100 p-2">
-                        {profile.country}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="region">Region</Label>
-                    {editAddress ? (
-                      <Input
-                        id="region"
-                        name="region"
-                        defaultValue={profile.region}
-                      />
-                    ) : (
-                      <p className="rounded bg-gray-100 p-2">
-                        {profile.region}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="city">City</Label>
-                    {editAddress ? (
-                      <Input
-                        id="city"
-                        name="city"
-                        defaultValue={profile.city}
-                      />
-                    ) : (
-                      <p className="rounded bg-gray-100 p-2">
-                        {profile.city}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
               <div className="col-span-full mt-4 text-right">
-                <Button type="submit" className="bg-blue-800">
+                <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
                   Save Profile
                 </Button>
               </div>
@@ -282,7 +240,11 @@ export default function UserProfilePage() {
                     <Input
                       id={`${field}Password`}
                       name={`${field}Password`}
-                      type={showPassword[field as keyof typeof showPassword] ? "text" : "password"}
+                      type={
+                        showPassword[field as keyof typeof showPassword]
+                          ? "text"
+                          : "password"
+                      }
                       className="pr-10"
                       required
                     />
@@ -291,7 +253,8 @@ export default function UserProfilePage() {
                       onClick={() =>
                         setShowPassword((prev) => ({
                           ...prev,
-                          [field as keyof typeof showPassword]: !prev[field as keyof typeof showPassword],
+                          [field as keyof typeof showPassword]:
+                            !prev[field as keyof typeof showPassword],
                         }))
                       }
                       className="absolute right-2 top-1/2 -translate-y-1/2"
@@ -301,7 +264,7 @@ export default function UserProfilePage() {
                   </div>
                 </div>
               ))}
-              <Button type="submit" className="bg-blue-800 mt-2">
+              <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
                 Save Password
               </Button>
             </form>

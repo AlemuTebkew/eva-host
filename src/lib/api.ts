@@ -243,7 +243,7 @@ export async function registerUser(
 
 // write a function to login user
 export async function loginUser(data: {
-  phone: string;
+  phoneNumber: string;
   password: string;
 }): Promise<ApiResponse<{ token: string }>> {
   try {

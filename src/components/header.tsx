@@ -52,7 +52,6 @@ export default function Header() {
     return false;
   };
 
-
   return (
     <header className="sticky top-0 z-40 bg-white shadow">
       {/* Mobile Header */}
@@ -61,6 +60,8 @@ export default function Header() {
           <Link href="/" className="text-lg font-bold text-gray-800">
             EVA ENGINEERING
           </Link>
+          <LanguageSwitcher />
+
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? (
               <X className="h-6 w-6" />
@@ -160,13 +161,13 @@ export default function Header() {
           <div className="absolute left-0 right-0 z-50 border-b border-gray-200 bg-white px-4 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">
               <div className="flex items-center justify-between">
-                <LanguageSwitcher />
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 items-center gap-3">
                   {!isAuthenticated ? (
                     <Link href="/login">
                       <Button
                         className="bg-orange-500 hover:bg-orange-600"
                         size="sm"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                       >
                         {t("login")}
                       </Button>
@@ -177,8 +178,9 @@ export default function Header() {
                         variant="ghost"
                         size="sm"
                         className="flex items-center gap-2"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                       >
-                        <UserCircle className="h-5 w-5" />
+                        <UserCircle className="h-5 w-5 text-blue-800" />
                         {t("profile")}
                       </Button>
                     </Link>
@@ -187,30 +189,19 @@ export default function Header() {
                   <Link href="/register-as-supplier">
                     <Button
                       variant="outline"
-                      className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                      className="border-gray-300 text-blue-800 hover:bg-gray-50"
                       size="sm"
+                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
                       {t("becomeSupplier")}
                     </Button>
                   </Link>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-sm font-medium text-gray-500">
-                  {t("quickLinks")}
-                </h3>
-                <div className="grid grid-cols-2 gap-2">
                   <Link
                     href="/contact-us"
-                    className="text-sm text-gray-600 hover:text-blue-600"
+                    className="text-sm text-blue-800"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   >
                     {t("contactUs")}
-                  </Link>
-                  <Link
-                    href="/help-center"
-                    className="text-sm text-gray-600 hover:text-blue-600"
-                  >
-                    {t("helpCenter")}
                   </Link>
                 </div>
               </div>

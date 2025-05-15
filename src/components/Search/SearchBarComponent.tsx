@@ -117,7 +117,7 @@ export default function SearchBar() {
 
       {/* Mobile Search Trigger */}
       <div
-        className="relative flex w-full  items-center border bg-white px-4 py-2 lg:hidden"
+        className="relative flex w-full  items-center border bg-white py-2 lg:hidden"
         onClick={() => setIsMobileSearchOpen(true)}
       >
         <input
@@ -130,7 +130,7 @@ export default function SearchBar() {
 
         <Button
           onClick={handleSearch}
-          className="absolute right-0 top-0 h-full w-[100px] rounded-l-none bg-blue-800 hover:bg-blue-800"
+          className="absolute right-0 top-0 h-full w-[100px] rounded-l-none bg-blue-700 hover:bg-blue-00"
           size="icon"
         >
           <Search className="h-4 w-4" />
