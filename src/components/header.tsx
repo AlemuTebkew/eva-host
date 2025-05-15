@@ -4,7 +4,6 @@ import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Search, Menu, X, User, UserCircle } from "lucide-react";
 import { useGetCategoriesQuery } from "@/store/app-api";
 import CategoryDropdown from "@/components/category-dropdown";
@@ -20,10 +19,7 @@ export default function Header() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const router = useRouter();
-  const params = useParams();
-  const locale = params.locale as string;
-  const [currentLocale, setCurrentLocale] = useState(locale);
+
   // fetch categories
   const { data: categories, isSuccess } = useGetCategoriesQuery();
 
@@ -56,14 +52,7 @@ export default function Header() {
     return false;
   };
 
-  const handleLocaleChange = (newLocale: string) => {
-    setCurrentLocale(newLocale);
-    const currentPath = window.location.pathname.replace(
-      /^\/[a-z]{2}(?=\/|$)/,
-      "",
-    );
-    router.push(`/${newLocale}${currentPath}`);
-  };
+
   return (
     <header className="sticky top-0 z-40 bg-white shadow">
       {/* Mobile Header */}

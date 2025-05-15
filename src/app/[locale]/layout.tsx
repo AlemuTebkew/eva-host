@@ -4,16 +4,15 @@ import Header from "@/components/header";
 import ClientProviders from "./client-provider";
 import { Inter } from "next/font/google";
 import { Suspense } from "react";
-import { locales, Locale } from "@/i18n/config";
 import { notFound } from "next/navigation";
 import {routing} from '@/i18n/routing';
 import '@/app/globals.css'; // 👈 this brings in Tailwind styles
 
 const inter = Inter({ subsets: ["latin"] });
 
-export async function generateStaticParams() {
-  return locales.map((lang) => ({ lang }));
-}
+// export async function generateStaticParams() {
+//   return locales.map((lang) => ({ lang }));
+// }
 
 export default async function RootLayout({
   children,
