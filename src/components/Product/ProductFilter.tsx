@@ -23,10 +23,14 @@ interface FilterProps {
     woreda?: string;
   }) => void;
   onClose: React.Dispatch<SetStateAction<boolean>>;
+  hideVendor?: boolean;
 }
 
-
-export default function Filter({ onApplyFilters, onClose }: FilterProps) {
+export default function Filter({
+  onApplyFilters,
+  onClose,
+  hideVendor,
+}: FilterProps) {
   const searchParams = useSearchParams();
   const categoryIdSearchQuery = searchParams.get("categoryId") || "";
   const subCategoryIdSearchQuery = searchParams.get("subCategoryId") || "";
@@ -66,10 +70,10 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
   });
 
   const [locationFilters, setLocationFilters] = useState({
-    region: '',
-    city: '',
-    subCity: '',
-    woreda: '',
+    region: "",
+    city: "",
+    subCity: "",
+    woreda: "",
   });
 
   useEffect(() => {
@@ -103,8 +107,8 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
       subCity: locationFilters.subCity,
       woreda: locationFilters.woreda,
     });
-    console.log('bbb',locationFilters)
-    console.log('ccc',selectedFilters)
+    console.log("bbb", locationFilters);
+    console.log("ccc", selectedFilters);
     onClose(false);
   };
 
@@ -188,10 +192,9 @@ export default function Filter({ onApplyFilters, onClose }: FilterProps) {
           onChange={(e) => handleInputChange("maxPrice", e.target.value)}
         />
       </div>
-
-      <AddressFilter
-        onChange={(location) => setLocationFilters(location)}
-      />
+      {!hideVendor && (
+        <AddressFilter onChange={(location) => setLocationFilters(location)} />
+      )}
 
       <Button
         className="flex w-full items-center justify-center"

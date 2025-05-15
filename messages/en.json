@@ -104,7 +104,11 @@
       "promoted": "Promoted",
       "promotionPrice": "Special promotion price",
       "contactSupplier": "Contact Supplier",
-      "shareText": "Check out {name} on our platform!"
+      "shareText": "Check out {name} on our platform!",
+      "noImage": "No Image Available",
+      "minOrder": "Minimum Order",
+      "units": "units",
+      "comparePrice": "Compare Price"
     }
   }
 }

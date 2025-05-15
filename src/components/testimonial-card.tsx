@@ -18,9 +18,9 @@ export default function TestimonialCard({
           "transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease, transform 0.5s ease",
       }}
     >
-      <p className="mb-4 leading-relaxed text-white">
-        {testimonial.description}
-      </p>
+      <blockquote className="mb-4 leading-relaxed text-white italic font-bold">
+        “{testimonial.description}”
+      </blockquote>
       <div className="flex items-center">
         <div>
           <div className="mr-3 h-10 w-10 overflow-hidden rounded-full">

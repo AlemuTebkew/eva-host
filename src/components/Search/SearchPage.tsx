@@ -244,6 +244,7 @@ export default function SearchPage({
             <Filter
               onApplyFilters={handleOnApplyFilter}
               onClose={setIsFilterOpen}
+              hideVendor={hideVendor}
             />
           </div>
           <div className="col-span-2 flex flex-col md:-ml-[100px] px-0">

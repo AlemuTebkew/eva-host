@@ -1,7 +1,5 @@
 "use client";
-import Footer from "@/components/Footer1";
-import Navbar from "@/components/Navigation";
-import SupplierListPage from "@/components/Suppliers/SupplierListPage";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SuppliersList from "@/components/suppliers-list";
@@ -9,7 +7,8 @@ import Image from "next/image";
 import { Suspense, useState, FormEvent } from "react";
 import { useFilterSupplierQuery } from "@/store/app-api";
 import GenericPagination from "@/components/Pagination";
-
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 function SupplierListSkeleton() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -47,7 +46,7 @@ export default function SuppliersPage() {
 
   // safe fallback for pagination meta
   const meta = data?.meta ?? { page: 1, total: 0, totalPages: 1 };
-
+  const t = useTranslations("products"); // Use the "suppliers" namespace for translations
   // on form submit, re-run the query with the new searchTerm
   function handleSearch(e: FormEvent) {
     e.preventDefault();
@@ -65,37 +64,39 @@ export default function SuppliersPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative bg-blue-900 text-white">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/hero/bg-new.jpg"
-            alt="Background"
-            fill
-            className="object-cover opacity-30"
-            priority
-          />
-        </div>
-        <div className="container relative z-10 mx-auto px-4 py-16 md:py-24">
-          <div className="max-w-2xl">
-            <h1 className="mb-4 text-4xl font-bold md:text-5xl">
-              Compare Prices. Choose Smart. Build with Eva
-            </h1>
-            <p className="mb-8 text-lg">
-              Explore materials. Connect with Suppliers and get the best deals.
-            </p>
-            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                Compare Price
-              </Button>
-              <Button className="bg-orange-500 hover:bg-orange-600">
-                Browse Suppliers
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
+       {/* Hero Section */}
+       <section className="relative bg-blue-900 text-white">
+         <div className="absolute inset-0 z-0">
+           <Image
+             src="/images/hero/bg-new.jpg"
+             alt={t("heroBackgroundAlt")} // Translate the alt text
+             fill
+             className="object-cover opacity-30"
+             priority
+             sizes="100vw"
+           />
+         </div>
+         <div className="container relative z-10 mx-auto px-4 py-12 md:py-24">
+           <div className="max-w-2xl">
+             <h1 className="mb-4 text-3xl font-bold md:text-5xl">
+               {t("heroTitle")}
+             </h1>
+             <p className="mb-6 text-lg">{t("heroDescription")}</p>
+             <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
+               <Link href="/search">
+                 <Button className="bg-blue-800 hover:bg-orange-500">
+                   {t("comparePriceButton")}
+                 </Button>
+               </Link>
+               <Link href="/suppliers">
+                 <Button className="bg-orange-500 hover:bg-blue-800">
+                   {t("browseSuppliersButton")}
+                 </Button>
+               </Link>
+             </div>
+           </div>
+         </div>
+       </section>
       {/* Suppliers Section */}
       <section className="bg-gray-50 py-12">
         <div className="container mx-auto px-4">

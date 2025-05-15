@@ -110,7 +110,11 @@
       "promoted": "የተሻሻለ",
       "promotionPrice": "የልዩ ቅናሽ ዋጋ",
       "contactSupplier": "አቅራቢን ያነጋግሩ",
-      "shareText": "{name} በመድረክ ላይ ይመልከቱ!"
+      "shareText": "{name} በመድረክ ላይ ይመልከቱ!",
+      "noImage": "ምስል አልተገኘም",
+      "minOrder": "አነስተኛ ትዕዛዝ",
+      "units": "እቃዎች",
+      "comparePrice": "ዋጋዎችን አንጻር ይመልከቱ"
     }
   }
 }

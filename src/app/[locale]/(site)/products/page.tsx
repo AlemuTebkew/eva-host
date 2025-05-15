@@ -87,12 +87,16 @@ export default function Home() {
             </h1>
             <p className="mb-6 text-lg">{t("heroDescription")}</p>
             <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                {t("comparePriceButton")}
-              </Button>
-              <Button className="bg-orange-500 hover:bg-orange-600">
-                <Link href="/suppliers">{t("browseSuppliersButton")}</Link>
-              </Button>
+              <Link href="/search">
+                <Button className="bg-blue-800 hover:bg-orange-500">
+                  {t("comparePriceButton")}
+                </Button>
+              </Link>
+              <Link href="/suppliers">
+                <Button className="bg-orange-500 hover:bg-blue-800">
+                  {t("browseSuppliersButton")}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

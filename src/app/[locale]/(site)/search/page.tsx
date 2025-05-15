@@ -9,7 +9,7 @@ const SearchPage = () => {
       <Suspense
         fallback={
           <div className="flex h-screen items-center justify-center">
-            Loading...
+            {/* Loading... */}
           </div>
         }
       >
