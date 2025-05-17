@@ -4,10 +4,16 @@ import { Product } from "@/types/product";
 import { Testimonial } from "@/types/testimonial";
 import { ApiResponse, UserProfile } from "@/types/api";
 
-const API_URL = "http://16.171.71.23:5007/user";
 // const API_URL = "http://127.0.0.1:5007/user";
 // const BASE_URL = "http://127.0.0.1:5007";
-const BASE_URL = "http://16.171.71.23:5007";
+
+
+// const BASE_URL = "http://16.171.71.23:5007";
+// const API_URL = "http://16.171.71.23:5007/user";
+
+const BASE_URL = "http://15.188.26.244:5007";
+const API_URL = "http://15.188.26.244:5007/user";
+
 
 /**
  * Generic fetch function with error handling

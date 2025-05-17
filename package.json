@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 4444 -H 0.0.0.0"
+    "start": "next start"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",
