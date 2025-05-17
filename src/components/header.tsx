@@ -47,8 +47,10 @@ export default function Header() {
   }, []);
   // Check if a nav link is active
   const isActive = (path: string) => {
-    if (path === "/" && pathname === "/") return true;
-    if (path !== "/" && pathname.startsWith(path)) return true;
+    const pathWithoutLocale = path.replace("/en", "").replace("/am", "");
+    if (pathWithoutLocale === "/" && pathname === "/") return true;
+    if (pathWithoutLocale !== "/" && pathname.startsWith(pathWithoutLocale))
+      return true;
     return false;
   };
 
@@ -203,6 +205,13 @@ export default function Header() {
                   >
                     {t("contactUs")}
                   </Link>
+                  <Link
+                    href="/legabout-us"
+                    className="text-sm text-blue-800"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  >
+                    {t("aboutUs")}
+                  </Link>
                 </div>
               </div>
             </div>
@@ -338,6 +347,16 @@ export default function Header() {
                 }`}
               >
                 {t("contactUs")}
+              </Link>
+              <Link
+                href="/legal/about-us"
+                className={`border-b-2 pb-2 text-sm font-medium ${
+                  isActive("/legal/about-us")
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-600 hover:border-blue-600 hover:text-blue-600"
+                }`}
+              >
+                {t("aboutUs")}
               </Link>
             </nav>
           </div>

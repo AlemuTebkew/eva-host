@@ -5,8 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { EyeIcon, PencilIcon, LogOutIcon } from "lucide-react";
+import {
+  EyeIcon,
+  PencilIcon,
+  LogOutIcon,
+  UserCircle,
+  Mail,
+  Phone,
+  Calendar,
+  Globe,
+  Shield,
+} from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 import { UserProfile } from "@/types/api";
 import { getUrl } from "@/lib/utils";
@@ -23,6 +35,7 @@ export default function UserProfilePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   // Check token existence
   useEffect(() => {
@@ -60,6 +73,78 @@ export default function UserProfilePage() {
     loadProfile();
   }, []);
 
+  // Update profile handler
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsUpdating(true);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const data = {
+        fullName: formData.get("fullName"),
+        gender: formData.get("gender"),
+        dob: formData.get("dob"),
+        email: formData.get("email"),
+        phoneNumber: formData.get("phone"),
+      };
+
+      const res = await fetch(`${getUrl()}/auth/me/${profile?.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Failed to update profile");
+
+      const { data: updatedProfile } = await res.json();
+      setProfile(updatedProfile);
+      setEditPersonalInfo(false);
+      toast.success("Profile updated successfully");
+    } catch (err: any) {
+      toast.error(err.message || "Failed to update profile");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  // Update password handler
+  const handleUpdatePassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsUpdating(true);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const oldPassword = formData.get("oldPassword");
+      const newPassword = formData.get("newPassword");
+      const confirmPassword = formData.get("confirmPassword");
+
+      if (newPassword !== confirmPassword) {
+        throw new Error("New passwords do not match");
+      }
+
+      const res = await fetch(`${getUrl()}/auth/me/password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ oldPassword, newPassword }),
+      });
+
+      if (!res.ok) throw new Error("Failed to update password");
+
+      toast.success("Password updated successfully");
+      e.currentTarget.reset();
+    } catch (err: any) {
+      toast.error(err.message || "Failed to update password");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   // Logout functionality
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -70,14 +155,14 @@ export default function UserProfilePage() {
   if (loading) {
     return (
       <div className="p-6">
-        <Skeleton className="mb-4" />
-        <Skeleton className="mb-2 h-20" />
-        <Skeleton className="mb-2 h-20" />
-        <Skeleton className="mb-2 h-20" />
-        <Skeleton className="mb-2 h-20" />
+        <Skeleton className="mb-4 h-32 w-full" />
+        <Skeleton className="mb-2 h-20 w-full" />
+        <Skeleton className="mb-2 h-20 w-full" />
+        <Skeleton className="mb-2 h-20 w-full" />
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="p-6 text-center text-red-600">
@@ -85,192 +170,214 @@ export default function UserProfilePage() {
       </div>
     );
   }
+
   if (!profile) {
     return null;
   }
 
   return (
-    <div className="flex min-h-screen flex-col gap-6 bg-gray-50 p-6 lg:flex-row">
-      {/* Sidebar */}
-      <Card className="flex w-full flex-col items-center p-6 text-center shadow-md transition-shadow duration-300 hover:shadow-lg lg:w-72">
-        <div className="relative h-24 w-24 overflow-hidden rounded-full bg-gray-200">
-          <Skeleton className="h-20 w-20" />
-        </div>
-        <h2 className="mt-4 text-lg font-semibold text-gray-800">
-          {profile.fullName}
-        </h2>
-        <div className="mt-4 w-full space-y-2 text-left text-sm">
-          <p className="flex items-center gap-2 text-gray-700">
-            <svg width="16" height="16" fill="currentColor">
-              <path d="M2 2h12v12H2z" />
-            </svg>
-            {profile.email}
-          </p>
-          <p className="flex items-center gap-2 text-gray-700">
-            <svg width="16" height="16" fill="currentColor">
-              <path d="M2 2h12v12H2z" />
-            </svg>
-            {profile.phoneNumber}
-          </p>
-        </div>
-        <div className="mt-6 w-full border-t pt-4">
-          <button
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="min-h-screen bg-gray-50 p-6"
+    >
+      <div className="mx-auto max-w-4xl">
+        {/* Header */}
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="h-16 w-16 overflow-hidden rounded-full bg-gradient-to-br from-blue-100 to-blue-200">
+              <UserCircle className="h-full w-full text-blue-600" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                {profile.fullName}
+              </h1>
+              <p className="text-sm text-gray-600">{profile.email}</p>
+            </div>
+          </div>
+          <Button
             onClick={handleLogout}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm text-white transition hover:bg-red-700"
+            variant="outline"
+            className="flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700"
           >
             <LogOutIcon size={16} />
             Logout
-          </button>
+          </Button>
         </div>
-      </Card>
 
-      {/* Main Content */}
-      <Card className="w-full flex-1 p-6 shadow-md transition-shadow duration-300 hover:shadow-lg">
-        <Tabs defaultValue="profile">
-          <TabsList className="flex flex-wrap">
-            <TabsTrigger value="profile">User Profile</TabsTrigger>
-            <TabsTrigger value="security">Security</TabsTrigger>
-          </TabsList>
-
-          {/* User Profile */}
-          <TabsContent value="profile">
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold">Personal Info</h3>
-              <div
-                onClick={() => setEditPersonalInfo(!editPersonalInfo)}
-                className="flex cursor-pointer items-center gap-1 text-blue-800 hover:underline"
-              >
-                <PencilIcon size={16} />
-                Edit
-              </div>
+        {/* Main Content */}
+        <Card className="overflow-hidden">
+          <Tabs defaultValue="profile" className="w-full">
+            <div className="border-b bg-gray-50/50 px-6">
+              <TabsList className="h-14 w-full justify-start gap-4 bg-transparent">
+                <TabsTrigger
+                  value="profile"
+                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+                >
+                  <UserCircle size={18} />
+                  Profile
+                </TabsTrigger>
+                <TabsTrigger
+                  value="security"
+                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+                >
+                  <Shield size={18} />
+                  Security
+                </TabsTrigger>
+              </TabsList>
             </div>
-            <form className="grid gap-4 md:grid-cols-2">
-              <div>
-                <Label htmlFor="fullName">Full Name *</Label>
-                <Input
-                  id="fullName"
-                  name="fullName"
-                  defaultValue={profile.fullName}
-                  disabled={!editPersonalInfo}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="gender">Gender *</Label>
-                <select
-                  id="gender"
-                  name="gender"
-                  className="w-full rounded border p-2"
-                  defaultValue={profile.gender}
-                  disabled={!editPersonalInfo}
-                  required
+
+            {/* User Profile */}
+            <TabsContent value="profile" className="p-6">
+              <div className="mb-6 flex items-center justify-between">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  Personal Info
+                </h3>
+                <Button
+                  onClick={() => setEditPersonalInfo(!editPersonalInfo)}
+                  variant="outline"
+                  className="flex items-center gap-2"
                 >
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                </select>
-              </div>
-              <div>
-                <Label htmlFor="dob">Date of Birth *</Label>
-                <Input
-                  id="dob"
-                  name="dob"
-                  type="date"
-                  defaultValue={profile.dob?.split("T")[0]}
-                  disabled={!editPersonalInfo}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">Email Address *</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  defaultValue={profile.email}
-                  disabled={!editPersonalInfo}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="phone">Phone Number *</Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  defaultValue={profile.phoneNumber}
-                  disabled={!editPersonalInfo}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="nationality">Nationality *</Label>
-                <select
-                  id="nationality"
-                  name="nationality"
-                  className="w-full rounded border p-2"
-                  defaultValue={profile.nationality}
-                  disabled={!editPersonalInfo}
-                  required
-                >
-                  <option value="Ethiopia">Ethiopia</option>
-                </select>
-              </div>
-              <div className="col-span-full mt-4 text-right">
-                <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
-                  Save Profile
+                  <PencilIcon size={16} />
+                  {editPersonalInfo ? "Cancel" : "Edit"}
                 </Button>
               </div>
-            </form>
-          </TabsContent>
-
-          {/* Security Tab */}
-          <TabsContent value="security">
-            <h3 className="mb-4 text-lg font-semibold">Change Password</h3>
-            <form className="max-w-md space-y-4">
-              {["old", "new", "confirm"].map((field) => (
-                <div key={field}>
-                  <Label htmlFor={`${field}Password`}>
-                    {field === "old"
-                      ? "Old Password *"
-                      : field === "new"
-                        ? "New Password *"
-                        : "Confirm Password *"}
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      id={`${field}Password`}
-                      name={`${field}Password`}
-                      type={
-                        showPassword[field as keyof typeof showPassword]
-                          ? "text"
-                          : "password"
-                      }
-                      className="pr-10"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setShowPassword((prev) => ({
-                          ...prev,
-                          [field as keyof typeof showPassword]:
-                            !prev[field as keyof typeof showPassword],
-                        }))
-                      }
-                      className="absolute right-2 top-1/2 -translate-y-1/2"
-                    >
-                      <EyeIcon size={16} />
-                    </button>
-                  </div>
+              <form
+                onSubmit={handleUpdateProfile}
+                className="grid gap-6 md:grid-cols-2"
+              >
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name *</Label>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    defaultValue={profile.fullName}
+                    disabled={!editPersonalInfo}
+                    required
+                    className="transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
+                  />
                 </div>
-              ))}
-              <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
-                Save Password
-              </Button>
-            </form>
-          </TabsContent>
-        </Tabs>
-      </Card>
-    </div>
+                <div className="space-y-2">
+                  <Label htmlFor="gender">Gender *</Label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-blue-600/20 disabled:cursor-not-allowed disabled:opacity-50"
+                    defaultValue={profile.gender}
+                    disabled={!editPersonalInfo}
+                    required
+                  >
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="dob">Date of Birth *</Label>
+                  <Input
+                    id="dob"
+                    name="dob"
+                    type="date"
+                    defaultValue={profile.dob?.split("T")[0]}
+                    disabled={!editPersonalInfo}
+                    required
+                    className="transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address *</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    defaultValue={profile.email}
+                    disabled={!editPersonalInfo}
+                    required
+                    className="transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    defaultValue={profile.phoneNumber}
+                    disabled={!editPersonalInfo}
+                    required
+                    className="transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
+                  />
+                </div>
+
+                {editPersonalInfo && (
+                  <div className="col-span-full mt-4 flex justify-end">
+                    <Button
+                      type="submit"
+                      className="bg-blue-600 hover:bg-blue-700"
+                      disabled={isUpdating}
+                    >
+                      {isUpdating ? "Saving..." : "Save Changes"}
+                    </Button>
+                  </div>
+                )}
+              </form>
+            </TabsContent>
+
+            {/* Security Tab */}
+            <TabsContent value="security" className="p-6">
+              <h3 className="mb-6 text-xl font-semibold text-gray-900">
+                Change Password
+              </h3>
+              <form
+                onSubmit={handleUpdatePassword}
+                className="max-w-md space-y-4"
+              >
+                {[
+                  { field: "old", label: "Old Password" },
+                  { field: "new", label: "New Password" },
+                  { field: "confirm", label: "Confirm Password" },
+                ].map(({ field, label }) => (
+                  <div key={field} className="space-y-2">
+                    <Label htmlFor={`${field}Password`}>{label} *</Label>
+                    <div className="relative">
+                      <Input
+                        id={`${field}Password`}
+                        name={`${field}Password`}
+                        type={
+                          showPassword[field as keyof typeof showPassword]
+                            ? "text"
+                            : "password"
+                        }
+                        className="pr-10 transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setShowPassword((prev) => ({
+                            ...prev,
+                            [field as keyof typeof showPassword]:
+                              !prev[field as keyof typeof showPassword],
+                          }))
+                        }
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      >
+                        <EyeIcon size={16} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  type="submit"
+                  className="mt-6 bg-blue-600 hover:bg-blue-700"
+                  disabled={isUpdating}
+                >
+                  {isUpdating ? "Updating..." : "Update Password"}
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
+        </Card>
+      </div>
+    </motion.div>
   );
 }

@@ -45,7 +45,8 @@
     "profile": "Profile",
     "becomeSupplier": "Become Supplier",
     "quickLinks": "Quick Links",
-    "helpCenter": "Help Center"
+    "helpCenter": "Help Center",
+    "aboutUs": "About Us"
   },
   "search": {
     "placeholder": "Search for products, suppliers, or services...",
@@ -111,6 +112,140 @@
       "minOrder": "Minimum Order",
       "units": "units",
       "comparePrice": "Compare Price"
+    }
+  },
+  "legal": {
+    "cookiesPolicy": {
+      "title": "Cookies Policy",
+      "sections": {
+        "whatAreCookies": {
+          "title": "What are Cookies?",
+          "content": "Cookies are small text files that are placed on your computer or mobile device when you visit our website. They are widely used to make websites work more efficiently and provide useful information to website owners."
+        },
+        "howWeUseCookies": {
+          "title": "How We Use Cookies",
+          "content": "We use cookies for the following purposes:",
+          "list": [
+            "Essential cookies for website functionality",
+            "Analytics cookies to understand how visitors use our site",
+            "Preference cookies to remember your settings",
+            "Marketing cookies to deliver relevant advertisements"
+          ]
+        },
+        "managingCookies": {
+          "title": "Managing Cookies",
+          "content": "You can control and/or delete cookies as you wish. You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed."
+        }
+      }
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "sections": {
+        "informationWeCollect": {
+          "title": "Information We Collect",
+          "content": "We collect information that you provide directly to us, including:",
+          "list": [
+            "Name and contact information",
+            "Account credentials",
+            "Payment information",
+            "Communication preferences"
+          ]
+        },
+        "howWeUseInformation": {
+          "title": "How We Use Your Information",
+          "content": "We use the information we collect to:",
+          "list": [
+            "Provide and maintain our services",
+            "Process transactions",
+            "Send you updates and marketing communications",
+            "Improve our services"
+          ]
+        },
+        "dataProtection": {
+          "title": "Data Protection",
+          "content": "We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction."
+        }
+      }
+    },
+    "termsOfService": {
+      "title": "Terms of Service",
+      "sections": {
+        "agreementToTerms": {
+          "title": "Agreement to Terms",
+          "content": "By accessing and using EVA ENGINEERING's services, you agree to be bound by these Terms of Service and all applicable laws and regulations."
+        },
+        "userResponsibilities": {
+          "title": "User Responsibilities",
+          "content": "As a user of our platform, you agree to:",
+          "list": [
+            "Provide accurate information",
+            "Maintain the security of your account",
+            "Comply with all applicable laws",
+            "Respect other users' rights"
+          ]
+        },
+        "serviceModifications": {
+          "title": "Service Modifications",
+          "content": "We reserve the right to modify or discontinue our services at any time without notice."
+        }
+      }
+    },
+    "aboutUs": {
+      "title": "About EVA ENGINEERING",
+      "sections": {
+        "mission": {
+          "title": "Our Mission",
+          "content": "EVA ENGINEERING is dedicated to revolutionizing the construction and building materials industry by providing a comprehensive marketplace that connects suppliers with customers efficiently and effectively."
+        },
+        "whatWeDo": {
+          "title": "What We Do",
+          "content": "We provide a platform that:",
+          "list": [
+            "Connects construction professionals with quality suppliers",
+            "Facilitates easy comparison of building materials",
+            "Ensures transparent pricing and quality standards",
+            "Streamlines the procurement process"
+          ]
+        },
+        "values": {
+          "title": "Our Values",
+          "list": [
+            "Quality and reliability",
+            "Customer satisfaction",
+            "Innovation and efficiency",
+            "Transparency and trust"
+          ]
+        }
+      }
+    }
+  },
+  "services": {
+    "comingSoon": "Coming Soon",
+    "title": "Our Services Are Getting Better",
+    "description": "We're working hard to bring you an enhanced service experience. Stay tuned for exciting updates and new features that will transform how you manage your construction projects.",
+    "features": {
+      "1": {
+        "icon": "🚀",
+        "title": "Enhanced Features",
+        "description": "New tools and capabilities to streamline your workflow"
+      },
+      "2": {
+        "icon": "💡",
+        "title": "Smart Solutions",
+        "description": "Intelligent features to help you make better decisions"
+      },
+      "3": {
+        "icon": "🛠️",
+        "title": "Better Integration",
+        "description": "Seamless connection with your existing tools and systems"
+      }
+    },
+    "notifyMe": "Notify Me When Ready",
+    "exploreProducts": "Explore Products",
+    "newsletter": {
+      "title": "Get notified when we launch",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
     }
   }
 }

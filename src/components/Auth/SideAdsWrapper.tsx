@@ -21,17 +21,17 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
       {style === "1" && (
         <div className="flex flex-col justify-between md:flex-row md:flex-nowrap ">
           {/* Left Ad - Vertically Centered */}
-          <div className="hidden -translate-y-1/2 md:block">
+          <div className="hidden p-4 md:block">
             <Image
               src="/images/left-ads.png"
               alt="Left Ad"
               width={150}
               height={2000}
-              className="min-h-[1500px] object-cover"
+              className="min-h-[500px] object-cover"
             />
           </div>
 
-          <div className="md:hidden ">
+          <div className="md:hidden p-2">
             <Image
               src="/images/left-ads.png"
               alt="Left Ad"
@@ -46,7 +46,7 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
           <div className="flex w-full flex-col justify-between">
             <div className="z-10 mx-auto h-full w-full ">{children}</div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center p-5">
               <Image
                 src="/images/bottom-ads.png"
                 alt="Right Ad"
@@ -58,13 +58,13 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
           </div>
 
           {/* Right Ad - Vertically Centered */}
-          <div className=" right-0 top-1/2 hidden -translate-y-1/2 md:block">
+          <div className="  hidden p-5 md:block">
             <Image
               src="/images/right-ads.png"
               alt="Right Ad"
               width={150}
               height={500}
-              className="min-h-[1500px] object-cover"
+              className="min-h-[500px] object-cover"
             />
           </div>
         </div>
@@ -73,7 +73,7 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
       {style === "2" && (
         <div className="">
           {/* Left Ad - Vertically Centered */}
-          <div className="fixed left-0 top-1/2 hidden -translate-y-1/2 md:block">
+          <div className="fixed left-5 top-1/2 hidden -translate-y-1/2 md:block">
             <Image
               src="/images/left-ads.png"
               alt="Left Ad"
@@ -109,7 +109,7 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
           </div>
 
           {/* Right Ad - Vertically Centered */}
-          <div className="fixed right-0 top-1/2 hidden -translate-y-1/2 md:block">
+          <div className="fixed right-5 top-1/2 hidden -translate-y-1/2 md:block">
             <Image
               src="/images/right-ads.png"
               alt="Right Ad"
