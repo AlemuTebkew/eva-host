@@ -12,21 +12,29 @@ import {
   TwitterIcon,
 } from "lucide-react";
 import SearchPage from "../Search/SearchPage";
-import { useGetSupplierDetailQuery } from "@/store/app-api";
+import {
+  useFilterRelatedSuppliersQuery,
+  useGetSupplierDetailQuery,
+} from "@/store/app-api";
 import SupplierListSkeleton from "../Skeleton/SupplierListSkeleton";
 import { Suspense } from "react";
+import SupplierCard from "../supplier-card";
+import RateSupplier from "../rate-supplier";
+import SupplierRatings from "../supplier-ratings";
 
 const SupplierDetail = ({ params: { slug } }: { params: { slug: string } }) => {
   const { data, isLoading, isSuccess } = useGetSupplierDetailQuery(slug);
 
+  const { data: suppliers = [], isLoading: isSuppliersLoading } =
+    useFilterRelatedSuppliersQuery(slug);
   return (
     <div className="border-t bg-white">
       {isLoading && <SupplierListSkeleton />}
       {isSuccess && data && (
         <div className="mx-auto max-w-c-1235 space-y-6 bg-white p-6">
           {/* Supplier Basic Information */}
-          <div className="flex justify-between gap-4 flex-wrap md:flex-nowrap">
-            <div className="w-full md:w-auto p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-800 hover:bg-gray-50 hover:scale-105">
+          <div className="flex flex-wrap justify-between gap-4 md:flex-nowrap">
+            <div className="w-full rounded-lg border border-blue-800 bg-white p-6 shadow-md transition-shadow duration-300 hover:scale-105 hover:bg-gray-50 hover:shadow-lg md:w-auto">
               {/* Supplier Name and Rating */}
               <div className="flex flex-col gap-4 lg:gap-2">
                 <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
@@ -43,7 +51,7 @@ const SupplierDetail = ({ params: { slug } }: { params: { slug: string } }) => {
 
               {/* Location Details */}
               <div className="mt-4 flex flex-col gap-4 text-base text-gray-700">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                   <div className="flex flex-col items-start">
                     <p className="font-medium text-gray-500">Region</p>
                     <p className="text-lg font-semibold">
@@ -67,7 +75,7 @@ const SupplierDetail = ({ params: { slug } }: { params: { slug: string } }) => {
 
               {/* Bio Section */}
               {data.bio && (
-                <p className="mt-6 text-gray-700 border-t pt-4">{data.bio}</p>
+                <p className="mt-6 border-t pt-4 text-gray-700">{data.bio}</p>
               )}
 
               {/* Contact Information */}
@@ -77,7 +85,7 @@ const SupplierDetail = ({ params: { slug } }: { params: { slug: string } }) => {
                     <p className="font-medium text-gray-500">Contact:</p>
                     <a
                       href={`tel:${data.phoneNumber}`}
-                      className="text-blue-600 hover:underline hover:text-blue-800 transition-colors"
+                      className="text-blue-600 transition-colors hover:text-blue-800 hover:underline"
                     >
                       {data.phoneNumber}
                     </a>
@@ -88,7 +96,7 @@ const SupplierDetail = ({ params: { slug } }: { params: { slug: string } }) => {
                     <p className="font-medium text-gray-500">Email:</p>
                     <a
                       href={`mailto:${data.email}`}
-                      className="text-blue-600 hover:underline hover:text-blue-800 transition-colors"
+                      className="text-blue-600 transition-colors hover:text-blue-800 hover:underline"
                     >
                       {data.email}
                     </a>
@@ -117,27 +125,39 @@ const SupplierDetail = ({ params: { slug } }: { params: { slug: string } }) => {
             <h3 className="text-xl font-semibold text-gray-800">
               Supplier Products
             </h3>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div></div>}>
               <SearchPage
                 hideVendor={true}
                 bgWite={true}
                 supplierId={data.id}
               />
             </Suspense>
+          </div>
 
-            {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {supplierData.products.map((product) => (
-                <div key={product.id} className="border p-4 rounded-lg space-y-2">
-                  <img
-                    src={product.imageUrl}
-                    alt={product.name}
-                    className="w-full h-32 object-cover rounded-md"
-                  />
-                  <h4 className="text-sm font-semibold">{product.name}</h4>
-                  <p className="text-sm text-gray-600">{product.price}</p>
-                </div>
-              ))}
-            </div> */}
+          {/* related vendors */}
+
+          {isSuppliersLoading && <SupplierListSkeleton />}
+          {!isSuppliersLoading && suppliers.length > 0 && (
+            <div className="mt-6 space-y-6">
+              <h3 className="text-xl font-semibold text-gray-800">
+                Related Suppliers
+              </h3>
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {suppliers.map((supplier) => (
+                  <SupplierCard key={supplier.id} supplier={supplier} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Rate Supplier section */}
+
+          <div className="w-full">
+            <RateSupplier supplierId={data.id} />
+          </div>
+
+          <div>
+            <SupplierRatings supplier={data} />
           </div>
         </div>
       )}

@@ -6,8 +6,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const appApi = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://16.171.71.23:5007" }), // Change this to your API
-  // baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:5007" }), // Change this to your API
+  // baseQuery: fetchBaseQuery({ baseUrl: "http://16.171.71.23:5007" }), // Change this to your API
+  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:5007" }), // Change this to your API
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
       query: () => ({
@@ -81,6 +81,15 @@ export const appApi = createApi({
         return response.data;
       },
     }),
+    filterRelatedSuppliers: builder.query<Supplier[], string>({
+      query: (id) => ({
+        url: `/user/related_vendors/${id}`,
+        method: "GET",
+      }),
+      transformResponse: (response: { status: boolean; message: string; data: Supplier[] }) => {
+        return response.data;
+      }
+    }),
   }),
 });
 
@@ -91,5 +100,6 @@ export const {
   useLazyGetSearchSuggestionQuery,
   useFilterSupplierQuery,
   useGetSupplierDetailQuery,
-  useGetRecommendedProductsQuery
+  useGetRecommendedProductsQuery,
+  useFilterRelatedSuppliersQuery
 } = appApi;

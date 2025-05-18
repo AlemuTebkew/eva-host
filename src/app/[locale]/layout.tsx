@@ -5,8 +5,8 @@ import ClientProviders from "./client-provider";
 import { Inter } from "next/font/google";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import {routing} from '@/i18n/routing';
-import '@/app/globals.css'; // 👈 this brings in Tailwind styles
+import { routing } from "@/i18n/routing";
+import "@/app/globals.css"; // 👈 this brings in Tailwind styles
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,17 +16,17 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default async function RootLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: string }>;
 }) {
   // Ensure that the incoming `locale` is valid
-  const {locale} = await params;
+  const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
- 
+
   return (
     <html
       suppressHydrationWarning={true}
@@ -41,7 +41,11 @@ export default async function RootLayout({
               <Header />
             </Suspense>
 
-            {children}
+            <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">Loading...</div>}>
+              <div className="min-h-screen">
+              {children}
+              </div>
+            </Suspense>
 
             <Suspense fallback={<div>Loading...</div>}>
               <Footer />

@@ -108,10 +108,13 @@ export default function ProductCard({
         <div className="mb-4">
           <div className="text-lg font-bold text-gray-900">
             ETB{" "}
-            {!priceRange
-              ? price.toLocaleString()
-              : priceRange.min.toLocaleString()}{" "}
-            - {priceRange.max ? priceRange.max.toLocaleString() : ""}
+            {priceRange &&
+            typeof priceRange.min === "number" &&
+            typeof priceRange.max === "number"
+              ? `${priceRange.min.toLocaleString()} - ${priceRange.max.toLocaleString()}`
+              : typeof price === "number"
+                ? price.toLocaleString()
+                : ""}
           </div>
           {isPromoted && (
             <div className="mt-1 text-xs text-orange-500">
