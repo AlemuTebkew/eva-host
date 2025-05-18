@@ -9,18 +9,20 @@ import { useFilterSupplierQuery } from "@/store/app-api";
 import GenericPagination from "@/components/Pagination";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import AddressFilter from "@/components/AddressFilter";
+
 function SupplierListSkeleton() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          className="animate-pulse rounded-lg bg-white p-4 shadow flex flex-col gap-4"
+          className="flex animate-pulse flex-col gap-4 rounded-lg bg-white p-4 shadow"
         >
-          <div className="h-24 bg-gray-200 rounded w-full" />
-          <div className="h-4 bg-gray-200 rounded w-3/4" />
-          <div className="h-4 bg-gray-100 rounded w-1/2" />
-          <div className="h-3 bg-gray-100 rounded w-1/3" />
+          <div className="h-24 w-full rounded bg-gray-200" />
+          <div className="h-4 w-3/4 rounded bg-gray-200" />
+          <div className="h-4 w-1/2 rounded bg-gray-100" />
+          <div className="h-3 w-1/3 rounded bg-gray-100" />
         </div>
       ))}
     </div>
@@ -32,17 +34,19 @@ export default function SuppliersPage() {
   const [params, setParams] = useState({
     page: 1,
     limit: 10,
-    search: "",   // initial empty search
+    search: "", // initial empty search
   });
 
-  // this hook will refetch any time params changes
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useFilterSupplierQuery({ params });
+  const [locationFilters, setLocationFilters] = useState({
+    region: "",
+    city: "",
+    subCity: "",
+    woreda: "",
+  });
+  // this hook will refetch any time params or locationFilters changes
+  const { data, isLoading, isError, error, isSuccess } = useFilterSupplierQuery(
+    { params: { ...params, ...locationFilters } },
+  );
 
   // safe fallback for pagination meta
   const meta = data?.meta ?? { page: 1, total: 0, totalPages: 1 };
@@ -52,8 +56,8 @@ export default function SuppliersPage() {
     e.preventDefault();
     setParams((prev) => ({
       ...prev,
-      page: 1,                      // reset to first page
-      search: searchTerm.trim() || "",    // send trimmed term, fallback to empty string
+      page: 1, // reset to first page
+      search: searchTerm.trim() || "", // send trimmed term, fallback to empty string
     }));
   }
 
@@ -64,54 +68,49 @@ export default function SuppliersPage() {
 
   return (
     <>
-       {/* Hero Section */}
-       <section className="relative bg-blue-900 text-white">
-         <div className="absolute inset-0 z-0">
-           <Image
-             src="/images/hero/bg-new.jpg"
-             alt={t("heroBackgroundAlt")} // Translate the alt text
-             fill
-             className="object-cover opacity-30"
-             priority
-             sizes="100vw"
-           />
-         </div>
-         <div className="container relative z-10 mx-auto px-4 py-12 md:py-24">
-           <div className="max-w-2xl">
-             <h1 className="mb-4 text-3xl font-bold md:text-5xl">
-               {t("heroTitle")}
-             </h1>
-             <p className="mb-6 text-lg">{t("heroDescription")}</p>
-             <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-               <Link href="/search">
-                 <Button className="bg-blue-800 hover:bg-orange-500">
-                   {t("comparePriceButton")}
-                 </Button>
-               </Link>
-               <Link href="/suppliers">
-                 <Button className="bg-orange-500 hover:bg-blue-800">
-                   {t("browseSuppliersButton")}
-                 </Button>
-               </Link>
-             </div>
-           </div>
-         </div>
-       </section>
+      {/* Hero Section */}
+      <section className="relative bg-blue-900 text-white">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/hero/bg-new.jpg"
+            alt={t("heroBackgroundAlt")} // Translate the alt text
+            fill
+            className="object-cover opacity-30"
+            priority
+            sizes="100vw"
+          />
+        </div>
+        <div className="container relative z-10 mx-auto px-4 py-12 md:py-18">
+          <div className="max-w-2xl">
+            <h1 className="mb-4 text-3xl font-bold md:text-5xl">
+              {t("heroTitle")}
+            </h1>
+            <p className="mb-6 text-lg">{t("heroDescription")}</p>
+            <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
+              <Link href="/search">
+                <Button className="bg-blue-800 hover:bg-orange-500">
+                  {t("comparePriceButton")}
+                </Button>
+              </Link>
+              <Link href="/suppliers">
+                <Button className="bg-orange-500 hover:bg-blue-800">
+                  {t("browseSuppliersButton")}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Suppliers Section */}
-      <section className="bg-gray-50 py-12">
+      <section className="bg-gray-50 pb-12 pt-2">
         <div className="container mx-auto px-4">
           <h2 className="mb-6 text-center text-2xl font-bold md:text-3xl">
             Suppliers
           </h2>
-          <p className="mb-8 text-center">
-            Search suppliers by material or city
-          </p>
+       
 
           {/* — Search Form — */}
-          <form
-            onSubmit={handleSearch}
-            className="mx-auto mb-12 max-w-md"
-          >
+          <form onSubmit={handleSearch} className="mx-auto mb-12 max-w-md">
             <div className="flex">
               <Input
                 type="text"
@@ -135,32 +134,42 @@ export default function SuppliersPage() {
           {isError && (
             <p className="text-center text-red-600">
               Error:{" "}
-              {error instanceof Error 
-                ? error.message 
+              {error instanceof Error
+                ? error.message
                 : "Failed to load suppliers."}
             </p>
           )}
           {isSuccess && data?.data.length === 0 && (
             <p className="text-center text-gray-500">
-              No suppliers found for “{searchTerm}.”
+              No suppliers found 
             </p>
           )}
 
-          {/* — Results — */}
-          {isSuccess && data?.data.length > 0 && (
-            <SuppliersList suppliers={data.data} />
-          )}
-
-          {/* — Pagination — */}
-          {isSuccess && meta.totalPages > 1 && (
-            <div className="mt-8 flex justify-center">
-              <GenericPagination
-                currentPage={meta.page}
-                totalPages={meta.totalPages}
-                onPageChange={onPageChange}
-              />
+          <div className="flex justify-between gap-10">
+            <div className="min-w-[200px]">
+            <AddressFilter
+              onChange={(location) => setLocationFilters(location)}
+            />
             </div>
-          )}
+
+            <div className="flex-1">
+              {/* — Results — */}
+              {isSuccess && data?.data.length > 0 && (
+                <SuppliersList suppliers={data.data} />
+              )}
+
+              {/* — Pagination — */}
+              {isSuccess && meta.totalPages > 1 && (
+                <div className="mt-8 flex justify-center">
+                  <GenericPagination
+                    currentPage={meta.page}
+                    totalPages={meta.totalPages}
+                    onPageChange={onPageChange}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 

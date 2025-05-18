@@ -80,7 +80,7 @@ export default function Home() {
             sizes="100vw"
           />
         </div>
-        <div className="container relative z-10 mx-auto px-4 py-12 md:py-24">
+        <div className="container relative z-10 mx-auto px-4 py-12 md:py-18">
           <div className="max-w-2xl">
             <h1 className="mb-4 text-3xl font-bold md:text-5xl">
               {t("heroTitle")}

@@ -54,7 +54,7 @@ const SideAdsWrapper = ({ children }: SideAdsWrapperProps) => {
       setIndices((prev) => {
         const next: Record<AdSlot, number> = { ...prev };
 
-        ["left", "right", "bottom"].forEach((slot) => {
+        (["left", "right", "bottom"] as AdSlot[]).forEach((slot) => {
           const count = ads.length;
           if (count > 1) {
             let newIndex = Math.floor(Math.random() * count);

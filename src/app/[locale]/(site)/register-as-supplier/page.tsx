@@ -1,3 +1,4 @@
+'use client";'
 import SupplierRegister from "@/components/Auth/SupplierRegistraion"
 import SideAdsWrapper from "@/components/Auth/SideAdsWrapper"
 const SupplierRegisterPage = () => {

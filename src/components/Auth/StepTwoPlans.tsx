@@ -55,8 +55,10 @@ export default function StepTwo({
   }, [billingCycle, subscriptionPlans]);
 
   const handleSubmit = async () => {
+    // Remove confirmPassword from payload if present
+    const { confirmPassword, ...restFormData } = formData;
     const payload = {
-      ...formData,
+      ...restFormData,
       subscriptionPlanId: selectedPlanId,
       billingCycle,
       paymentMethod,
@@ -271,7 +273,7 @@ export default function StepTwo({
         actionButton={
           dialogState.type === "success"
             ? {
-                label: "Close",
+                label: "OK",
                 onClick: () =>
                   setDialogState((prev) => ({ ...prev, isOpen: false })),
               }
