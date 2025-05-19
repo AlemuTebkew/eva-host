@@ -9,7 +9,7 @@ COPY package*.json ./
 
 # Install project dependencies
 RUN npm install --force
-
+ 
 # Install ts-node globally for running TypeScript code
 RUN npm install -g ts-node
 
