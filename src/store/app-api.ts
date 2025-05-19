@@ -82,6 +82,15 @@ export const appApi = createApi({
         return response.data;
       },
     }),
+    filterRelatedSuppliers: builder.query<Supplier[], string>({
+      query: (id) => ({
+        url: `/user/related_vendors/${id}`,
+        method: "GET",
+      }),
+      transformResponse: (response: { status: boolean; message: string; data: Supplier[] }) => {
+        return response.data;
+      }
+    }),
   }),
 });
 
@@ -92,5 +101,6 @@ export const {
   useLazyGetSearchSuggestionQuery,
   useFilterSupplierQuery,
   useGetSupplierDetailQuery,
-  useGetRecommendedProductsQuery
+  useGetRecommendedProductsQuery,
+  useFilterRelatedSuppliersQuery
 } = appApi;

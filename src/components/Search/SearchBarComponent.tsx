@@ -28,12 +28,15 @@ export default function SearchBar() {
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setIsMobileSearchOpen(false);
+    } else {
+      router.push(`/search`);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSearch(e);
+      setIsInputFocused(false);
     }
   };
 
@@ -79,7 +82,10 @@ export default function SearchBar() {
             onBlur={() => setTimeout(() => setIsInputFocused(false), 150)}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              GetSuggestions({ params: { keyword: e.target.value } });
+
+              if (e.target.value.length > 0) {
+                GetSuggestions({ params: { keyword: e.target.value } });
+              }
             }}
             onKeyDown={handleKeyDown}
             placeholder={t("placeholder")} // Use the translated placeholder
@@ -130,7 +136,7 @@ export default function SearchBar() {
 
         <Button
           onClick={handleSearch}
-          className="absolute right-0 top-0 h-full w-[100px] rounded-l-none bg-blue-700 hover:bg-blue-00"
+          className="hover:bg-blue-00 absolute right-0 top-0 h-full w-[100px] rounded-l-none bg-blue-700"
           size="icon"
         >
           <Search className="h-4 w-4" />

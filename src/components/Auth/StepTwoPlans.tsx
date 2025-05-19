@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { register } from "module";
 import { registerSupplier, SubscriptionPlan } from "@/lib/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,8 +55,10 @@ export default function StepTwo({
   }, [billingCycle, subscriptionPlans]);
 
   const handleSubmit = async () => {
+    // Remove confirmPassword from payload if present
+    const { confirmPassword, ...restFormData } = formData;
     const payload = {
-      ...formData,
+      ...restFormData,
       subscriptionPlanId: selectedPlanId,
       billingCycle,
       paymentMethod,
@@ -272,7 +273,7 @@ export default function StepTwo({
         actionButton={
           dialogState.type === "success"
             ? {
-                label: "Close",
+                label: "OK",
                 onClick: () =>
                   setDialogState((prev) => ({ ...prev, isOpen: false })),
               }

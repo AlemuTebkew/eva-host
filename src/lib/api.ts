@@ -2,7 +2,7 @@ import { Category } from "@/types/category";
 import { Supplier } from "@/types/supplier";
 import { Product } from "@/types/product";
 import { Testimonial } from "@/types/testimonial";
-import { ApiResponse, UserProfile } from "@/types/api";
+import { ApiResponse, SupplierRating, UserProfile } from "@/types/api";
 
 // const API_URL = "http://127.0.0.1:5007/user";
 // const BASE_URL = "http://127.0.0.1:5007";
@@ -251,7 +251,7 @@ export async function registerUser(
 export async function loginUser(data: {
   phoneNumber: string;
   password: string;
-}): Promise<ApiResponse<{ token: string }>> {
+}): Promise<ApiResponse<{ token: string; customer: any }>> {
   try {
     console.log("Logging in user with data:", data);
     const response = await fetch(`${API_URL}/auth/login`, {
@@ -374,4 +374,41 @@ export async function getRecommendedProducts(
   return fetchApi<ApiResponse<Product[]>>(
     `/products/${productId}/recommendations`,
   );
+}
+
+// rate supplier
+export async function rateSupplier(
+  supplierId: string,
+  rating: number,
+  comment: string,
+  userId: string,
+): Promise<{ message: string; status: boolean }> {
+  try {
+    const response = await fetch(`${API_URL}/rate_vendor`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ vendorId: supplierId, rating, comment, userId }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw errorData;
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error(`Error rating supplier:`, error);
+    throw error;
+  }
+}
+// fetch supplier ratings
+export async function getSupplierRatings(
+  supplierId: string,
+): Promise<ApiResponse<SupplierRating[]>> {
+  return fetchApi<
+    ApiResponse<SupplierRating[]>
+  >(`/vendor_ratings/${supplierId}`);
 }

@@ -73,6 +73,7 @@ export default function Login() {
       });
       const responseData = response?.data;
       localStorage.setItem("token", responseData?.token);
+      localStorage.setItem("user",JSON.stringify(responseData?.customer))
       setDialogState({
         isOpen: true,
         type: "success",

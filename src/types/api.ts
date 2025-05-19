@@ -21,3 +21,15 @@ export interface UserProfile {
   nationality: string;
 
 }
+
+export type SupplierRating = {
+  id: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  customer: {
+    id: string;
+    fullName: string;
+    email: string;
+  };
+};

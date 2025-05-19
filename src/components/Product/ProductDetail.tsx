@@ -10,7 +10,6 @@ interface ProductDetailProps {
   product: ProductDetails;
 }
 
-
 const ProductDetail = ({ product }: ProductDetailProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -18,7 +17,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
     useGetRecommendedProductsQuery(product.id);
 
   return (
-    <div className="flex flex-col gap-10 mx-0">
+    <div className="mx-0 flex flex-col gap-10">
       <div className="mx-auto flex w-full flex-col gap-6 lg:flex-row lg:p-4">
         {/* Image section */}
         <div className="flex flex-col-reverse gap-4">
@@ -61,7 +60,10 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
           {product.priceTiers && product.priceTiers.length > 0 ? (
             <div className="flex flex-wrap gap-8">
               {product.priceTiers.map((priceTier, index) => (
-                <div className="flex flex-col gap-1 bg-gray-200 border rounded-md p-3" key={index}>
+                <div
+                  className="flex flex-col gap-1 rounded-md border bg-gray-200 p-3"
+                  key={index}
+                >
                   <p className="font-normal">{`${priceTier.minQty} ${product.unit}`}</p>
                   <p className="text-2xl font-semibold">{`ETB ${priceTier.price}`}</p>
                 </div>
@@ -104,7 +106,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
             >
               {product.vendor.name}
             </span>
-            <button className="self-end justify-self-end rounded bg-primary md:px-2 py-1 text-white">
+            <button className="self-end justify-self-end rounded bg-primary py-1 text-white md:px-2">
               Contact Supplier
             </button>
           </Link>
@@ -112,7 +114,17 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
           {product.otherVendors?.length > 0 && (
             <div className="mt-8">
               <h2 className="mb-3 text-lg font-semibold">Other Suppliers</h2>
-              <div className="flex flex-wrap gap-4">
+              <div
+                className={`flex gap-4 ${
+                  product.otherVendors.length > 4
+                    ? "max-h-96 flex-col overflow-y-auto"
+                    : "flex-wrap"
+                }`}
+                style={{
+                  minHeight:
+                    product.otherVendors.length > 4 ? "16rem" : undefined,
+                }}
+              >
                 {product.otherVendors.map((otherVendor, index) => (
                   <Link
                     href={`/products/${otherVendor.id}`}
@@ -152,10 +164,13 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
         )}
       </div>
 
-    {/* product description */}
+      {/* product description */}
       <div>
-      <h2 className="mb-3 text-lg font-semibold">Descriptions</h2>
-      {product.description}
+        <h2 className="mb-3 text-lg font-semibold">Descriptions</h2>
+        <div
+          className="prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: product.description || "" }}
+        />
       </div>
     </div>
   );

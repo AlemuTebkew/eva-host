@@ -1,9 +1,14 @@
+import SideAdsWrapper from "@/components/Auth/SideAdsWrapper";
 import Footer from "@/components/Footer1";
 import Navbar from "@/components/Navigation";
 import SupplierDetail from "@/components/Suppliers/SupplierDetail";
 import { Suspense } from "react";
 
-export default async function SupplierDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function SupplierDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   return (
@@ -11,12 +16,12 @@ export default async function SupplierDetailPage({ params }: { params: Promise<{
       {/* <Navbar /> */}
       <Suspense
         fallback={
-          <div className="flex h-screen items-center justify-center">
-            Loading...
-          </div>
+          <div className="flex h-screen items-center justify-center"></div>
         }
       >
-        <SupplierDetail params={{ slug }} />
+        <SideAdsWrapper>
+          <SupplierDetail params={{ slug }} />
+        </SideAdsWrapper>
       </Suspense>
       {/* You can also show their products list here */}
       {/* <Footer/> */}

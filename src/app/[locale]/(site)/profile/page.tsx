@@ -1,3 +1,4 @@
+'use client'
 import ProfileComponent from "@/components/Auth/Profile";
 import SideAdsWrapper from "@/components/Auth/SideAdsWrapper";
 

@@ -12,21 +12,18 @@ export default function SupplierCard({ supplier }: { supplier: Supplier }) {
         <h3 className="text-base font-semibold sm:text-lg">
           {supplier.companyName}
         </h3>
-        {/* <div className="mt-1 flex items-center text-blue-600 sm:mt-0">
-          <CheckCircle className="mr-1 h-3 w-3 sm:h-4 sm:w-4" />
-          <span className="text-xs">Promoted</span>
-        </div> */}
+       
       </div>
       <p>{supplier?.categories?.map((cat) => cat.name).join(", ")}</p>
       <div className="mb-3 text-xs text-gray-600 sm:mb-4 sm:text-sm">
         {supplier.region?.name}, {supplier.city?.name}, {supplier.subCity?.name}
       </div>
-      <div className="m-2 p-3">
+      <div className="my-2 py-3">
         <Button className="h-9 w-full bg-orange-500 text-sm hover:bg-orange-600 ">
           <Link href={`/suppliers/${supplier.id}`}> Contact Supplier</Link>
         </Button>
       </div>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-0">
         {/* <div className="mt-3 sm:mt-4 flex flex-wrap gap-1 sm:gap-2"> */}
         {supplier.categories?.map((cat) => (
           <div

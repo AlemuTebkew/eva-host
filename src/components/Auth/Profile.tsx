@@ -22,6 +22,8 @@ import { motion } from "framer-motion";
 
 import { UserProfile } from "@/types/api";
 import { getUrl } from "@/lib/utils";
+import { StatusDialog } from "@/components/ui/status-dialog";
+import { set } from "react-hook-form";
 
 export default function UserProfilePage() {
   const [showPassword, setShowPassword] = useState({
@@ -36,6 +38,17 @@ export default function UserProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [dialog, setDialog] = useState<{
+    isOpen: boolean;
+    type: "success" | "error";
+    title: string;
+    message: string;
+  }>({
+    isOpen: false,
+    type: "success",
+    title: "",
+    message: "",
+  });
 
   // Check token existence
   useEffect(() => {
@@ -88,7 +101,7 @@ export default function UserProfilePage() {
         phoneNumber: formData.get("phone"),
       };
 
-      const res = await fetch(`${getUrl()}/auth/me/${profile?.id}`, {
+      const res = await fetch(`${getUrl()}/auth/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -97,14 +110,27 @@ export default function UserProfilePage() {
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) throw new Error("Failed to update profile");
+      if (!res.ok) throw await res.json();
 
       const { data: updatedProfile } = await res.json();
       setProfile(updatedProfile);
       setEditPersonalInfo(false);
-      toast.success("Profile updated successfully");
+      // On success
+      setDialog({
+        isOpen: true,
+        type: "success",
+        title: "Success",
+        message: "Profile updated successfully",
+      });
     } catch (err: any) {
-      toast.error(err.message || "Failed to update profile");
+      console.error("Error updating profile:", err);
+      // On error
+      setDialog({
+        isOpen: true,
+        type: "error",
+        title: "Error",
+        message: err?.message || "Failed to update profile",
+      });
     } finally {
       setIsUpdating(false);
     }
@@ -134,12 +160,22 @@ export default function UserProfilePage() {
         body: JSON.stringify({ oldPassword, newPassword }),
       });
 
-      if (!res.ok) throw new Error("Failed to update password");
+      if (!res.ok) throw await res.json();
 
-      toast.success("Password updated successfully");
-      e.currentTarget.reset();
+      setDialog({
+        isOpen: true,
+        type: "success",
+        title: "Success",
+        message: "Password updated successfully",
+      });
+      e.currentTarget?.reset();
     } catch (err: any) {
-      toast.error(err.message || "Failed to update password");
+      setDialog({
+        isOpen: true,
+        type: "error",
+        title: "Error",
+        message: err?.message || "Failed to update password",
+      });
     } finally {
       setIsUpdating(false);
     }
@@ -186,7 +222,7 @@ export default function UserProfilePage() {
         <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="h-16 w-16 overflow-hidden rounded-full bg-gradient-to-br from-blue-100 to-blue-200">
-              <UserCircle className="h-full w-full text-blue-600" />
+              <UserCircle className="h-full w-full text-blue-800" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -212,14 +248,14 @@ export default function UserProfilePage() {
               <TabsList className="h-14 w-full justify-start gap-4 bg-transparent">
                 <TabsTrigger
                   value="profile"
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-800 data-[state=active]:shadow-sm"
                 >
                   <UserCircle size={18} />
                   Profile
                 </TabsTrigger>
                 <TabsTrigger
                   value="security"
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-800 data-[state=active]:shadow-sm"
                 >
                   <Shield size={18} />
                   Security
@@ -263,10 +299,13 @@ export default function UserProfilePage() {
                     id="gender"
                     name="gender"
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-blue-600/20 disabled:cursor-not-allowed disabled:opacity-50"
-                    defaultValue={profile.gender}
+                    defaultValue={profile.gender || ""}
                     disabled={!editPersonalInfo}
                     required
                   >
+                    <option value="" disabled>
+                      Select Gender
+                    </option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                   </select>
@@ -284,14 +323,13 @@ export default function UserProfilePage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address *</Label>
+                  <Label htmlFor="email">Email Address </Label>
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     defaultValue={profile.email}
                     disabled={!editPersonalInfo}
-                    required
                     className="transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
                   />
                 </div>
@@ -312,7 +350,7 @@ export default function UserProfilePage() {
                   <div className="col-span-full mt-4 flex justify-end">
                     <Button
                       type="submit"
-                      className="bg-blue-600 hover:bg-blue-700"
+                      className="bg-blue-800 hover:bg-blue-700"
                       disabled={isUpdating}
                     >
                       {isUpdating ? "Saving..." : "Save Changes"}
@@ -368,7 +406,7 @@ export default function UserProfilePage() {
                 ))}
                 <Button
                   type="submit"
-                  className="mt-6 bg-blue-600 hover:bg-blue-700"
+                  className="mt-6 bg-blue-800 hover:bg-blue-700"
                   disabled={isUpdating}
                 >
                   {isUpdating ? "Updating..." : "Update Password"}
@@ -377,6 +415,14 @@ export default function UserProfilePage() {
             </TabsContent>
           </Tabs>
         </Card>
+
+        <StatusDialog
+          isOpen={dialog.isOpen}
+          onClose={() => setDialog((d) => ({ ...d, isOpen: false }))}
+          title={dialog.title}
+          message={dialog.message}
+          type={dialog.type}
+        />
       </div>
     </motion.div>
   );

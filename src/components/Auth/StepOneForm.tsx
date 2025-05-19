@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { PhoneInput } from "@/components/ui/phone-input";
 import RegionSelector from "./AddressSelector";
 import { FileUploader } from "./FileUploader";
 import { MapPickerModal } from "./MapPickerModal";
 import { Card } from "@/components/ui/card";
+import { Eye, EyeOff } from "lucide-react";
 
 export const Step1 = () => {
   const {
@@ -20,6 +20,8 @@ export const Step1 = () => {
     formState: { errors, isDirty },
   } = useFormContext();
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const latitude = watch("address.latitude");
   const longitude = watch("address.longitude");
@@ -34,7 +36,7 @@ export const Step1 = () => {
         <div className="space-y-5">
           <FormItem>
             <FormLabel className="text-sm font-medium text-gray-700">
-              First Name
+              First Name <span className="text-red-500">*</span>
             </FormLabel>
             <Input
               {...register("firstName", {
@@ -51,7 +53,7 @@ export const Step1 = () => {
 
           <FormItem>
             <FormLabel className="text-sm font-medium text-gray-700">
-              Last Name
+              Last Name <span className="text-red-500">*</span>
             </FormLabel>
             <Input
               {...register("lastName", {
@@ -68,7 +70,7 @@ export const Step1 = () => {
 
           <FormItem>
             <FormLabel className="text-sm font-medium text-gray-700">
-              Email
+              Email <span className="text-red-500">*</span>
             </FormLabel>
             <Input
               type="email"
@@ -90,7 +92,7 @@ export const Step1 = () => {
 
           <FormItem>
             <FormLabel className="text-sm font-medium text-gray-700">
-              Phone Number
+              Phone Number <span className="text-red-500">*</span>
             </FormLabel>
             <Controller
               control={control}
@@ -111,16 +113,67 @@ export const Step1 = () => {
 
           <FormItem>
             <FormLabel className="text-sm font-medium text-gray-700">
-              Password
+              Password <span className="text-red-500">*</span>
             </FormLabel>
-            <Input
-              type="password"
-              {...register("password", { maxLength: 50 })}
-              placeholder="Create a password"
-              className="transition-all duration-200 focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20"
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                {...register("password", {
+                  required: "Password is required",
+                  maxLength: 50,
+                })}
+                placeholder="Create a password"
+                className="transition-all duration-200 focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 pr-10"
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                tabIndex={-1}
+                onClick={() => setShowPassword((v) => !v)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
             <FormMessage className="text-sm">
               {errors.password?.message as string}
+            </FormMessage>
+          </FormItem>
+
+          <FormItem>
+            <FormLabel className="text-sm font-medium text-gray-700">
+              Confirm Password <span className="text-red-500">*</span>
+            </FormLabel>
+            <div className="relative">
+              <Input
+                type={showConfirm ? "text" : "password"}
+                {...register("confirmPassword", {
+                  required: "Confirm password is required",
+                  validate: (value: string) =>
+                    value === watch("password") || "Passwords do not match",
+                  maxLength: 50,
+                })}
+                placeholder="Confirm password"
+                className="transition-all duration-200 focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 pr-10"
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                tabIndex={-1}
+                onClick={() => setShowConfirm((v) => !v)}
+              >
+                {showConfirm ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+            <FormMessage className="text-sm">
+              {errors.confirmPassword?.message as string}
             </FormMessage>
           </FormItem>
         </div>
@@ -134,7 +187,7 @@ export const Step1 = () => {
         <div className="space-y-5">
           <FormItem>
             <FormLabel className="text-sm font-medium text-gray-700">
-              Company Name
+              Company Name <span className="text-red-500">*</span>
             </FormLabel>
             <Input
               {...register("companyName", {
